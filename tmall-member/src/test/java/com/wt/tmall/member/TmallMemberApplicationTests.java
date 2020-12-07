@@ -1,0 +1,13 @@
+package com.wt.tmall.member;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class TmallMemberApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
