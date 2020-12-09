@@ -17,6 +17,7 @@
 		<module>tmall-ware</module>
 		<module>renren-fast</module>
 		<module>renren-generator</module>
-	</modules>
+        <module>tmall-common</module>
+    </modules>
 
 </project>
