@@ -1,20 +1,14 @@
 package com.wt.tmall.order.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.wt.tmall.order.entity.OmsPaymentInfoEntity;
-import com.wt.tmall.order.service.OmsPaymentInfoService;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.R;
+import com.wt.tmall.order.entity.OmsPaymentInfoEntity;
+import com.wt.tmall.order.service.OmsPaymentInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 

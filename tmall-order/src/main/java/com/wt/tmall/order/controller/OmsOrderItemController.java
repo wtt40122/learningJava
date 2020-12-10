@@ -1,20 +1,14 @@
 package com.wt.tmall.order.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.wt.tmall.order.entity.OmsOrderItemEntity;
-import com.wt.tmall.order.service.OmsOrderItemService;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.R;
+import com.wt.tmall.order.entity.OmsOrderItemEntity;
+import com.wt.tmall.order.service.OmsOrderItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -35,7 +29,6 @@ public class OmsOrderItemController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("order:omsorderitem:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = omsOrderItemService.queryPage(params);
 
@@ -47,7 +40,6 @@ public class OmsOrderItemController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("order:omsorderitem:info")
     public R info(@PathVariable("id") Long id){
 		OmsOrderItemEntity omsOrderItem = omsOrderItemService.getById(id);
 
@@ -58,7 +50,6 @@ public class OmsOrderItemController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("order:omsorderitem:save")
     public R save(@RequestBody OmsOrderItemEntity omsOrderItem){
 		omsOrderItemService.save(omsOrderItem);
 
@@ -69,7 +60,6 @@ public class OmsOrderItemController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("order:omsorderitem:update")
     public R update(@RequestBody OmsOrderItemEntity omsOrderItem){
 		omsOrderItemService.updateById(omsOrderItem);
 
@@ -80,7 +70,6 @@ public class OmsOrderItemController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("order:omsorderitem:delete")
     public R delete(@RequestBody Long[] ids){
 		omsOrderItemService.removeByIds(Arrays.asList(ids));
 
