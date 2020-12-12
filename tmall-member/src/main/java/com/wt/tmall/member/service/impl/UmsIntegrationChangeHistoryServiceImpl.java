@@ -8,19 +8,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.Query;
 
-import com.wt.tmall.member.dao.UmsIntegrationChangeHistoryDao;
-import com.wt.tmall.member.entity.UmsIntegrationChangeHistoryEntity;
-import com.wt.tmall.member.service.UmsIntegrationChangeHistoryService;
+import com.wt.tmall.member.dao.IntegrationChangeHistoryDao;
+import com.wt.tmall.member.entity.IntegrationChangeHistoryEntity;
+import com.wt.tmall.member.service.IntegrationChangeHistoryService;
 
 
 @Service("umsIntegrationChangeHistoryService")
-public class UmsIntegrationChangeHistoryServiceImpl extends ServiceImpl<UmsIntegrationChangeHistoryDao, UmsIntegrationChangeHistoryEntity> implements UmsIntegrationChangeHistoryService {
+public class UmsIntegrationChangeHistoryServiceImpl extends ServiceImpl<IntegrationChangeHistoryDao, IntegrationChangeHistoryEntity> implements IntegrationChangeHistoryService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<UmsIntegrationChangeHistoryEntity> page = this.page(
-                new Query<UmsIntegrationChangeHistoryEntity>().getPage(params),
-                new QueryWrapper<UmsIntegrationChangeHistoryEntity>()
+        IPage<IntegrationChangeHistoryEntity> page = this.page(
+                new Query<IntegrationChangeHistoryEntity>().getPage(params),
+                new QueryWrapper<IntegrationChangeHistoryEntity>()
         );
 
         return new PageUtils(page);

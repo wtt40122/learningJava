@@ -8,19 +8,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.Query;
 
-import com.wt.tmall.member.dao.UmsMemberCollectSpuDao;
-import com.wt.tmall.member.entity.UmsMemberCollectSpuEntity;
-import com.wt.tmall.member.service.UmsMemberCollectSpuService;
+import com.wt.tmall.member.dao.MemberCollectSpuDao;
+import com.wt.tmall.member.entity.MemberCollectSpuEntity;
+import com.wt.tmall.member.service.MemberCollectSpuService;
 
 
 @Service("umsMemberCollectSpuService")
-public class UmsMemberCollectSpuServiceImpl extends ServiceImpl<UmsMemberCollectSpuDao, UmsMemberCollectSpuEntity> implements UmsMemberCollectSpuService {
+public class UmsMemberCollectSpuServiceImpl extends ServiceImpl<MemberCollectSpuDao, MemberCollectSpuEntity> implements MemberCollectSpuService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<UmsMemberCollectSpuEntity> page = this.page(
-                new Query<UmsMemberCollectSpuEntity>().getPage(params),
-                new QueryWrapper<UmsMemberCollectSpuEntity>()
+        IPage<MemberCollectSpuEntity> page = this.page(
+                new Query<MemberCollectSpuEntity>().getPage(params),
+                new QueryWrapper<MemberCollectSpuEntity>()
         );
 
         return new PageUtils(page);

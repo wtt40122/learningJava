@@ -1,8 +1,9 @@
-package com.wt.tmall.coupon.controller;
+package com.wt.tmall.member.controller;
 
 import java.util.Arrays;
 import java.util.Map;
 
+import com.wt.tmall.member.feign.CouponFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,33 +11,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wt.tmall.coupon.entity.CouponEntity;
-import com.wt.tmall.coupon.service.CouponService;
+import com.wt.tmall.member.entity.MemberEntity;
+import com.wt.tmall.member.service.MemberService;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.R;
 
 
 
 /**
- * 优惠券信息
+ * 会员
  *
  * @author wtt
  * @email 1136220284@qq.com
- * @date 2020-12-09 09:38:32
+ * @date 2020-12-09 09:45:00
  */
 @RestController
-@RequestMapping("coupon/coupon")
-public class CouponController {
+@RequestMapping("member/member")
+public class MemberController {
     @Autowired
-    private CouponService couponService;
+    private MemberService memberService;
 
-    @RequestMapping("/member/list")
-    public R memberCoupons(){
-        CouponEntity couponEntity = new CouponEntity();
-        couponEntity.setCouponName("满减优惠券");
-        couponEntity.setCouponType(1);
-        couponEntity.setNum(2);
-        return R.ok().put("coupons",Arrays.asList(couponEntity));
+    @Autowired
+    private CouponFeignService couponFeignService;
+
+    @RequestMapping("/coupons")
+    public R test(){
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setNickname("张三");
+        R memberCoupons = couponFeignService.memberCoupons();
+        return R.ok().put("member",memberEntity).put("coupons",memberCoupons.get("coupons"));
     }
 
     /**
@@ -44,7 +47,7 @@ public class CouponController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = couponService.queryPage(params);
+        PageUtils page = memberService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -55,17 +58,17 @@ public class CouponController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-		CouponEntity coupon = couponService.getById(id);
+		MemberEntity umsMember = memberService.getById(id);
 
-        return R.ok().put("coupon", coupon);
+        return R.ok().put("umsMember", umsMember);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody CouponEntity coupon){
-		couponService.save(coupon);
+    public R save(@RequestBody MemberEntity umsMember){
+		memberService.save(umsMember);
 
         return R.ok();
     }
@@ -74,8 +77,8 @@ public class CouponController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody CouponEntity coupon){
-		couponService.updateById(coupon);
+    public R update(@RequestBody MemberEntity umsMember){
+		memberService.updateById(umsMember);
 
         return R.ok();
     }
@@ -85,7 +88,7 @@ public class CouponController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-		couponService.removeByIds(Arrays.asList(ids));
+		memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }
