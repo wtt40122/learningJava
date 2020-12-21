@@ -1,16 +1,19 @@
 package com.wt.tmall.product.service.impl;
 
-import org.springframework.stereotype.Service;
-import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.Query;
-
 import com.wt.tmall.product.dao.CategoryDao;
 import com.wt.tmall.product.entity.CategoryEntity;
 import com.wt.tmall.product.service.CategoryService;
+import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryService")
@@ -26,4 +29,31 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return new PageUtils(page);
     }
 
+    @Override
+    public List<CategoryEntity> queryAllCategoryWithTree() {
+        List<CategoryEntity> categoryEntities = baseMapper.selectList(null);
+        //查询一级分类
+        List<CategoryEntity> menu = categoryEntities.stream()
+                .filter(categoryEntity -> categoryEntity.getParentCid() == 0)
+                .map(categoryEntity -> {
+                    //设置子菜单
+                    categoryEntity.setChildren(queryChildrenMenu(categoryEntity, categoryEntities));
+                    return categoryEntity;
+                })
+                .sorted(Comparator.comparingInt(o -> (o.getSort() == null ? 0 : o.getSort())))
+                .collect(Collectors.toList());
+        return menu;
+    }
+    //查询子菜单
+    public static List<CategoryEntity> queryChildrenMenu(CategoryEntity categoryEntity, List<CategoryEntity> allMenu) {
+        List<CategoryEntity> childMenu = allMenu.stream()
+                .filter(entity -> entity.getParentCid() == categoryEntity.getCatId())
+                .map(entity -> {
+                    entity.setChildren((queryChildrenMenu(entity, allMenu)));
+                    return entity;
+                })
+                .sorted(Comparator.comparingInt(o -> (o.getSort() == null ? 0 : o.getSort())))
+                .collect(Collectors.toList());
+        return childMenu;
+    }
 }

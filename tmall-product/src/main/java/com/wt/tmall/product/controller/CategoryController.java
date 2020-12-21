@@ -1,6 +1,7 @@
 package com.wt.tmall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,20 @@ import com.wt.common.utils.R;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
+    /**
+     *
+     * @Description //查询分类树形列表展示
+     * @Author wtt
+     * @Date 2020/12/18 11:31
+     * @param: []
+     * @return com.wt.common.utils.R
+     */
+    @RequestMapping("/list/tree")
+    public R queryAllCategoryWithTree(){
+        List<CategoryEntity> entityList = categoryService.queryAllCategoryWithTree();
+        return R.ok().put("data",entityList);
+    }
 
     /**
      * 列表
