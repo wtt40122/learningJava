@@ -44,13 +44,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .collect(Collectors.toList());
         return menu;
     }
+
+    @Override
+    public void removeCategory(List<Long> categoryIds) {
+        this.removeByIds(categoryIds);
+    }
+
     //查询子菜单
-    public static List<CategoryEntity> queryChildrenMenu(CategoryEntity categoryEntity, List<CategoryEntity> allMenu) {
+    public static List<CategoryEntity> queryChildrenMenu(CategoryEntity root, List<CategoryEntity> allMenu) {
         List<CategoryEntity> childMenu = allMenu.stream()
-                .filter(entity -> entity.getParentCid() == categoryEntity.getCatId())
-                .map(entity -> {
-                    entity.setChildren((queryChildrenMenu(entity, allMenu)));
-                    return entity;
+                .filter(entity -> entity.getParentCid().longValue() == root.getCatId().longValue())
+                .map(categoryEntity -> {
+                    categoryEntity.setChildren(queryChildrenMenu(categoryEntity, allMenu));
+                    return categoryEntity;
                 })
                 .sorted(Comparator.comparingInt(o -> (o.getSort() == null ? 0 : o.getSort())))
                 .collect(Collectors.toList());
