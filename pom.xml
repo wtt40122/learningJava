@@ -19,7 +19,7 @@
 		<module>renren-generator</module>
         <module>tmall-common</module>
         <module>tmall-gateway</module>
-		<module>tmall-gateway</module>
+        <module>tmall-third-party</module>
 	</modules>
 
 </project>
