@@ -13,3 +13,4 @@ spring:
       secret-key: nx8rnaFpOprp56BrMxn4xyZO4GyLwq
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: wttoss

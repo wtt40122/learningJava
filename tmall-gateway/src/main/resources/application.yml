@@ -24,6 +24,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: third_parties_route
+          uri: lb://tmall-third-party
+          predicates:
+            - Path=/api/thirdParties/**
+          filters:
+            - RewritePath=/api/thirdParties/(?<segment>.*),/$\{segment}
+
         - id: admin_route
           uri: lb://renren-fast
           predicates:
