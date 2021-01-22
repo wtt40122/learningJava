@@ -7,8 +7,12 @@ import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.Query;
 import com.wt.tmall.product.dao.CategoryDao;
 import com.wt.tmall.product.entity.CategoryEntity;
+import com.wt.tmall.product.service.CategoryBrandRelationService;
 import com.wt.tmall.product.service.CategoryService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,6 +22,9 @@ import java.util.stream.Collectors;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -48,6 +55,21 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public void removeCategory(List<Long> categoryIds) {
         this.removeByIds(categoryIds);
+    }
+
+    @Transactional
+    @Override
+    public void saveDetail(CategoryEntity category) {
+        this.save(category);
+    }
+
+    @Override
+    public void updateDetail(CategoryEntity category) {
+        this.updateById(category);
+        String name = category.getName();
+        if(StringUtils.isNotBlank(name)){
+            categoryBrandRelationService.updateCategoryName(category.getCatId(),category.getName());
+        }
     }
 
     //查询子菜单

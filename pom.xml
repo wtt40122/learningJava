@@ -20,6 +20,7 @@
         <module>tmall-common</module>
         <module>tmall-gateway</module>
         <module>tmall-third-party</module>
-	</modules>
+        <module>knowledge-point</module>
+    </modules>
 
 </project>

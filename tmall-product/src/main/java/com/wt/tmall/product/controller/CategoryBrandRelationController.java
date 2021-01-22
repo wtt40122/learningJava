@@ -1,6 +1,7 @@
 package com.wt.tmall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,15 @@ public class CategoryBrandRelationController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 列表
+     */
+    @RequestMapping("/catelog/list")
+    public R catelogList(@RequestParam("brandId")Long brandId){
+        List<CategoryBrandRelationEntity> data = categoryBrandRelationService.catelogList(brandId);
+        return R.ok().put("data", data);
+    }
+
 
     /**
      * 信息
@@ -56,7 +66,7 @@ public class CategoryBrandRelationController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
+		categoryBrandRelationService.saveDetail(categoryBrandRelation);
 
         return R.ok();
     }
