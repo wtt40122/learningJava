@@ -48,7 +48,7 @@ public class MemberCollectSpuController {
     public R info(@PathVariable("id") Long id){
 		MemberCollectSpuEntity umsMemberCollectSpu = memberCollectSpuService.getById(id);
 
-        return R.ok().put("umsMemberCollectSpu", umsMemberCollectSpu);
+        return R.ok().put("memberCollectSpu", umsMemberCollectSpu);
     }
 
     /**

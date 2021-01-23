@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryBrandRelationService")
@@ -72,6 +73,17 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     public void updateCategoryName(Long categoryId, String name) {
         this.baseMapper.updateCategoryName(categoryId,name);
+    }
+
+    @Override
+    public List<BrandEntity> getBrandsByCatId(Long catId) {
+        List<CategoryBrandRelationEntity> relationEntityList = this.list(new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+        List<BrandEntity> brandEntities = relationEntityList.stream().map(relationEntity -> {
+            Long brandId = relationEntity.getBrandId();
+            BrandEntity brandEntity = brandService.getById(brandId);
+            return brandEntity;
+        }).collect(Collectors.toList());
+        return brandEntities;
     }
 
 

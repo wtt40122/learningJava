@@ -48,7 +48,7 @@ public class MemberLoginLogController {
     public R info(@PathVariable("id") Long id){
 		MemberLoginLogEntity umsMemberLoginLog = memberLoginLogService.getById(id);
 
-        return R.ok().put("umsMemberLoginLog", umsMemberLoginLog);
+        return R.ok().put("memberLoginLog", umsMemberLoginLog);
     }
 
     /**

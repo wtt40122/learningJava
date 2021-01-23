@@ -43,7 +43,7 @@ public class GrowthChangeHistoryController {
     public R info(@PathVariable("id") Long id){
 		GrowthChangeHistoryEntity umsGrowthChangeHistory = growthChangeHistoryService.getById(id);
 
-        return R.ok().put("umsGrowthChangeHistory", umsGrowthChangeHistory);
+        return R.ok().put("growthChangeHistory", umsGrowthChangeHistory);
     }
 
     /**

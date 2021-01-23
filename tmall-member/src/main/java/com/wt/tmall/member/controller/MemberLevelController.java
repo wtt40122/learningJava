@@ -48,7 +48,7 @@ public class MemberLevelController {
     public R info(@PathVariable("id") Long id){
 		MemberLevelEntity umsMemberLevel = memberLevelService.getById(id);
 
-        return R.ok().put("umsMemberLevel", umsMemberLevel);
+        return R.ok().put("memberLevel", umsMemberLevel);
     }
 
     /**

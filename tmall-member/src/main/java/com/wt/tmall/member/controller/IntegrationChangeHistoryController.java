@@ -48,7 +48,7 @@ public class IntegrationChangeHistoryController {
     public R info(@PathVariable("id") Long id){
 		IntegrationChangeHistoryEntity umsIntegrationChangeHistory = integrationChangeHistoryService.getById(id);
 
-        return R.ok().put("umsIntegrationChangeHistory", umsIntegrationChangeHistory);
+        return R.ok().put("integrationChangeHistory", umsIntegrationChangeHistory);
     }
 
     /**

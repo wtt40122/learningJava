@@ -3,13 +3,13 @@ package com.wt.tmall.product.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.wt.tmall.product.entity.BrandEntity;
+import com.wt.tmall.product.vo.BrandVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.wt.tmall.product.entity.CategoryBrandRelationEntity;
 import com.wt.tmall.product.service.CategoryBrandRelationService;
@@ -39,6 +39,18 @@ public class CategoryBrandRelationController {
         PageUtils page = categoryBrandRelationService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    @GetMapping("/brands/list")
+    public R relationBrandList(@RequestParam("catId") Long catId){
+        List<BrandEntity> brandEntities = categoryBrandRelationService.getBrandsByCatId(catId);
+        List<BrandVo> brandVos = brandEntities.stream().map(brandEntity -> {
+            BrandVo brandVo = new BrandVo();
+            brandVo.setBrandId(brandEntity.getBrandId());
+            brandVo.setBrandName(brandEntity.getName());
+            return brandVo;
+        }).collect(Collectors.toList());
+        return R.ok().put("data",brandVos);
     }
 
     /**

@@ -48,7 +48,7 @@ public class MemberReceiveAddressController {
     public R info(@PathVariable("id") Long id){
 		MemberReceiveAddressEntity umsMemberReceiveAddress = memberReceiveAddressService.getById(id);
 
-        return R.ok().put("umsMemberReceiveAddress", umsMemberReceiveAddress);
+        return R.ok().put("memberReceiveAddress", umsMemberReceiveAddress);
     }
 
     /**

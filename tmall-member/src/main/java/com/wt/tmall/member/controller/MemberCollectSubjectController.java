@@ -48,7 +48,7 @@ public class MemberCollectSubjectController {
     public R info(@PathVariable("id") Long id){
 		MemberCollectSubjectEntity umsMemberCollectSubject = memberCollectSubjectService.getById(id);
 
-        return R.ok().put("umsMemberCollectSubject", umsMemberCollectSubject);
+        return R.ok().put("memberCollectSubject", umsMemberCollectSubject);
     }
 
     /**

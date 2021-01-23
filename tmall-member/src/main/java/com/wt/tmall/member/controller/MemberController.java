@@ -60,7 +60,7 @@ public class MemberController {
     public R info(@PathVariable("id") Long id){
 		MemberEntity umsMember = memberService.getById(id);
 
-        return R.ok().put("umsMember", umsMember);
+        return R.ok().put("member", umsMember);
     }
 
     /**

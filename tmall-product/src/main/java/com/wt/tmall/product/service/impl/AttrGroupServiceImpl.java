@@ -6,17 +6,23 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.Query;
+import com.wt.tmall.product.dao.AttrAttrgroupRelationDao;
 import com.wt.tmall.product.dao.AttrGroupDao;
+import com.wt.tmall.product.entity.AttrAttrgroupRelationEntity;
 import com.wt.tmall.product.entity.AttrGroupEntity;
 import com.wt.tmall.product.entity.CategoryEntity;
 import com.wt.tmall.product.service.AttrGroupService;
 import com.wt.tmall.product.service.CategoryService;
+import com.wt.tmall.product.vo.AttrGroupRelationVo;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("attrGroupService")
@@ -25,6 +31,8 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    AttrAttrgroupRelationDao attrAttrgroupRelationDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -60,15 +68,26 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     @Override
     public List<Long> queryCategoryPath(Long catelogId) {
         List<Long> categoryPaths = Lists.newArrayList();
-        queryCategoryIds(categoryPaths,catelogId);
+        queryCategoryIds(categoryPaths, catelogId);
+        Collections.reverse(categoryPaths);
         return categoryPaths;
     }
 
-    private void queryCategoryIds(List<Long> categoryPaths,Long catelogId){
+    @Override
+    public void deleteRelation(List<AttrGroupRelationVo> relationVos) {
+        List<AttrAttrgroupRelationEntity> entities = relationVos.stream().map(relationVo -> {
+            AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
+            BeanUtils.copyProperties(relationVo, relationEntity);
+            return relationEntity;
+        }).collect(Collectors.toList());
+        attrAttrgroupRelationDao.batchDeleteRelation(entities);
+    }
+
+    private void queryCategoryIds(List<Long> categoryPaths, Long catelogId) {
         categoryPaths.add(catelogId);
         CategoryEntity categoryEntity = categoryService.getById(catelogId);
-        if(categoryEntity.getParentCid() != 0){
-            queryCategoryIds(categoryPaths,categoryEntity.getParentCid());
+        if (categoryEntity.getParentCid() != 0) {
+            queryCategoryIds(categoryPaths, categoryEntity.getParentCid());
         }
     }
 

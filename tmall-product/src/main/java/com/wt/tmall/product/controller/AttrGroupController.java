@@ -1,22 +1,20 @@
 package com.wt.tmall.product.controller;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.wt.tmall.product.entity.AttrGroupEntity;
-import com.wt.tmall.product.service.AttrGroupService;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.R;
+import com.wt.tmall.product.entity.AttrEntity;
+import com.wt.tmall.product.entity.AttrGroupEntity;
+import com.wt.tmall.product.service.AttrAttrgroupRelationService;
+import com.wt.tmall.product.service.AttrGroupService;
+import com.wt.tmall.product.service.AttrService;
+import com.wt.tmall.product.vo.AttrGroupRelationVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -33,11 +31,42 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
+    @Autowired
+    AttrService attrService;
+
+    @Autowired
+    AttrAttrgroupRelationService attrAttrgroupRelationService;
+    // 新增关联关系
+    @PostMapping("/attr/relation")
+    public R addRelation(@RequestBody List<AttrGroupRelationVo> relationVos){
+        attrAttrgroupRelationService.addRelationBatch(relationVos);
+        return R.ok();
+    }
+
+    @GetMapping("/{attrGroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrGroupId") Long attrGroupId) {
+        List<AttrEntity> data = attrService.getRelationAttr(attrGroupId);
+        return R.ok().put("data", data);
+    }
+
+    @GetMapping("/{attrGroupId}/noattr/relation")
+    public R attrNoRelation(@RequestParam Map<String, Object> params,
+                            @PathVariable("attrGroupId") Long attrGroupId) {
+        PageUtils page = attrService.attrNoRelation(params, attrGroupId);
+        return R.ok().put("page", page);
+    }
+
+    @PostMapping("/attr/relation/delete")
+    public R deleteRelation(@RequestBody List<AttrGroupRelationVo> relationVos) {
+        attrGroupService.deleteRelation(relationVos);
+        return R.ok();
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = attrGroupService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -60,7 +89,6 @@ public class AttrGroupController {
 		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
         List<Long> categoryPaths = attrGroupService.queryCategoryPath(attrGroup.getCatelogId());
         if(!CollectionUtils.isEmpty(categoryPaths)){
-            Collections.reverse(categoryPaths);
             attrGroup.setCategoryPaths(categoryPaths);
         }
         return R.ok().put("attrGroup", attrGroup);

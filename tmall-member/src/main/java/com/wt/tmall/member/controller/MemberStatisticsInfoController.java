@@ -48,7 +48,7 @@ public class MemberStatisticsInfoController {
     public R info(@PathVariable("id") Long id){
 		MemberStatisticsInfoEntity umsMemberStatisticsInfo = memberStatisticsInfoService.getById(id);
 
-        return R.ok().put("umsMemberStatisticsInfo", umsMemberStatisticsInfo);
+        return R.ok().put("memberStatisticsInfo", umsMemberStatisticsInfo);
     }
 
     /**

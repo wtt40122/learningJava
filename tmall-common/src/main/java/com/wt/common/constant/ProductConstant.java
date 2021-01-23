@@ -1,7 +1,5 @@
 package com.wt.common.constant;
 
-import lombok.Data;
-
 public class ProductConstant {
 
 
