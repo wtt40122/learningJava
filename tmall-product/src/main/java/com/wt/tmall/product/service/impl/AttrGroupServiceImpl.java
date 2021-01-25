@@ -9,11 +9,14 @@ import com.wt.common.utils.Query;
 import com.wt.tmall.product.dao.AttrAttrgroupRelationDao;
 import com.wt.tmall.product.dao.AttrGroupDao;
 import com.wt.tmall.product.entity.AttrAttrgroupRelationEntity;
+import com.wt.tmall.product.entity.AttrEntity;
 import com.wt.tmall.product.entity.AttrGroupEntity;
 import com.wt.tmall.product.entity.CategoryEntity;
 import com.wt.tmall.product.service.AttrGroupService;
+import com.wt.tmall.product.service.AttrService;
 import com.wt.tmall.product.service.CategoryService;
 import com.wt.tmall.product.vo.AttrGroupRelationVo;
+import com.wt.tmall.product.vo.AttrGroupWithAttrsVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     private CategoryService categoryService;
     @Autowired
     AttrAttrgroupRelationDao attrAttrgroupRelationDao;
+    @Autowired
+    AttrService attrService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -81,6 +86,23 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             return relationEntity;
         }).collect(Collectors.toList());
         attrAttrgroupRelationDao.batchDeleteRelation(entities);
+    }
+
+    @Override
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
+        //1、查询分组信息
+        List<AttrGroupEntity> attrGroupEntities = this.list(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId));
+
+        //2、查询所有属性
+        List<AttrGroupWithAttrsVo> collect = attrGroupEntities.stream().map(group -> {
+            AttrGroupWithAttrsVo attrsVo = new AttrGroupWithAttrsVo();
+            BeanUtils.copyProperties(group,attrsVo);
+            List<AttrEntity> attrs = attrService.getRelationAttr(attrsVo.getAttrGroupId());
+            attrsVo.setAttrs(attrs);
+            return attrsVo;
+        }).collect(Collectors.toList());
+
+        return collect;
     }
 
     private void queryCategoryIds(List<Long> categoryPaths, Long catelogId) {
