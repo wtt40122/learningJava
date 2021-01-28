@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 9008
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -7,7 +7,7 @@ spring:
     username: root
     password: wangtao
   application:
-    name: tmall-ware
+    name: tmall-wares
   cloud:
     nacos:
       discovery:
@@ -15,3 +15,6 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
