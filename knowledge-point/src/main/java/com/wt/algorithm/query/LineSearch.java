@@ -1,4 +1,4 @@
-package com.wt.algorithm.query.linesearch;
+package com.wt.algorithm.query;
 
 /**
  * @Auther: wtt

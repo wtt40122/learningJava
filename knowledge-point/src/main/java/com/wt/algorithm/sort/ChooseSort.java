@@ -1,16 +1,16 @@
-package com.wt.algorithm.sort.choose;
+package com.wt.algorithm.sort;
 
 /**
  * @Auther: wtt
  * @Date: 2021/1/25 18:04
- * @Description:
+ * @Description: 选择排序
  */
 public class ChooseSort {
 
     private ChooseSort() {
     }
 
-    public static <E extends Comparable> void chooseSort(E[] arr) {
+    public static <E extends Comparable<E>> void sort(E[] arr) {
         for (int i = 0; i < arr.length; i++) {
             int minIndex = i;
             for (int j = i; j < arr.length; j++) {

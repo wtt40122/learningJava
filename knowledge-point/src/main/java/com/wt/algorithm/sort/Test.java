@@ -1,4 +1,4 @@
-package com.wt.algorithm.sort.choose;
+package com.wt.algorithm.sort;
 
 import java.util.Arrays;
 
@@ -10,8 +10,12 @@ import java.util.Arrays;
 public class Test {
     public static void main(String[] args) {
         Integer[] arr = {1,3,5,8,4,2};
-        ChooseSort.chooseSort(arr);
+        BubbleSort.sort(arr);
         System.out.print(Arrays.toString(arr));
+        int length = 10000;
+        int max = 10000;
+
+//        Generator.generatorArray(length, max);
 
     }
 }
