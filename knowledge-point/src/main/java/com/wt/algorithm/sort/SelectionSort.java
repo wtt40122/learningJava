@@ -5,9 +5,9 @@ package com.wt.algorithm.sort;
  * @Date: 2021/1/25 18:04
  * @Description: 选择排序
  */
-public class ChooseSort {
+public class SelectionSort {
 
-    private ChooseSort() {
+    private SelectionSort() {
     }
 
     public static <E extends Comparable<E>> void sort(E[] arr) {
@@ -27,5 +27,13 @@ public class ChooseSort {
         E temp = arr[originIndex];
         arr[originIndex] = arr[targetIndex];
         arr[targetIndex] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] dataSize = {10000,100000};
+        for(int n: dataSize){
+            Integer[] arr = ArrayGenerator.generateRandomArray(n, n);
+            SortingHelper.sortTest("SelectionSort",arr);
+        }
     }
 }

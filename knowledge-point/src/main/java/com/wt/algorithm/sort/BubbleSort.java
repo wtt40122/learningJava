@@ -24,4 +24,12 @@ public class BubbleSort {
         arr[originIndex] = arr[targetIndex];
         arr[targetIndex] = temp;
     }
+
+    public static void main(String[] args) {
+        int[] dataSize = {10000,100000};
+        for(int n: dataSize){
+            Integer[] arr = ArrayGenerator.generateRandomArray(n, n);
+            SortingHelper.sortTest("BubbleSort",arr);
+        }
+    }
 }
