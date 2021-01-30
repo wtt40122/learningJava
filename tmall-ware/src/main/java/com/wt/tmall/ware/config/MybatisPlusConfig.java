@@ -1,6 +1,5 @@
-package com.wt.tmall.product.config;
+package com.wt.tmall.ware.config;
 
-import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -14,9 +13,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @Date: 2021/1/21 14:10
  * @Description:
  */
-@Configuration
 @EnableTransactionManagement
-@MapperScan("com.wt.tmall.product.dao")
+@Configuration
+@MapperScan("com.wt.tmall.ware.dao")
 public class MybatisPlusConfig {
 
     @Bean
