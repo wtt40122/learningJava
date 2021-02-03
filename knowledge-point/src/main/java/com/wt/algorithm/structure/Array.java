@@ -1,5 +1,7 @@
 package com.wt.algorithm.structure;
 
+import javax.xml.crypto.Data;
+
 /**
  * @Auther: wtt
  * @Date: 2021/2/1 09:25
@@ -20,7 +22,7 @@ public class Array<E> {
         this(10);
     }
 
-    // 获取数组容量
+    // 获取数组大小
     public int getSize() {
         return size;
     }
@@ -37,7 +39,8 @@ public class Array<E> {
 
     // 在数组尾部插入元素
     public void addLast(E e) {
-        data[size++] = e;
+//        data[size++] = e;
+        this.add(size,e);
     }
 
     // 指定位置插入元素
@@ -45,7 +48,11 @@ public class Array<E> {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("插入数组的索引超出限制");
         }
-        for (int i = size; i >= index; i--) {
+        if(size == data.length){
+            //扩容
+            resize(2*getCapacity());
+        }
+        for (int i = size-1; i >= index; i--) {
             data[i + 1] = data[i];
         }
         data[index] = e;
@@ -100,6 +107,9 @@ public class Array<E> {
         for (int i = index; i < size; i++) {
             data[i] = data[i+1];
         }
+        if(size == data.length/2){
+            resize(data.length/2);
+        }
         data[size-1] = null;
         size--;
         return ret;
@@ -132,5 +142,13 @@ public class Array<E> {
             b.append(", ");
         }
         return b.toString();
+    }
+    //扩容
+    private void resize(int newCapacity) {
+        E[] newData = (E[])new Object[newCapacity];
+        for(int i=0;i<size;i++){
+            newData[i] = data[i];
+        }
+        data = newData;
     }
 }
