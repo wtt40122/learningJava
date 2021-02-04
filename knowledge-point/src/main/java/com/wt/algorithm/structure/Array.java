@@ -1,7 +1,5 @@
 package com.wt.algorithm.structure;
 
-import javax.xml.crypto.Data;
-
 /**
  * @Auther: wtt
  * @Date: 2021/2/1 09:25
@@ -72,6 +70,14 @@ public class Array<E> {
         return data[index];
     }
 
+    public E getFirst() {
+        return get(0);
+    }
+
+    public E getLast() {
+        return get(size - 1);
+    }
+
     // 修改数组中指定位置处的元素
     public void set(int index, E e) {
         if (index < 0 || index >= size) {
@@ -107,8 +113,8 @@ public class Array<E> {
         for (int i = index; i < size; i++) {
             data[i] = data[i+1];
         }
-        if(size == data.length/2){
-            resize(data.length/2);
+        if (size == data.length / 4) {
+            resize(data.length / 2);
         }
         data[size-1] = null;
         size--;
