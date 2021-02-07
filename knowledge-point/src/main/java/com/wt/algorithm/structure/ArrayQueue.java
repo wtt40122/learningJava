@@ -2,18 +2,18 @@ package com.wt.algorithm.structure;
 
 /**
  * @Auther: wtt
- * @Date: 2021/2/4 09:49
+ * @Date: 2021/2/5 14:45
  * @Description:
  */
-public class ArrayStack<E> implements Stack<E> {
+public class ArrayQueue<E> implements Queue<E> {
 
     private Array<E> array;
 
-    public ArrayStack() {
+    public ArrayQueue() {
         array = new Array<>();
     }
 
-    public ArrayStack(int capacity) {
+    public ArrayQueue(int capacity) {
         array = new Array<>(capacity);
     }
 
@@ -28,36 +28,35 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     @Override
-    public void push(E e) {
+    public void enQueue(E e) {
         array.addLast(e);
     }
 
     @Override
-    public E pop() {
-        return array.removeLast();
+    public E deQueue() {
+        return array.removeFirst();
     }
 
     @Override
-    public E peek() {
-        return array.getLast();
+    public E getFront() {
+        return array.getFirst();
     }
 
     @Override
-    public String toString() {
+    public String toString(){
         StringBuilder res = new StringBuilder();
-        res.append("Stack size is:");
+        res.append("Queue size is:");
         res.append(getSize());
         res.append(",");
-        res.append("[");
+        res.append("top [");
         for (int i = 0; i < array.getSize(); i++) {
             res.append(array.get(i));
             if (i != getSize() - 1) {
                 res.append(",");
             }
         }
-        res.append("] top");
+        res.append("] tail");
         return res.toString();
     }
-
 
 }

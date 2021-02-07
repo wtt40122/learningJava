@@ -110,14 +110,14 @@ public class Array<E> {
             throw new IllegalArgumentException("删除数组中数据的索引超出限制");
         }
         E ret = data[index];
-        for (int i = index; i < size; i++) {
+        for (int i = index; i < size-1; i++) {
             data[i] = data[i+1];
-        }
-        if (size == data.length / 4) {
-            resize(data.length / 2);
         }
         data[size-1] = null;
         size--;
+        if (size == data.length / 4) {
+            resize(data.length / 2);
+        }
         return ret;
     }
 
