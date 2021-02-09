@@ -3,7 +3,7 @@ package com.wt.algorithm.structure;
 /**
  * @Auther: wtt
  * @Date: 2021/2/4 09:49
- * @Description:
+ * @Description: 数组实现的栈
  */
 public class ArrayStack<E> implements Stack<E> {
 

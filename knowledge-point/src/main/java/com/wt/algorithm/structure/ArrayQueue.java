@@ -3,7 +3,7 @@ package com.wt.algorithm.structure;
 /**
  * @Auther: wtt
  * @Date: 2021/2/5 14:45
- * @Description:
+ * @Description: 数组实现的队列
  */
 public class ArrayQueue<E> implements Queue<E> {
 

@@ -87,4 +87,50 @@ public class MyTest {
         System.out.println("出队的元素为" + loopQueue.deQueue());
         System.out.println(loopQueue);
     }
+
+    @Test
+    public void testLinkedList(){
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        for(int i=0;i<5;i++){
+            linkedList.addFirst(i);
+            System.out.println(linkedList);
+        }
+        linkedList.add(2,5656);
+        System.out.println(linkedList);
+
+        linkedList.remove(2);
+        System.out.println(linkedList);
+
+        linkedList.removeFirst();
+        System.out.println(linkedList);
+
+        linkedList.removeLast();
+        System.out.println(linkedList);
+    }
+
+    @Test
+    public void testLinkedListStack(){
+        Stack<Integer> listStack = new LinkedListStack<>();
+        for (int i = 0; i < 5; i++) {
+            listStack.push(i);
+            System.out.println(listStack);
+        }
+        Integer popEle = listStack.pop();
+        System.out.println("弹出的栈顶元素为：" + popEle);
+        System.out.println(listStack);
+        System.out.println("栈顶元素为：" + listStack.peek());
+    }
+
+    @Test
+    public void testLinkedListQueue() {
+        LinkedListQueue<Integer> listQueue = new LinkedListQueue();
+        for (int i = 0; i < 10; i++) {
+            listQueue.enQueue(i);
+            System.out.println(listQueue);
+        }
+        System.out.println("队头元素：" + listQueue.getFront());
+        System.out.println("出队的元素为" + listQueue.deQueue());
+        System.out.println("出队的元素为" + listQueue.deQueue());
+        System.out.println(listQueue);
+    }
 }
