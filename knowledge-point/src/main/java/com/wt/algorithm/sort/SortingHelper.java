@@ -33,6 +33,9 @@ public class SortingHelper {
         if("BubbleSort".equalsIgnoreCase(sortName)){
             BubbleSort.sort(arr);
         }
+        if("mergeSort".equalsIgnoreCase(sortName)){
+            MergeSort.sort(arr);
+        }
         long endTime = System.nanoTime();
 
         double time = (endTime - startTime) / 1000000000.0;
