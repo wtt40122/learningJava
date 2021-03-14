@@ -30,6 +30,15 @@ public class ThreadLocalTest {
             }
         }
         executorService.shutdown();
+        ThreadLocal<Integer> sThreadLocalA = new ThreadLocal<Integer>();
+        ThreadLocal<Double> sThreadLocalB = new ThreadLocal<Double>();
+        ThreadLocal<String> sThreadLocalC = new ThreadLocal<String>();
+        sThreadLocalA.set(1);
+        sThreadLocalB.set(2.0);
+        sThreadLocalC.set("哈哈");
+        System.out.println(sThreadLocalA.get());
+        System.out.println(sThreadLocalB.get());
+        System.out.println(sThreadLocalC.get());
     }
 
     List getList() {

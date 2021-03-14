@@ -27,21 +27,30 @@ public class SortingHelper {
         if("InsertionSort".equalsIgnoreCase(sortName)){
             InsertionSort.sort(arr);
         }
-        if("InsertionSort1".equalsIgnoreCase(sortName)){
+        if ("InsertionSort1".equalsIgnoreCase(sortName)) {
             InsertionSort.sort1(arr);
         }
-        if("BubbleSort".equalsIgnoreCase(sortName)){
+        if ("BubbleSort".equalsIgnoreCase(sortName)) {
             BubbleSort.sort(arr);
         }
-        if("mergeSort".equalsIgnoreCase(sortName)){
+        if ("mergeSort".equalsIgnoreCase(sortName)) {
             MergeSort.sort(arr);
+        }
+        if ("quickSort".equalsIgnoreCase(sortName)) {
+            QuickSort.sort(arr);
+        }
+        if ("quickSort2".equalsIgnoreCase(sortName)) {
+            QuickSort.sort2(arr);
+        }
+        if ("quickSort3".equalsIgnoreCase(sortName)) {
+            QuickSort.sort3(arr);
         }
         long endTime = System.nanoTime();
 
         double time = (endTime - startTime) / 1000000000.0;
 
         if (!SortingHelper.isSort(arr)) {
-            throw new RuntimeException(sortName + " failed");
+            throw  new RuntimeException(sortName + " failed");
         }
         System.out.println(String.format("%s, n=%d : %f s", sortName, arr.length, time));
     }
