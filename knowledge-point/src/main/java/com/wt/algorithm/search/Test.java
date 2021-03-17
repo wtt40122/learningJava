@@ -1,4 +1,4 @@
-package com.wt.algorithm.query;
+package com.wt.algorithm.search;
 
 /**
  * @Auther: wtt
