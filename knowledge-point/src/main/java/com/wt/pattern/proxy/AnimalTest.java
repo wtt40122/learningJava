@@ -13,7 +13,7 @@ import java.lang.reflect.Proxy;
 public class AnimalTest {
 
     public static void main(String[] args) {
-        jdkProxy();
+//        jdkProxy();
         cglibProxy();
     }
 
@@ -38,7 +38,8 @@ public class AnimalTest {
      */
     private static void cglibProxy() {
         System.out.println("CGLIB动态代理，直接对类进行代理");
-        CatAnimal animal = (CatAnimal) Enhancer.create(new CatAnimal().getClass(), (MethodInterceptor) (o, method, objects, methodProxy) -> {
+        CatAnimal animal = (CatAnimal) Enhancer.create(new CatAnimal().getClass(),
+                (MethodInterceptor) (o, method, objects, methodProxy) -> {
             System.out.println("方法代理前");
             Object result = method.invoke(new CatAnimal(), objects);
             System.out.println("方法代理后");
