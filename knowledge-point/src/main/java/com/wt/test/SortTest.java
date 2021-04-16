@@ -54,6 +54,41 @@ public class SortTest {
         }
     }
 
+    /**
+     * 归并排序
+     */
+    public static void mergeSort(int[] arr) {
+        mergeSort(arr, 0, arr.length - 1);
+    }
+
+    private static void mergeSort(int[] arr, int l, int r) {
+        if (l >= r) return;
+        int mid = (l + r) / 2;
+        mergeSort(arr, l, mid);
+        mergeSort(arr, mid + 1, r);
+        merge(arr, l, mid, r);
+    }
+
+    private static void merge(int[] arr, int l, int mid, int r) {
+        int[] temp = Arrays.copyOfRange(arr, l, r + 1);
+        int i = l, j = mid + 1;
+        for (int k = l; k <= r; k++) {
+            if (i > mid) {
+                arr[k] = temp[j - l];
+                j++;
+            } else if (j > r) {
+                arr[k] = temp[i - l];
+                i++;
+            } else if (arr[i] < arr[j]) {
+                arr[k] = temp[i - l];
+                i++;
+            } else {
+                arr[k] = temp[j - l];
+                j++;
+            }
+        }
+    }
+
     public static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
@@ -64,7 +99,8 @@ public class SortTest {
         int[] arr = {3, 2, 1, 4, 5, 9, 0};
 //        insertionSort(arr);
 //        selectionSort(arr);
-        bubbleSort(arr);
+//        bubbleSort(arr);
+        mergeSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
