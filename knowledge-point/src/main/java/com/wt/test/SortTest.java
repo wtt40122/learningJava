@@ -1,6 +1,7 @@
 package com.wt.test;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * @Auther: wtt
@@ -89,6 +90,43 @@ public class SortTest {
         }
     }
 
+    /**
+     * 快速排序
+     */
+    public static void quickSort(int[] arr) {
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    public static void quickSort(int[] arr, int l, int r) {
+        if (r - l <= 0)
+            return;
+        int p = partition(arr, l, r);
+        quickSort(arr, l, p);
+        quickSort(arr, p + 1, r);
+    }
+
+    static Random random = new Random();
+
+    private static int partition(int[] arr, int l, int r) {
+        int p = l + random.nextInt(r - l + 1);
+        swap(arr, p, l);
+        int i = l + 1, j = r;
+        while (true) {
+            while (i <= j && arr[i] <= arr[l]) {
+                i++;
+            }
+            while (j >= i && arr[j] >= arr[l]) {
+                j--;
+            }
+            if (i >= j) break;
+            swap(arr, i, j);
+            i++;
+            j--;
+        }
+        swap(arr, l, j);
+        return j;
+    }
+
     public static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
@@ -100,7 +138,8 @@ public class SortTest {
 //        insertionSort(arr);
 //        selectionSort(arr);
 //        bubbleSort(arr);
-        mergeSort(arr);
+//        mergeSort(arr);
+        quickSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
