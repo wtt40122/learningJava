@@ -10,7 +10,7 @@ import java.util.Stack;
 public class CharacterPattern {
 
     public static boolean isPattern(String str) {
-        Stack<Character> stack = new Stack<>();
+        Stack<Character> stack = new Stack<Character>();
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == '(' || str.charAt(i) == '[' || str.charAt(i) == '{') {
                 stack.push(str.charAt(i));
