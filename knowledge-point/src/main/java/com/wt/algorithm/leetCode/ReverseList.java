@@ -50,7 +50,7 @@ public class ReverseList {
             cur.next = prev;
             prev = cur;
             cur = next;
-        }
+    }
         return prev;
     }
 
@@ -86,4 +86,6 @@ public class ReverseList {
         System.out.println(rebuildNum(6));
         System.out.println(twoPowerMin(6));
     }
+
+
 }

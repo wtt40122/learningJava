@@ -141,5 +141,6 @@ public class SortTest {
 //        mergeSort(arr);
         quickSort(arr);
         System.out.println(Arrays.toString(arr));
+        System.out.println(3 / 2);
     }
 }

@@ -22,29 +22,29 @@ public class ColorClassify {
     }
 
     public static void classify(int[] nums) {
-        int zero = -1, i=0,two = nums.length;
-        while(i< two){
-            if(nums[i] == 0){
+        int zero = -1, i = 0, two = nums.length;
+        while (i < two) {
+            if (nums[i] == 0) {
                 zero++;
-                swap(nums,zero,i);
+                swap(nums, zero, i);
                 i++;
-            }else if(nums[i] == 2){
+            } else if (nums[i] == 2) {
                 two--;
-                swap(nums,i,two);
-            }else{
-               i++;
+                swap(nums, i, two);
+            } else {
+                i++;
             }
         }
     }
 
-    private static void swap(int[] nums,int i,int j){
+    private static void swap(int[] nums, int i, int j) {
         int t = nums[i];
         nums[i] = nums[j];
         nums[j] = t;
     }
 
     public static void main(String[] args) {
-        int[] nums = {2,1,0,1,2,0};
+        int[] nums = {2, 1, 0, 1, 2, 0};
         ColorClassify.classify(nums);
         System.out.println(Arrays.toString(nums));
     }

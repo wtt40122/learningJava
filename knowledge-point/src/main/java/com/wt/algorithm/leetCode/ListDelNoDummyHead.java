@@ -23,7 +23,7 @@ public class ListDelNoDummyHead {
                 ListNode delNode = prev.next;
                 prev.next = delNode.next;
                 delNode.next = null;
-            }else{
+            } else {
                 prev = prev.next;
             }
         }

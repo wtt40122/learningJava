@@ -8,11 +8,9 @@ package com.wt.test;
 public enum CountryEnum {
     one(1, "齐"), two(2, "楚"),
 
-    three(3, "燕"),
+    three(3, "燕"), four(4, "赵"),
 
-    four(4, "赵"), five(5, "魏"),
-
-    six(6, "韩");
+    five(5, "魏"), six(6, "韩");
 
     private Integer retCode;
     private String retMessage;

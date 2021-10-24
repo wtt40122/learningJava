@@ -11,7 +11,7 @@ import java.util.Set;
  * @Date: 2021/1/16 16:05
  * @Description:
  */
-public class ListValueValidator implements ConstraintValidator<ListValue,Integer> {
+public class ListValueValidator implements ConstraintValidator<ListValue, Integer> {
     private Set<Integer> setValue = new HashSet<Integer>();
 
     @Override
