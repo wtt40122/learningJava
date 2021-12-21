@@ -1,7 +1,6 @@
 package com.wt.server;
 
-import com.wt.server.request.Request;
-import com.wt.server.response.Response;
+import com.wt.server.request.RequestProcessor;
 import com.wt.server.servlet.HttpServlet;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -15,6 +14,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * @author wtt
@@ -32,23 +32,28 @@ public class MiniTomcatBootstrap {
 
         loadServlet();
 
+        int corePoolSize = 10;
+        int maximumPoolSize = 20;
+        long keepAliveTime = 1;
+        TimeUnit unit = TimeUnit.MINUTES;
+        BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(100);
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        RejectedExecutionHandler handler = new ThreadPoolExecutor.AbortPolicy();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize,
+                maximumPoolSize,
+                keepAliveTime,
+                unit,
+                workQueue,
+                threadFactory,
+                handler);
+
         ServerSocket serverSocket = new ServerSocket(port);
         while (true) {
             Socket socket = serverSocket.accept();
             String data = "Hello mini tomcat";
             System.out.println(data);
-
-            InputStream inputStream = socket.getInputStream();
-            Request request = new Request(inputStream);
-            Response response = new Response(socket.getOutputStream());
-
-            if (servletMap.containsKey(request.getUrl())) {
-                HttpServlet httpServlet = servletMap.get(request.getUrl());
-                httpServlet.service(request, response);
-            } else {
-                response.outputHtml(request.getUrl());
-            }
-//            socket.close();
+            RequestProcessor requestProcessor = new RequestProcessor(socket, servletMap);
+            threadPoolExecutor.execute(requestProcessor);
         }
     }
 

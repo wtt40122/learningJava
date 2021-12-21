@@ -23,6 +23,8 @@
         <module>knowledge-point</module>
         <module>myProject</module>
         <module>mini-tomcat</module>
-    </modules>
+        <module>mini-mybatis</module>
+		<module>mini-rpc</module>
+	</modules>
 
 </project>
