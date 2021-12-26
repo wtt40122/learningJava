@@ -21,6 +21,7 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(9999);
         System.out.println("服务端已经启动");
         while (true) {
+            // 会阻塞
             Socket socket = serverSocket.accept();
             System.out.println("有客户端连接了");
             executorService.submit(() -> {
@@ -32,7 +33,7 @@ public class Server {
     private static void handle(Socket socket) {
         System.out.println("线程Id:" + Thread.currentThread().getId() + " 线程名:" + Thread.currentThread().getName());
         try {
-            // 从连接中去除输入流来接受参数
+            // 从连接中取出输入流来接受参数
             InputStream inputStream = socket.getInputStream();
             byte[] bytes = new byte[1024];
             int read = inputStream.read(bytes);
