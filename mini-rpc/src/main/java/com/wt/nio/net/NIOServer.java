@@ -37,8 +37,8 @@ public class NIOServer {
                 continue;
             }
             //5. 获取客户端传递过来的数据,并把数据放在byteBuffer这个缓冲区中
-            ByteBuffer byteBuffer = ByteBuffer.allocate(1024); //返回值:
-            //正数: 表示本次读到的有效字节个数.
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+            //返回值:正数: 表示本次读到的有效字节个数.
             //0   : 表示本次没有读到有效字节.
             //-1  : 表示读到了末尾
             int read = socketChannel.read(byteBuffer);

@@ -15,7 +15,7 @@ public class CreateBufferDemo {
             System.out.println(byteBuffer.get());
         }
         //在此调用会报错--后续再读缓冲区时着重讲解
-        System.out.println(byteBuffer.get());
+//        System.out.println(byteBuffer.get());
         // 2.创建一个有内容的缓冲区
         ByteBuffer wrap = ByteBuffer.wrap("lagou".getBytes());
         for (int i = 0; i < 5; i++) {
