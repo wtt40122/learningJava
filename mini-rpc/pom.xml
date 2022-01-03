@@ -22,6 +22,24 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.42.Final</version>
         </dependency>
+        <!--json依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
+        </dependency>
+        <!--lombok依赖 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.7</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>
