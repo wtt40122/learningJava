@@ -28,7 +28,9 @@
 		<module>rpc-consumer</module>
 		<module>rpc-provider</module>
 		<module>rpc-api</module>
-	</modules>
+        <module>flink-learn</module>
+        <module>spring-boot-test</module>
+    </modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
