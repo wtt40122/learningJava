@@ -67,7 +67,7 @@ public class ExecutorController {
             log.info("Number of Tasks in Queue: {}", threadPool.getQueue().size());
 
             log.info("=========================");
-        }, 0, 1, TimeUnit.SECONDS);
+        }, 0, 1, TimeUnit.HOURS);
     }
 
 
@@ -114,7 +114,7 @@ public class ExecutorController {
     }
 
 
-    @GetMapping("wrong")
+    @GetMapping("/executor/wrong")
     public String wrong() throws InterruptedException {
         ThreadPoolExecutor threadPool = ThreadPoolHelper.getThreadPool();
         IntStream.rangeClosed(1, 10).forEach(i -> {
