@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisController {
 
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         try (Jedis jedis = new Jedis("127.0.0.1", 6379)) {
             Assert.isTrue("OK".equals(jedis.set("a", "1")), "set a = 1 return OK");

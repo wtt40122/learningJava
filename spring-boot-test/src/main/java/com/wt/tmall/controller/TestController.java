@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -69,5 +74,11 @@ public class TestController {
         });
         log.info("took:{}", System.currentTimeMillis() - begin);
         return data.size();
+    }
+
+    public static void main(String[] args) throws IOException {
+        Files.deleteIfExists(Paths.get("hello.txt"));
+        Files.write(Paths.get("hello.txt"),"你好Hi".getBytes(Charset.forName("GBK")));
+        
     }
 }

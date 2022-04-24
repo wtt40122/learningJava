@@ -14,5 +14,7 @@ public class Test {
         String compileStr = "/home/work/log/commission-compare-pos/app.2022-04-12-12.0.log";
         Pattern compile = Pattern.compile(str);
         System.out.println(compile.matcher(compileStr).matches());
+        String testStr = "wtt";
+        System.out.println(String.format("%-10s", testStr).replace(" ", "_"));
     }
 }
