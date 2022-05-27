@@ -96,7 +96,9 @@ public class YingBiZhaoLing {
     public static void main(String[] args) {
         int[] values = {5, 3};
         int total = 13;
-        int minCoinCountHelper = getMinCoinCountHelper(total, values);
-        System.out.println(minCoinCountHelper);
+//        int minCoinCountHelper = getMinCoinCountHelper(total, values);
+        YingBiZhaoLing yingBiZhaoLing = new YingBiZhaoLing();
+        int minCoin = yingBiZhaoLing.getMinCoinCountOfValue(total, values, 0);
+        System.out.println(minCoin);
     }
 }

@@ -30,6 +30,7 @@
 		<module>rpc-api</module>
         <module>flink-learn</module>
         <module>spring-boot-test</module>
+        <module>sentinel-analyze</module>
     </modules>
 
 	<parent>
