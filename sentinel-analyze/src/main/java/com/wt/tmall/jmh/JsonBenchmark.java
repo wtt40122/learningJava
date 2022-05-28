@@ -28,16 +28,25 @@ public class JsonBenchmark {
     String str = "{\"startDate\":\"2020-04-01     16:00:00\",\"endDate\":\"2020-05-20 13:00:00\"" +
             ",\"flag\":true,\"threads\":5,\"shardingIndex\":0}";
 
+    @Param(value =
+            {"{\"startDate\":\"2020-04-01 16:00:00\",\"endDate\":\"2020-05-20 13:00:00\",\"flag\":true,\"threads\":5,\"shardingIndex\":0}",
+                    "{\"startDate\":\"2020-04-01 16:00:00\",\"endDate\":\"2020-05-20 14:00:00\"}",
+                    "{\"flag\":true,\"threads\":5,\"shardingIndex\":0}"})
+    private String jsonStr;
+
+    public JsonBenchmark() {
+    }
+
     @Test
     @Benchmark
     public void testGson() {
-        gson.fromJson(str, JsonTestModel.class);
-        System.out.println("current Thread:"+Thread.currentThread().getName()+"==>"+gson.hashCode());
+        gson.fromJson(jsonStr, JsonTestModel.class);
+        System.out.println("current Thread:" + Thread.currentThread().getName() + "==>" + gson.hashCode());
     }
 
     @Benchmark
     @Test
     public void testJackson() throws JsonProcessingException {
-        objectMapper.readValue(str, JsonTestModel.class);
+        objectMapper.readValue(jsonStr, JsonTestModel.class);
     }
 }

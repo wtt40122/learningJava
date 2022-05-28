@@ -1,5 +1,7 @@
 package com.wt.tmall.test;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +11,7 @@ import java.util.stream.Collectors;
  * @date: 2022/5/24 13:08
  * @description:
  */
+@Slf4j
 public class Match {
 
     static class Task implements Runnable {
@@ -31,7 +34,7 @@ public class Match {
                 List<String> ids = Arrays.stream(value.split(",")).collect(Collectors.toList());
 
                 boolean exist = ids.contains("4029000");
-                System.out.println("exist:" + exist + ",time:" + (System.currentTimeMillis() - start));
+                log.info("exist:" + exist + ",time:" + (System.currentTimeMillis() - start));
             }
 
         }
