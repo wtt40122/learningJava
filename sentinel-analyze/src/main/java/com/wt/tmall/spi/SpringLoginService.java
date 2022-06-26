@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SpringLoginService implements LoginService{
     @Override
     public LoginResponse login(String username, String password) {
-        log.info("SpringLoginService");
+        log.info("SpringLoginService,username:{},pawword:{}", username, password);
         return null;
     }
 }
