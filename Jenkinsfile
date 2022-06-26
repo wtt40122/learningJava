@@ -30,7 +30,7 @@ pipeline{
                 sh "echo $hello"
                 //未来，凡是需要取变量值的时候，都用双引号
                 sh 'echo ${world}'
-                sh "ssh --help"
+//                 sh "ssh --help"
             }
         }
         //1、编译 "abc"
