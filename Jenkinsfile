@@ -6,6 +6,16 @@ pipeline{
     // agent none  //以后所有stage都必须指定自己的
     agent any
 
+    environment {
+        hello = "123456"
+        world = "456789"
+        WS = "${WORKSPACE}"
+        IMAGE_VERSION = "v1.0"
+
+        //引用Jenkins配置的全局秘钥信息
+        ALIYUN_SECRTE=credentials("aliyun-docker-repo")
+    }
+
     //定义流水线的加工流程
     stages {
         //流水线的所有阶段
