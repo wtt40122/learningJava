@@ -21,7 +21,6 @@
         <module>tmall-gateway</module>
         <module>tmall-third-party</module>
         <module>knowledge-point</module>
-        <module>myProject</module>
         <module>mini-tomcat</module>
         <module>mini-mybatis</module>
 		<module>mini-rpc</module>
