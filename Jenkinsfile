@@ -40,8 +40,6 @@ pipeline{
                 docker {
                     image 'maven:3-alpine'
                     args '-v /var/jenkins_home/appconfig/maven/.m2:/root/.m2'
-//                     args  '-v /a/settings.xml:/app/settings.xml'
-                    //docker run -v /a/settings.xml:/app/settings.xml
                  }
             }
             steps {
@@ -57,6 +55,29 @@ pipeline{
                sh 'cd ${WS} && mvn clean package -s "/var/jenkins_home/appconfig/maven/settings.xml"  -Dmaven.test.skip=true '
                //jar包推送给maven repo ，nexus
                //如何让他适用阿里云镜像源
+
+            }
+        }
+
+        //2、测试，每一个 stage的开始，都会重置到默认的WORKSPACE位置
+        stage('测试'){
+            steps {
+                sh 'pwd && ls -alh'
+                echo "测试..."
+            }
+        }
+
+        //3、打包
+        stage('生成镜像'){
+            steps {
+                echo "打包..."
+                //检查Jenkins的docker命令是否能运行
+                sh 'docker version'
+                sh 'pwd && ls -alh'
+                sh 'docker build -t java-devops-demo .'
+
+                //镜像就可以进行保存
+
 
             }
         }
