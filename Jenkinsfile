@@ -13,7 +13,7 @@ pipeline{
         IMAGE_VERSION = "v1.0"
 
         //引用Jenkins配置的全局秘钥信息
-        ALIYUN_SECRTE=credentials("aliyun-docker-repo")
+//         ALIYUN_SECRTE=credentials("aliyun-docker-repo")
     }
 
     //定义流水线的加工流程
