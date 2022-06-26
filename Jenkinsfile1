@@ -6,6 +6,9 @@ pipeline{
    // agent none  //以后所有stage都必须指定自己的
     agent any
 
+
+
+
     //定义一些环境信息
     environment {
       hello = "123456"
