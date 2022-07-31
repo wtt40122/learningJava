@@ -30,6 +30,7 @@
         <module>flink-learn</module>
         <module>spring-boot-test</module>
         <module>sentinel-analyze</module>
+		<module>wt-mybatis</module>
     </modules>
 
 	<parent>
