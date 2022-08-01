@@ -109,6 +109,14 @@ pipeline{
             }
         }
     }
-
+    //后置处理过程
+    post {
+      failure {
+        echo "这个阶段 完蛋了.... $currentBuild.result"
+      }
+      success {
+        echo "这个阶段 成了.... $currentBuild.result"
+      }
+    }
 
 }
