@@ -17,6 +17,7 @@
         <module>wt-mybatis-05</module>
         <module>wt-mybatis-06</module>
         <module>wt-mybatis-07</module>
+        <module>wt-mybatis-08</module>
     </modules>
 
     <artifactId>wt-mybatis</artifactId>
@@ -31,6 +32,11 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ognl</groupId>
+            <artifactId>ognl</artifactId>
+            <version>3.3.2</version>
         </dependency>
     </dependencies>
 
