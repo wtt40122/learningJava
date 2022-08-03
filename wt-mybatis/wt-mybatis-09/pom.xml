@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>wt-mybatis-08</artifactId>
+    <artifactId>wt-mybatis-09</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -41,12 +41,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.75</version>
-        </dependency>
-        <dependency>
-            <groupId>com.wt.tmall</groupId>
-            <artifactId>wt-mybatis-09</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
