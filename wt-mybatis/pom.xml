@@ -19,6 +19,7 @@
         <module>wt-mybatis-07</module>
         <module>wt-mybatis-08</module>
         <module>wt-mybatis-09</module>
+        <module>wt-mybatis-10</module>
     </modules>
 
     <artifactId>wt-mybatis</artifactId>
