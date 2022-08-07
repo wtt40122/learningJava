@@ -22,13 +22,19 @@ public class MapperProxyTest {
     public void testMapperProxyFactory() {
         MapperProxyFactory<IUserDao> factory = new MapperProxyFactory<>(IUserDao.class);
 
-        Map<String, String> sqlSession = new HashMap<>();
-        sqlSession.put("com.wt.mybatis.IUserDao.queryUserName", "模拟执行 Mapper.xml 中 SQL 语句的操作：查询用户姓名");
-        sqlSession.put("com.wt.mybatis.IUserDao.queryUserAge", "模拟执行 Mapper.xml 中 SQL 语句的操作：查询用户年龄");
+        Map<String, Object> sqlSession = new HashMap<>();
+        sqlSession.put("com.wt.mybatis.IUserDao.queryUserName", "张三");
+        sqlSession.put("com.wt.mybatis.IUserDao.queryUserAge", 20);
         IUserDao userDao = factory.newInstance(sqlSession);
 
-        String res = userDao.queryUserName("10001");
-        logger.info("测试结果：{}", res);
+        String queryUserName = userDao.queryUserName("10001");
+        logger.info("测试queryUserName结果：{}", queryUserName);
+        Integer queryUserAge = userDao.queryUserAge("张三");
+        logger.info("测试queryUserAge结果：{}", queryUserAge);
+
+        int hashCode = userDao.hashCode();
+        logger.info("测试hashCode结果：{}", hashCode);
+
     }
 }
 

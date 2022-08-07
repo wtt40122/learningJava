@@ -31,7 +31,8 @@
         <module>spring-boot-test</module>
         <module>sentinel-analyze</module>
 		<module>wt-mybatis</module>
-    </modules>
+        <module>java-jvm</module>
+	</modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

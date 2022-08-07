@@ -33,6 +33,9 @@ public class ApiTest {
         // 4. 测试验证
         String res = userDao.queryUserName("10001");
         logger.info("测试结果：{}", res);
+
+        Integer queryUserAge = userDao.queryUserAge("10001");
+        logger.info("测试queryUserAge结果：{}", queryUserAge);
     }
 
 }
