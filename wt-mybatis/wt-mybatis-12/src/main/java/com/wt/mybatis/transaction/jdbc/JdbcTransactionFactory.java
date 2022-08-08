@@ -1,6 +1,6 @@
 package com.wt.mybatis.transaction.jdbc;
 
-import com.wt.mybatis.transaction.TransactionIsolationLevel;
+import com.wt.mybatis.session.TransactionIsolationLevel;
 import com.wt.mybatis.transaction.Transaction;
 import com.wt.mybatis.transaction.TransactionFactory;
 

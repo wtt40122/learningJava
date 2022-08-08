@@ -1,5 +1,7 @@
 package com.wt.mybatis.transaction;
 
+import com.wt.mybatis.session.TransactionIsolationLevel;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 
