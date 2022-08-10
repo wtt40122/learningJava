@@ -22,14 +22,12 @@ public abstract class BaseExecutor implements Executor {
 
     protected Configuration configuration;
     protected Transaction transaction;
-    protected Executor wrapper;
 
     private boolean closed;
 
     protected BaseExecutor(Configuration configuration, Transaction transaction) {
         this.configuration = configuration;
         this.transaction = transaction;
-        this.wrapper = this;
     }
 
     @Override
