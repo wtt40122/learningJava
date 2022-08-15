@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wt.IUserDao">
+<mapper namespace="com.wt.mybatis.dao.IUserDao">
 
-    <select id="queryUserInfoById" parameterType="java.lang.Long" resultType="com.wt.User">
+    <select id="queryUserInfoById" parameterType="java.lang.Long" resultType="com.wt.mybatis.pojo.User">
         SELECT id, userId, userName, userHead
         FROM user
         where id = #{id}
     </select>
 
-    <select id="queryUserInfo" parameterType="com.wt.User" resultType="com.wt.User">
+    <select id="queryUserInfo" parameterType="com.wt.mybatis.pojo.User" resultType="com.wt.mybatis.pojo.User">
         SELECT id, userId, userName, userHead
         FROM user
         where id = #{id} and userId = #{userId}
     </select>
 
-    <select id="queryUserInfoList" resultType="com.wt.User">
+    <select id="queryUserInfoList" resultType="com.wt.mybatis.pojo.User">
         SELECT id, userId, userName, userHead
         FROM user
     </select>
 
-    <update id="updateUserInfo" parameterType="com.wt.User">
+    <update id="updateUserInfo" parameterType="com.wt.mybatis.pojo.User">
         UPDATE user
         SET userName = #{userName}
         WHERE id = #{id}
     </update>
 
-    <insert id="insertUserInfo" parameterType="com.wt.User">
+    <insert id="insertUserInfo" parameterType="com.wt.mybatis.pojo.User">
         INSERT INTO user
             (userId, userName, userHead, createTime, updateTime)
         VALUES (#{userId}, #{userName}, #{userHead}, now(), now())
