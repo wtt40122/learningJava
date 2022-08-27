@@ -32,7 +32,8 @@
         <module>sentinel-analyze</module>
 		<module>wt-mybatis</module>
         <module>java-jvm</module>
-	</modules>
+        <module>wt-spring</module>
+    </modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

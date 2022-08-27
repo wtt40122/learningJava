@@ -48,13 +48,13 @@ public class ApiTest {
         pooledDataSource.setDriver("com.mysql.jdbc.Driver");
         pooledDataSource.setUrl("jdbc:mysql://127.0.0.1:3306/mybatis_test?useUnicode=true");
         pooledDataSource.setUsername("root");
-        pooledDataSource.setPassword("root");
+        pooledDataSource.setPassword("wangtao");
         // 持续获得链接
         while (true) {
             Connection connection = pooledDataSource.getConnection();
             System.out.println(connection);
             Thread.sleep(1000);
-            connection.close();
+//            connection.close();
         }
     }
 

@@ -33,9 +33,10 @@ public class PooledDataSource implements DataSource {
     // 这是给连接池一个打印日志状态机会的低层次设置,还有重新尝试获得连接, 这些情况下往往需要很长时间 为了避免连接池没有配置时静默失败)。
     protected int poolTimeToWait = 20000;
     // 发送到数据的侦测查询,用来验证连接是否正常工作,并且准备 接受请求。默认是“NO PING QUERY SET” ,这会引起许多数据库驱动连接由一 个错误信息而导致失败
-    protected String poolPingQuery = "NO PING QUERY SET";
+//    protected String poolPingQuery = "NO PING QUERY SET";
+    protected String poolPingQuery = "select VERSION()";
     // 开启或禁用侦测查询
-    protected boolean poolPingEnabled = false;
+    protected boolean poolPingEnabled = true;
     // 用来配置 poolPingQuery 多次时间被用一次
     protected int poolPingConnectionsNotUsedFor = 0;
 
@@ -82,6 +83,42 @@ public class PooledDataSource implements DataSource {
                 logger.info("A bad connection (" + connection.getRealHashCode() + ") attempted to return to the pool, discarding connection.");
                 state.badConnectionCount++;
             }
+        }
+    }
+
+    public void forceCloseAll() {
+        synchronized (state) {
+            expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
+            // 关闭活跃链接
+            for (int i = state.activeConnections.size(); i > 0; i--) {
+                try {
+                    PooledConnection conn = state.activeConnections.remove(i - 1);
+                    conn.invalidate();
+
+                    Connection realConn = conn.getRealConnection();
+                    if (!realConn.getAutoCommit()) {
+                        realConn.rollback();
+                    }
+                    realConn.close();
+                } catch (Exception ignore) {
+
+                }
+            }
+            // 关闭空闲链接
+            for (int i = state.idleConnections.size(); i > 0; i--) {
+                try {
+                    PooledConnection conn = state.idleConnections.remove(i - 1);
+                    conn.invalidate();
+
+                    Connection realConn = conn.getRealConnection();
+                    if (!realConn.getAutoCommit()) {
+                        realConn.rollback();
+                    }
+                } catch (Exception ignore) {
+
+                }
+            }
+            logger.info("PooledDataSource forcefully closed/removed all connections.");
         }
     }
 
@@ -177,42 +214,6 @@ public class PooledDataSource implements DataSource {
         }
 
         return conn;
-    }
-
-    public void forceCloseAll() {
-        synchronized (state) {
-            expectedConnectionTypeCode = assembleConnectionTypeCode(dataSource.getUrl(), dataSource.getUsername(), dataSource.getPassword());
-            // 关闭活跃链接
-            for (int i = state.activeConnections.size(); i > 0; i--) {
-                try {
-                    PooledConnection conn = state.activeConnections.remove(i - 1);
-                    conn.invalidate();
-
-                    Connection realConn = conn.getRealConnection();
-                    if (!realConn.getAutoCommit()) {
-                        realConn.rollback();
-                    }
-                    realConn.close();
-                } catch (Exception ignore) {
-
-                }
-            }
-            // 关闭空闲链接
-            for (int i = state.idleConnections.size(); i > 0; i--) {
-                try {
-                    PooledConnection conn = state.idleConnections.remove(i - 1);
-                    conn.invalidate();
-
-                    Connection realConn = conn.getRealConnection();
-                    if (!realConn.getAutoCommit()) {
-                        realConn.rollback();
-                    }
-                } catch (Exception ignore) {
-
-                }
-            }
-            logger.info("PooledDataSource forcefully closed/removed all connections.");
-        }
     }
 
     protected boolean pingConnection(PooledConnection conn) {

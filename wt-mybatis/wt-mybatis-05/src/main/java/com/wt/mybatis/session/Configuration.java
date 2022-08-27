@@ -43,8 +43,8 @@ public class Configuration {
         typeAliasRegistry.registerAlias("JDBC", JdbcTransactionFactory.class);
         typeAliasRegistry.registerAlias("DRUID", DruidDataSourceFactory.class);
 
-        typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
         typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
+        typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
     }
 
     public void addMappers(String packageName) {
