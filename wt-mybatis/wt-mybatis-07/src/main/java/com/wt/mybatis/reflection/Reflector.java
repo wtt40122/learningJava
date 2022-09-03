@@ -270,6 +270,25 @@ public class Reflector {
         return methods.toArray(new Method[methods.size()]);
     }
 
+    private String getSignature(Method method) {
+        StringBuilder sb = new StringBuilder();
+        Class<?> returnType = method.getReturnType();
+        if (returnType != null) {
+            sb.append(returnType.getName()).append('#');
+        }
+        sb.append(method.getName());
+        Class<?>[] parameters = method.getParameterTypes();
+        for (int i = 0; i < parameters.length; i++) {
+            if (i == 0) {
+                sb.append(':');
+            } else {
+                sb.append(',');
+            }
+            sb.append(parameters[i].getName());
+        }
+        return sb.toString();
+    }
+
     private void addUniqueMethods(Map<String, Method> uniqueMethods, Method[] methods) {
         for (Method currentMethod : methods) {
             if (!currentMethod.isBridge()) {
@@ -291,25 +310,6 @@ public class Reflector {
                 }
             }
         }
-    }
-
-    private String getSignature(Method method) {
-        StringBuilder sb = new StringBuilder();
-        Class<?> returnType = method.getReturnType();
-        if (returnType != null) {
-            sb.append(returnType.getName()).append('#');
-        }
-        sb.append(method.getName());
-        Class<?>[] parameters = method.getParameterTypes();
-        for (int i = 0; i < parameters.length; i++) {
-            if (i == 0) {
-                sb.append(':');
-            } else {
-                sb.append(',');
-            }
-            sb.append(parameters[i].getName());
-        }
-        return sb.toString();
     }
 
     private static boolean canAccessPrivateMethods() {

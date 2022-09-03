@@ -33,6 +33,7 @@
 		<module>wt-mybatis</module>
         <module>java-jvm</module>
         <module>wt-spring</module>
+        <module>wt-bytecode</module>
     </modules>
 
 	<parent>

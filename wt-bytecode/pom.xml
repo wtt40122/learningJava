@@ -9,13 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wt.spring</groupId>
-    <artifactId>wt-spring</artifactId>
+    <groupId>com.wt.byte</groupId>
+    <artifactId>wt-bytecode</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>wt-spring01</module>
-        <module>wt-spring02</module>
-        <module>wt-spring03</module>
+        <module>wt-bytecode01</module>
+        <module>wt-bytecode02</module>
+        <module>wt-bytecode02</module>
     </modules>
 
     <properties>
@@ -25,17 +25,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-commons</artifactId>
+            <version>6.2.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm-analysis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm-tree</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>3.3.0</version>
-        </dependency>
-
     </dependencies>
 
 </project>
