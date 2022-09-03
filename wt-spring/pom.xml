@@ -16,6 +16,7 @@
         <module>wt-spring01</module>
         <module>wt-spring02</module>
         <module>wt-spring03</module>
+        <module>wt-spring04</module>
     </modules>
 
     <properties>
@@ -34,6 +35,12 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.5.0</version>
         </dependency>
 
     </dependencies>

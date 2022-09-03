@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author: wtt
  * @date: 2022/7/30 18:46
- * @description:
+ * @description: 每个dao接口一个MapperProxyFactory类，一个MapperProxy类
  */
 public class MapperProxyTest {
 

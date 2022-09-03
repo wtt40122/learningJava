@@ -9,6 +9,9 @@ public class UserService {
 
     private String name;
 
+    public UserService() {
+    }
+
     public UserService(String name) {
         this.name = name;
     }
@@ -19,8 +22,9 @@ public class UserService {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("");
-        sb.append(name);
-        return super.toString() + sb.toString();
+        final StringBuilder sb = new StringBuilder(",");
+        sb.append(name).append(",");
+        sb.append("我是UserService");
+        return super.toString() + sb;
     }
 }

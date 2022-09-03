@@ -47,6 +47,7 @@ public class TypeAliasRegistry {
                 value = (Class<T>) TYPE_ALIASES.get(key);
             } else {
                 value = (Class<T>) Resources.classForName(string);
+                registerAlias(string, value);
             }
             return value;
         } catch (ClassNotFoundException e) {

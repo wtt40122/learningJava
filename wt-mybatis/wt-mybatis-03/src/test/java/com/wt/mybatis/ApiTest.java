@@ -1,5 +1,6 @@
 package com.wt.mybatis;
 
+import com.wt.mybatis.dao.ICompanyDao;
 import com.wt.mybatis.dao.IUserDao;
 import com.wt.mybatis.io.Resources;
 import com.wt.mybatis.session.SqlSession;
@@ -32,7 +33,14 @@ public class ApiTest {
 
         // 3. 测试验证
         String res = userDao.queryUserInfoById("10001");
-        logger.info("测试结果：{}", res);
+        logger.info("IUserDao->queryUserInfoById 测试结果：{}", res);
+
+        String queryAllUsers = userDao.queryAllUsers();
+        logger.info("IUserDao->queryAllUsers 测试结果：{}", queryAllUsers);
+
+        // 2. 获取映射器对象
+        ICompanyDao companyDao = sqlSession.getMapper(ICompanyDao.class);
+        logger.info("companyDao 测试结果：{}", res);
     }
 
 }

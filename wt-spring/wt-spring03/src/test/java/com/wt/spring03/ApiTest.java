@@ -25,14 +25,15 @@ public class ApiTest {
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
         beanFactory.registerBeanDefinition("userService", beanDefinition);
         // 获取bean
-        UserService userService = (UserService) beanFactory.getBean("userService","wtt5345");
+        UserService userService = (UserService) beanFactory.getBean("userService", "wtt5345");
         // 执行bean
         userService.queryUserInfo();
-        System.out.println("query01:"+userService.hashCode());
-        UserService userService_singleton = (UserService) beanFactory.getBean("userService","wtt");
+        System.out.println("query01:" + userService.toString());
+        UserService userService_singleton = (UserService) beanFactory.getBean("userService", "wtt");
         userService_singleton.queryUserInfo();
-        System.out.println("query02:"+userService_singleton.hashCode());
-
+        System.out.println("query02:" + userService_singleton.toString());
+        UserService userServiceNoArgs = (UserService) beanFactory.getBean("userService", "wtt5345");
+        System.out.println("userServiceNoArgs:" + userServiceNoArgs.toString());
     }
 
     @Test
@@ -45,7 +46,8 @@ public class ApiTest {
                 return super.hashCode();
             }
         });
-        Object obj = enhancer.create(new Class[]{String.class}, new Object[]{"小王哥"});
+//        Object obj = enhancer.create();
+        Object obj = enhancer.create(new Class[]{String.class}, new String[]{"小白"});
         System.out.println(obj);
     }
 

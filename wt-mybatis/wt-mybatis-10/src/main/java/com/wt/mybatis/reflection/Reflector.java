@@ -275,7 +275,7 @@ public class Reflector {
             if (!currentMethod.isBridge()) {
                 //取得签名
                 String signature = getSignature(currentMethod);
-                // check to see if the method is already known
+                // check to see if the method is already knownmatrx
                 // if it is known, then an extended class must have
                 // overridden a method
                 if (!uniqueMethods.containsKey(signature)) {
