@@ -30,6 +30,15 @@ public abstract class AbstractApplicationContext extends
         beanFactory.preInstantiateSingletons();
     }
 
+    @Override
+    public void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
+    }
+
+    @Override
+    public void close() {
+        getBeanFactory().destroySingletons();
+    }
 
     protected abstract ConfigurableListableBeanFactory getBeanFactory();
 
