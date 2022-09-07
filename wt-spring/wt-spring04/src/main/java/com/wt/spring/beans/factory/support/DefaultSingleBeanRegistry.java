@@ -19,7 +19,7 @@ public class DefaultSingleBeanRegistry implements SingleBeanRegistry {
         return singleObjects.get(beanName);
     }
 
-    protected void addSingle(String beanName, Object beanDefinition) {
-        singleObjects.put(beanName, beanDefinition);
+    protected void addSingle(String beanName, Object bean) {
+        singleObjects.put(beanName, bean);
     }
 }

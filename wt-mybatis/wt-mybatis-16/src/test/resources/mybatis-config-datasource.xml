@@ -9,6 +9,7 @@
             <property name="test00" value="100"/>
             <property name="test01" value="200"/>
         </plugin>
+        <plugin interceptor="com.wt.test.plugin.PageHelperPlugin"></plugin>
     </plugins>
 
     <environments default="development">

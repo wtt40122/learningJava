@@ -18,14 +18,14 @@ public class Invocation {
     // 调用的参数
     private Object[] args;
 
+    public Object getTarget() {
+        return target;
+    }
+
     public Invocation(Object target, Method method, Object[] args) {
         this.target = target;
         this.method = method;
         this.args = args;
-    }
-
-    public Object getTarget() {
-        return target;
     }
 
     public Method getMethod() {

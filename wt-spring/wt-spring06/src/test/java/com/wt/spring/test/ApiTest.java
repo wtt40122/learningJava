@@ -25,11 +25,11 @@ public class ApiTest {
 
 //        beanDefinitionReader.loadBeanDefinitions("classpath:spring.xml");
         beanDefinitionReader.loadBeanDefinitions("classpath:springPostProcessor.xml");
-//        BeanFactoryPostProcessor beanFactoryPostProcessor = new MyBeanFactoryPostProcessor();
+        BeanFactoryPostProcessor beanFactoryPostProcessor = new MyBeanFactoryPostProcessor();
 //        beanFactoryPostProcessor.postProcessBeanFactory(beanFactory);
-//
-//        BeanPostProcessor beanPostProcessor = new MyBeanPostProcessor();
-//        beanFactory.addBeanPostProcessor(beanPostProcessor);
+
+        BeanPostProcessor beanPostProcessor = new MyBeanPostProcessor();
+        beanFactory.addBeanPostProcessor(beanPostProcessor);
 
         UserService userService = beanFactory.getBean("userService", UserService.class);
         String result = userService.queryUserInfo();

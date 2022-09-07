@@ -19,6 +19,7 @@
         <module>wt-spring04</module>
         <module>wt-spring05</module>
         <module>wt-spring06</module>
+        <module>wt-spring07</module>
     </modules>
 
     <properties>

@@ -36,7 +36,7 @@ public class ApiTest {
         beanFactory.registerBeanDefinition("userService", beanDefinition);
 
         UserService userService = (UserService) beanFactory.getBean("userService");
-        userService.queryUserInfo();
+        System.out.println(userService.queryUserInfo());
     }
 
     private DefaultResourceLoader resourceLoader;
