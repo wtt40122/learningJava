@@ -1,14 +1,20 @@
 package com.wt.spring.test08.bean;
 
-import com.wt.spring.beans.factory.DisposableBean;
-import com.wt.spring.beans.factory.InitializingBean;
+import com.wt.spring.beans.BeansException;
+import com.wt.spring.beans.factory.*;
+import com.wt.spring.context.ApplicationContext;
+import com.wt.spring.context.ApplicationContextAware;
 
 /**
  * @author: wtt
  * @date: 2022/9/4 19:12
  * @description:
  */
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements InitializingBean, DisposableBean,
+        BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
+
+    private ApplicationContext applicationContext;
+    private BeanFactory beanFactory;
 
     private String uId;
     private String company;
@@ -61,4 +67,31 @@ public class UserService implements InitializingBean, DisposableBean {
         this.userDao = userDao;
     }
 
+    @Override
+    public void setBeanName(String name) throws BeansException {
+        System.out.println("Bean Name is：" + name);
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader beanClassLoader) throws BeansException {
+        System.out.println("ClassLoader：" + beanClassLoader);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
 }

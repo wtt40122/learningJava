@@ -1,5 +1,6 @@
 package com.wt.spring.beans.factory.support;
 
+import cn.hutool.core.util.ClassUtil;
 import com.wt.spring.beans.BeansException;
 import com.wt.spring.beans.factory.config.BeanDefinition;
 import com.wt.spring.beans.factory.config.BeanPostProcessor;
@@ -15,6 +16,8 @@ import java.util.List;
  */
 public abstract class AbstractBeanFactory extends DefaultSingleBeanRegistry
         implements ConfigurableBeanFactory {
+
+    private ClassLoader beanClassLoader = ClassUtil.getClassLoader();
 
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
@@ -53,9 +56,14 @@ public abstract class AbstractBeanFactory extends DefaultSingleBeanRegistry
         return beanPostProcessors;
     }
 
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader;
+    }
+
     protected abstract Object createBean(String name,
                                          BeanDefinition beanDefinition,
                                          Object[] args) throws BeansException;
 
     protected abstract BeanDefinition getBeanDefinition(String name) throws BeansException;
+
 }

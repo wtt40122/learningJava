@@ -56,6 +56,19 @@ public class ApiTest {
         System.out.println("result:" + userService.queryUserInfo());
     }
 
+    @Test
+    public void test_xml_aware() {
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("result:" + result);
+        System.out.println("applicationContextAware:" + userService.getApplicationContext());
+        System.out.println("beanFactoryAware:" + userService.getBeanFactory());
+    }
+
 
     @Test
     public void test_hook() {
