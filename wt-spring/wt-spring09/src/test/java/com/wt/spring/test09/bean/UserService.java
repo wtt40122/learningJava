@@ -20,6 +20,15 @@ public class UserService implements InitializingBean, DisposableBean,
     private String company;
     private String location;
     private UserDao userDao;
+    private IUserDao iUserDao;
+
+    public IUserDao getiUserDao() {
+        return iUserDao;
+    }
+
+    public void setiUserDao(IUserDao iUserDao) {
+        this.iUserDao = iUserDao;
+    }
 
     @Override
     public void destroy() throws Exception {
@@ -32,7 +41,7 @@ public class UserService implements InitializingBean, DisposableBean,
     }
 
     public String queryUserInfo() {
-        return userDao.queryUserName(uId) + "," + company + "," + location;
+        return userDao.queryUserName(uId) + "," + company + "," + location + "," + iUserDao.queryUserName(uId);
     }
 
     public String getuId() {

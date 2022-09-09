@@ -9,6 +9,7 @@ import com.wt.spring.test09.bean.UserService;
 import com.wt.spring.test09.common.MyBeanFactoryPostProcessor;
 import com.wt.spring.test09.common.MyBeanPostProcessor;
 import org.junit.Test;
+import org.openjdk.jol.info.ClassLayout;
 
 /**
  * @author: wtt
@@ -67,6 +68,33 @@ public class ApiTest {
         System.out.println("result:" + result);
         System.out.println("applicationContextAware:" + userService.getApplicationContext());
         System.out.println("beanFactoryAware:" + userService.getBeanFactory());
+    }
+
+    @Test
+    public void test_prototype() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService01 = applicationContext.getBean("userService", UserService.class);
+        UserService userService02 = applicationContext.getBean("userService", UserService.class);
+
+        System.out.println(userService01);
+        System.out.println(userService02);
+
+        // 打印16进制hash
+        System.out.println(userService01 + " 十六进制哈希:" + Integer.toHexString(userService01.hashCode()));
+        System.out.println(ClassLayout.parseInstance(userService01).toPrintable());
+    }
+
+    @Test
+    public void test_factory_bean() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        System.out.println("result:" + userService.queryUserInfo());
     }
 
 

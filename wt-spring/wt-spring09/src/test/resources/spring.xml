@@ -6,11 +6,14 @@
     <bean id="userDao" class="com.wt.spring.test09.bean.UserDao"
           init-method="initDataMethod" destroy-method="destroyDataMethod"/>
 
-    <bean id="userService" class="com.wt.spring.test09.bean.UserService">
+    <bean id="userService" class="com.wt.spring.test09.bean.UserService" scope="scope">
         <property name="uId" value="10002"/>
         <property name="company" value="腾讯"/>
         <property name="location" value="深圳"/>
         <property name="userDao" ref="userDao"/>
+        <property name="iUserDao" ref="proxyUserDao"/>
     </bean>
+
+    <bean id="proxyUserDao" class="com.wt.spring.test09.bean.ProxyBeanFactory"/>
 
 </beans>

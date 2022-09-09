@@ -4,9 +4,10 @@ import com.wt.spring.beans.BeansException;
 import com.wt.spring.beans.factory.DisposableBean;
 import com.wt.spring.beans.factory.config.SingleBeanRegistry;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author: wtt
@@ -15,8 +16,10 @@ import java.util.Set;
  */
 public class DefaultSingleBeanRegistry implements SingleBeanRegistry {
 
-    private Map<String, Object> singleObjects = new HashMap<>();
-    private final Map<String, DisposableBean> disposableBeans = new HashMap<>();
+    protected static final Object NULL_OBJECT = new Object();
+
+    private Map<String, Object> singleObjects = new ConcurrentHashMap<>();
+    private final Map<String, DisposableBean> disposableBeans = new LinkedHashMap<>();
 
     @Override
     public Object getSingle(String beanName) {
