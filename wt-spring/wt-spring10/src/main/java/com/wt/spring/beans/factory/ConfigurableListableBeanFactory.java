@@ -12,7 +12,8 @@ import com.wt.spring.beans.factory.config.ConfigurableBeanFactory;
  * @description
  * @date 2022/9/3 17:19
  */
-public interface ConfigurableListableBeanFactory extends ListableBeanFactory, AutowireCapableBeanFactory, ConfigurableBeanFactory {
+public interface ConfigurableListableBeanFactory extends ListableBeanFactory,
+        AutowireCapableBeanFactory, ConfigurableBeanFactory {
 
     BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 

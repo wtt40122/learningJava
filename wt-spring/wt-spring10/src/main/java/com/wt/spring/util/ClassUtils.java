@@ -22,4 +22,12 @@ public class ClassUtils {
         }
         return classLoader;
     }
+
+    public static boolean isCglibProxyClass(Class<?> clazz) {
+        return null != clazz && isCglibProxyClassName(clazz.getName());
+    }
+
+    public static boolean isCglibProxyClassName(String clasName) {
+        return null != clasName && clasName.contains("$$");
+    }
 }

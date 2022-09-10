@@ -15,5 +15,9 @@
     </bean>
 
     <bean id="proxyUserDao" class="com.wt.spring.test10.bean.ProxyBeanFactory"/>
+    <bean class="com.wt.spring.test10.event.CustomEventListener"/>
+    <bean class="com.wt.spring.test10.event.ContextClosedEventListener"/>
+    <bean class="com.wt.spring.test10.event.ContextRefreshedEventListener"/>
+    <bean class="com.wt.spring.test10.event.ApplicationContextEventListener"/>
 
 </beans>

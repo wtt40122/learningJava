@@ -8,6 +8,7 @@ import com.wt.spring.context.support.ClassPathXmlApplicationContext;
 import com.wt.spring.test10.bean.UserService;
 import com.wt.spring.test10.common.MyBeanFactoryPostProcessor;
 import com.wt.spring.test10.common.MyBeanPostProcessor;
+import com.wt.spring.test10.event.CustomEvent;
 import org.junit.Test;
 import org.openjdk.jol.info.ClassLayout;
 
@@ -95,6 +96,15 @@ public class ApiTest {
 
         UserService userService = applicationContext.getBean("userService", UserService.class);
         System.out.println("result:" + userService.queryUserInfo());
+    }
+
+    @Test
+    public void test_event() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.publishEvent(new CustomEvent(applicationContext, 1232424324234L, "我成功了"));
+
+        applicationContext.registerShutdownHook();
     }
 
 

@@ -8,4 +8,6 @@ package com.wt.spring.beans.factory.config;
 public interface SingleBeanRegistry {
 
     Object getSingle(String beanName);
+
+    void registerSingleton(String beanName, Object singletonObject);
 }
