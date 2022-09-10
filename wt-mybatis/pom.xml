@@ -28,6 +28,7 @@
         <module>wt-mybatis-16</module>
         <module>wt-mybatis-17</module>
         <module>wt-mybatis-18</module>
+        <module>wt-spring11</module>
     </modules>
 
     <artifactId>wt-mybatis</artifactId>

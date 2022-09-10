@@ -1,14 +1,14 @@
-package com.wt.spring.test10;
+package com.wt.spring.test11;
 
 import com.wt.spring.beans.factory.config.BeanFactoryPostProcessor;
 import com.wt.spring.beans.factory.config.BeanPostProcessor;
 import com.wt.spring.beans.factory.support.DefaultListableBeanFactory;
 import com.wt.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.wt.spring.context.support.ClassPathXmlApplicationContext;
-import com.wt.spring.test10.bean.UserService;
-import com.wt.spring.test10.common.MyBeanFactoryPostProcessor;
-import com.wt.spring.test10.common.MyBeanPostProcessor;
-import com.wt.spring.test10.event.CustomEvent;
+import com.wt.spring.test11.bean.UserService;
+import com.wt.spring.test11.common.MyBeanFactoryPostProcessor;
+import com.wt.spring.test11.common.MyBeanPostProcessor;
+import com.wt.spring.test11.event.CustomEvent;
 import org.junit.Test;
 import org.openjdk.jol.info.ClassLayout;
 

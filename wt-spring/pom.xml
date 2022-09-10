@@ -23,6 +23,7 @@
         <module>wt-spring08</module>
         <module>wt-spring09</module>
         <module>wt-spring10</module>
+        <module>wt-spring11</module>
     </modules>
 
     <properties>
