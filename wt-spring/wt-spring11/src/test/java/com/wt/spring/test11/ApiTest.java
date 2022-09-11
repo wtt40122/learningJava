@@ -1,11 +1,19 @@
 package com.wt.spring.test11;
 
+import com.wt.spring.aop.AdvisedSupported;
+import com.wt.spring.aop.TargetSource;
+import com.wt.spring.aop.aspect.AspectJExpressionPointCut;
+import com.wt.spring.aop.framework.Cglib2AopProxy;
+import com.wt.spring.aop.framework.JdkDynamicAopProxy;
 import com.wt.spring.beans.factory.config.BeanFactoryPostProcessor;
 import com.wt.spring.beans.factory.config.BeanPostProcessor;
 import com.wt.spring.beans.factory.support.DefaultListableBeanFactory;
 import com.wt.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.wt.spring.context.support.ClassPathXmlApplicationContext;
+import com.wt.spring.test11.bean.BookService;
+import com.wt.spring.test11.bean.IBookService;
 import com.wt.spring.test11.bean.UserService;
+import com.wt.spring.test11.bean.UserServiceInterceptor;
 import com.wt.spring.test11.common.MyBeanFactoryPostProcessor;
 import com.wt.spring.test11.common.MyBeanPostProcessor;
 import com.wt.spring.test11.event.CustomEvent;
@@ -108,6 +116,21 @@ public class ApiTest {
         applicationContext.registerShutdownHook();
         TimeUnit.MINUTES.sleep(1l);
         applicationContext.publishEvent(new CustomEvent(applicationContext, 325435L, "我又来了"));
+    }
+
+    @Test
+    public void test_dynamic() {
+        IBookService bookService = new BookService();
+        AdvisedSupported advisedSupported = new AdvisedSupported();
+        advisedSupported.setTargetSource(new TargetSource(bookService));
+        advisedSupported.setMethodInterceptor(new UserServiceInterceptor());
+        advisedSupported.setMethodMatcher(new AspectJExpressionPointCut("execution(* com.wt.spring.test11.bean.UserService.*(..))"));
+
+        IBookService proxy_jdk = (IBookService) new JdkDynamicAopProxy(advisedSupported).getProxy();
+        System.out.println("测试结果:" + proxy_jdk.queryBookInfo());
+
+        IBookService proxy_cglib = (IBookService) new Cglib2AopProxy(advisedSupported).getProxy();
+        System.out.println("测试结果:" + proxy_cglib.register("菜菜"));
     }
 
 
