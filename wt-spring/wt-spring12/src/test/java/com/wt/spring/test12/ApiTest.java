@@ -133,6 +133,14 @@ public class ApiTest {
         System.out.println("测试结果:" + proxy_cglib.register("菜菜"));
     }
 
+    @Test
+    public void test_aop() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring.xml");
+        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
+        System.out.println("测试结果：" + bookService.queryBookInfo());
+    }
+
 
     @Test
     public void test_hook() {

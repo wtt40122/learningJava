@@ -14,10 +14,26 @@
         <property name="iUserDao" ref="proxyUserDao"/>
     </bean>
 
+    <bean class="com.wt.spring.test12.bean.BookService"/>
+
     <bean id="proxyUserDao" class="com.wt.spring.test12.bean.ProxyBeanFactory"/>
     <bean class="com.wt.spring.test12.event.CustomEventListener"/>
     <bean class="com.wt.spring.test12.event.ContextClosedEventListener"/>
     <bean class="com.wt.spring.test12.event.ContextRefreshedEventListener"/>
     <bean class="com.wt.spring.test12.event.ApplicationContextEventListener"/>
+
+    <bean class="com.wt.spring.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <bean id="beforeAdvice" class="com.wt.spring.test12.bean.UserServiceBeforeAdvice"/>
+
+    <bean id="methodInterceptor" class="com.wt.spring.aop.framework.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>
+
+    <bean id="pointcutAdvisor" class="com.wt.spring.aop.aspect.AspectJExpressionPointCutAdvisor">
+        <property name="expression" value="execution(* com.wt.spring.test12.bean.IBookService.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+
 
 </beans>
