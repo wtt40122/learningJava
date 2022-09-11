@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <!--    <bean id="userDao" class="com.wt.spring.test08.bean.UserDao"/>-->
+
+    <bean id="userDao" class="com.wt.spring.test12.bean.UserDao"
+          init-method="initDataMethod" destroy-method="destroyDataMethod"/>
+
+    <bean id="userService" class="com.wt.spring.test12.bean.UserService" scope="scope">
+        <property name="uId" value="10002"/>
+        <property name="company" value="腾讯"/>
+        <property name="location" value="深圳"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="iUserDao" ref="proxyUserDao"/>
+    </bean>
+
+    <bean id="proxyUserDao" class="com.wt.spring.test12.bean.ProxyBeanFactory"/>
+    <bean class="com.wt.spring.test12.event.CustomEventListener"/>
+    <bean class="com.wt.spring.test12.event.ContextClosedEventListener"/>
+    <bean class="com.wt.spring.test12.event.ContextRefreshedEventListener"/>
+    <bean class="com.wt.spring.test12.event.ApplicationContextEventListener"/>
+
+</beans>
