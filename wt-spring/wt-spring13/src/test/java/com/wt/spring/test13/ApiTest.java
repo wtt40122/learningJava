@@ -10,10 +10,7 @@ import com.wt.spring.beans.factory.config.BeanPostProcessor;
 import com.wt.spring.beans.factory.support.DefaultListableBeanFactory;
 import com.wt.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.wt.spring.context.support.ClassPathXmlApplicationContext;
-import com.wt.spring.test13.bean.BookService;
-import com.wt.spring.test13.bean.IBookService;
-import com.wt.spring.test13.bean.UserService;
-import com.wt.spring.test13.bean.UserServiceInterceptor;
+import com.wt.spring.test13.bean.*;
 import com.wt.spring.test13.common.MyBeanFactoryPostProcessor;
 import com.wt.spring.test13.common.MyBeanPostProcessor;
 import com.wt.spring.test13.event.CustomEvent;
@@ -139,6 +136,22 @@ public class ApiTest {
                 ClassPathXmlApplicationContext("classpath:spring.xml");
         IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
         System.out.println("测试结果：" + bookService.queryBookInfo());
+    }
+
+    @Test
+    public void test_property() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring-property.xml");
+        ISchoolService schoolService = applicationContext.getBean("schoolService", ISchoolService.class);
+        System.out.println("测试结果:" + schoolService);
+    }
+
+    @Test
+    public void test_scan() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring-scan.xml");
+        ISchoolService schoolService = applicationContext.getBean("schoolService", ISchoolService.class);
+        System.out.println("测试结果：" + schoolService.queryUserInfo());
     }
 
 
