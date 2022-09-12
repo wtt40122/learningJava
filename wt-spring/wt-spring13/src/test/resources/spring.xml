@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <!--    <bean id="userDao" class="com.wt.spring.test08.bean.UserDao"/>-->
+
+    <bean id="userDao" class="com.wt.spring.test13.bean.UserDao"
+          init-method="initDataMethod" destroy-method="destroyDataMethod"/>
+
+    <bean id="userService" class="com.wt.spring.test13.bean.UserService" scope="scope">
+        <property name="uId" value="10002"/>
+        <property name="company" value="腾讯"/>
+        <property name="location" value="深圳"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="iUserDao" ref="proxyUserDao"/>
+    </bean>
+
+    <bean class="com.wt.spring.test13.bean.BookService"/>
+
+    <bean id="proxyUserDao" class="com.wt.spring.test13.bean.ProxyBeanFactory"/>
+    <bean class="com.wt.spring.test13.event.CustomEventListener"/>
+    <bean class="com.wt.spring.test13.event.ContextClosedEventListener"/>
+    <bean class="com.wt.spring.test13.event.ContextRefreshedEventListener"/>
+    <bean class="com.wt.spring.test13.event.ApplicationContextEventListener"/>
+
+    <bean class="com.wt.spring.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <bean id="beforeAdvice" class="com.wt.spring.test13.bean.UserServiceBeforeAdvice"/>
+
+    <bean id="methodInterceptor" class="com.wt.spring.aop.framework.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>
+
+    <bean id="pointcutAdvisor" class="com.wt.spring.aop.aspect.AspectJExpressionPointCutAdvisor">
+        <property name="expression" value="execution(* com.wt.spring.test13.bean.IBookService.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+
+
+</beans>
