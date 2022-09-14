@@ -163,6 +163,14 @@ public class ApiTest {
     }
 
     @Test
+    public void test_autoProxy() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-aop.xml");
+        IBookService bookService = applicationContext.getBean("bookService", IBookService.class);
+        System.out.println("测试结果：" + bookService.queryBookInfo());
+    }
+
+
+    @Test
     public void test_hook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("close")));
     }

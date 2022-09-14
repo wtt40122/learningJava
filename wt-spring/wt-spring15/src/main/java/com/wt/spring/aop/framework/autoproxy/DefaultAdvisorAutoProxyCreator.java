@@ -30,19 +30,15 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
     }
 
     @Override
-    public Object postProcessorBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
     }
 
     @Override
-    public Object postProcessorAfterInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    @Override
-    public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        Class<?> beanClass = bean.getClass();
         if (isInfrastructureClass(beanClass)) {
-            return null;
+            return bean;
         }
         Collection<AspectJExpressionPointCutAdvisor> advisors = beanFactory.getBeansOfType(AspectJExpressionPointCutAdvisor.class).values();
         for (AspectJExpressionPointCutAdvisor advisor : advisors) {
@@ -51,19 +47,24 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
                 continue;
             }
             AdvisedSupported advisedSupported = new AdvisedSupported();
-            TargetSource targetSource = null;
-            try {
-                targetSource = new TargetSource(beanClass.getDeclaredConstructor().newInstance());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            TargetSource targetSource = new TargetSource(bean);
             advisedSupported.setTargetSource(targetSource);
             advisedSupported.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
             advisedSupported.setMethodMatcher(advisor.getPointCut().getMethodMatcher());
             advisedSupported.setProxyTargetClass(false);
             return new ProxyFactory(advisedSupported).getProxy();
         }
+        return bean;
+    }
+
+    @Override
+    public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
         return null;
+    }
+
+    @Override
+    public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
+        return true;
     }
 
     @Override

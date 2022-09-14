@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class MyBeanPostProcessor implements BeanPostProcessor {
     @Override
-    public Object postProcessorBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if ("userService".equals(beanName)) {
             UserService userService = (UserService) bean;
             userService.setLocation("北京市昌平区");
@@ -22,7 +22,7 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
     }
 
     @Override
-    public Object postProcessorAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (Objects.equals("userService", beanName)) {
             System.out.println("我在初始化方法后设置了值");
         }

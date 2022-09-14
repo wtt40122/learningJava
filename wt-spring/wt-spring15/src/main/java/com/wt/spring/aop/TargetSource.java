@@ -1,5 +1,7 @@
 package com.wt.spring.aop;
 
+import com.wt.spring.util.ClassUtils;
+
 /**
  * @author wtt
  * @version 1.0
@@ -15,7 +17,10 @@ public class TargetSource {
     }
 
     public Class<?>[] getTargetClass() {
-        return target.getClass().getInterfaces();
+        Class<?> clazz = target.getClass();
+        clazz = ClassUtils.isCglibProxyClass(clazz) ? clazz.getSuperclass() : clazz;
+        return clazz.getInterfaces();
+
     }
 
     public Object getTarget() {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bookService" class="com.wt.spring.test15.bean.BookService">
+        <property name="token" value="RejDlI78hu223Opo983Ds"/>
+    </bean>
+
+    <bean class="com.wt.spring.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <bean id="beforeAdvice" class="com.wt.spring.test15.bean.UserServiceBeforeAdvice"/>
+
+    <bean id="methodInterceptor" class="com.wt.spring.aop.framework.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>
+
+    <bean id="pointcutAdvisor" class="com.wt.spring.aop.aspect.AspectJExpressionPointCutAdvisor">
+        <property name="expression" value="execution(* com.wt.spring.test15.bean.IBookService.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+
+</beans>

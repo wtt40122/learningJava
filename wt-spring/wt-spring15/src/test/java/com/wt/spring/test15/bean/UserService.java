@@ -21,6 +21,15 @@ public class UserService implements InitializingBean, DisposableBean,
     private String location;
     private UserDao userDao;
     private IUserDao iUserDao;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public IUserDao getiUserDao() {
         return iUserDao;
