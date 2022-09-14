@@ -154,6 +154,13 @@ public class ApiTest {
         System.out.println("测试结果：" + schoolService.queryUserInfo());
     }
 
+    @Test
+    public void test_annotation() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring-annotation.xml");
+        ISchoolService schoolService = applicationContext.getBean("schoolService", ISchoolService.class);
+        System.out.println("测试结果：" + schoolService.queryUserInfo());
+    }
 
     @Test
     public void test_hook() {

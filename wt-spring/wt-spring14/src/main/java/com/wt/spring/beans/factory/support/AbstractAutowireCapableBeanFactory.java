@@ -33,7 +33,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
         Object bean = null;
         try {
-
             // 判断是否需要返回代理Bean对象
             bean = resolveBeforeInstantiation(beanName, beanDefinition);
             if (null != bean) {
@@ -41,6 +40,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends
             }
             // bean = beanDefinition.getBeanClass().newInstance();
             bean = createBeanInstance(beanDefinition, beanName, args);
+            // 在设置 Bean属性之前，允许 BeanPostProcessor修改属性值
+            applyBeanPostProcessorsApplyingPropertyValues(beanName, bean, beanDefinition);
             // bean 属性填充
             applyPropertyValues(beanName, bean, beanDefinition);
             // 执行bean的初始化方法和BeanPostProcessor的前置和后置方法
@@ -55,6 +56,20 @@ public abstract class AbstractAutowireCapableBeanFactory extends
             addSingle(beanName, bean);
         }
         return bean;
+    }
+
+    private void applyBeanPostProcessorsApplyingPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
+        getBeanPostProcessors().forEach(beanPostProcessor -> {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor)
+                        .postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
+                if (null != pvs) {
+                    for (PropertyValue propertyValue : pvs.getPropertyValues()) {
+                        beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
+                    }
+                }
+            }
+        });
     }
 
     private Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {

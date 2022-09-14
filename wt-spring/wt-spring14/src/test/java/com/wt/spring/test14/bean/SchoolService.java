@@ -1,5 +1,7 @@
 package com.wt.spring.test14.bean;
 
+import com.wt.spring.beans.factory.annotation.Autowired;
+import com.wt.spring.beans.factory.annotation.Value;
 import com.wt.spring.stereotype.Component;
 
 import java.util.Random;
@@ -13,7 +15,11 @@ import java.util.Random;
 @Component("schoolService")
 public class SchoolService implements ISchoolService {
 
+    @Value("${token}")
     private String token;
+
+    @Autowired
+    private UserDao userDao;
 
     public String getToken() {
         return token;
@@ -30,7 +36,7 @@ public class SchoolService implements ISchoolService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return "小家伙，100001，深圳->" + token;
+        return "小家伙，100001，深圳->" + token + "-->" + userDao.queryUserName("10002");
 
     }
 

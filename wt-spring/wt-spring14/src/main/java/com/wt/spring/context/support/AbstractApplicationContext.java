@@ -31,7 +31,6 @@ public abstract class AbstractApplicationContext extends
         refreshBeanFactory();
         // 2.获取beanFactory
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
-
         //3.添加ApplicationContextAwareProcessor,
         // 让继承自 ApplicationContextAware的Bean对象能感知到所属的ApplicationContext
         beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
@@ -122,6 +121,11 @@ public abstract class AbstractApplicationContext extends
     @Override
     public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
         return getBeanFactory().getBeansOfType(type);
+    }
+
+    @Override
+    public <T> T getBean(Class<T> requiredType) throws BeansException {
+        return getBeanFactory().getBean(requiredType);
     }
 
     @Override

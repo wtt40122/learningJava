@@ -4,6 +4,7 @@ import com.wt.spring.aop.*;
 import com.wt.spring.aop.aspect.AspectJExpressionPointCutAdvisor;
 import com.wt.spring.aop.framework.ProxyFactory;
 import com.wt.spring.beans.BeansException;
+import com.wt.spring.beans.PropertyValues;
 import com.wt.spring.beans.factory.BeanFactory;
 import com.wt.spring.beans.factory.BeanFactoryAware;
 import com.wt.spring.beans.factory.config.InstantiationAwareBeanPostProcessor;
@@ -63,6 +64,11 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
             return new ProxyFactory(advisedSupported).getProxy();
         }
         return null;
+    }
+
+    @Override
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName) throws BeansException {
+        return pvs;
     }
 
     private boolean isInfrastructureClass(Class<?> beanClass) {

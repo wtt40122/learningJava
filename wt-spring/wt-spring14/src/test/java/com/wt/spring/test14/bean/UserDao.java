@@ -1,5 +1,8 @@
 package com.wt.spring.test14.bean;
 
+import com.wt.spring.beans.factory.InitializingBean;
+import com.wt.spring.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +12,8 @@ import java.util.Map;
  * @description
  * @date 2022/9/3 15:16
  */
-public class UserDao {
+@Component
+public class UserDao implements InitializingBean {
     private static Map<String, String> hashMap = new HashMap<>();
 
     public void initDataMethod() {
@@ -28,4 +32,8 @@ public class UserDao {
         return hashMap.get(uId);
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        initDataMethod();
+    }
 }
