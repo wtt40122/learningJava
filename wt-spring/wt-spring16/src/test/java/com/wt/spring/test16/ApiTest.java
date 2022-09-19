@@ -1,6 +1,6 @@
 package com.wt.spring.test16;
 
-import com.wt.spring.aop.AdvisedSupported;
+import com.wt.spring.aop.AdvisedSupport;
 import com.wt.spring.aop.TargetSource;
 import com.wt.spring.aop.aspect.AspectJExpressionPointCut;
 import com.wt.spring.aop.framework.Cglib2AopProxy;
@@ -10,6 +10,8 @@ import com.wt.spring.beans.factory.config.BeanPostProcessor;
 import com.wt.spring.beans.factory.support.DefaultListableBeanFactory;
 import com.wt.spring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.wt.spring.context.support.ClassPathXmlApplicationContext;
+import com.wt.spring.test16.bean.A;
+import com.wt.spring.test16.bean.B;
 import com.wt.spring.test16.bean.*;
 import com.wt.spring.test16.common.MyBeanFactoryPostProcessor;
 import com.wt.spring.test16.common.MyBeanPostProcessor;
@@ -118,7 +120,7 @@ public class ApiTest {
     @Test
     public void test_dynamic() {
         IBookService bookService = new BookService();
-        AdvisedSupported advisedSupported = new AdvisedSupported();
+        AdvisedSupport advisedSupported = new AdvisedSupport();
         advisedSupported.setTargetSource(new TargetSource(bookService));
         advisedSupported.setMethodInterceptor(new UserServiceInterceptor());
         advisedSupported.setMethodMatcher(new AspectJExpressionPointCut("execution(* com.wt.spring.test16.bean.UserService.*(..))"));
@@ -169,6 +171,27 @@ public class ApiTest {
         System.out.println("测试结果：" + bookService.queryBookInfo());
     }
 
+    @Test
+    public void test_circle() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring-circle.xml");
+        Husband husband = applicationContext.getBean("husband", Husband.class);
+        Wife wife = applicationContext.getBean("wife", Wife.class);
+        System.out.println("老公的媳妇：" + husband.queryWife());
+        System.out.println("媳妇的老公：" + wife.queryHusband());
+    }
+
+    @Test
+    public void test_circle_simple() {
+        ClassPathXmlApplicationContext applicationContext = new
+                ClassPathXmlApplicationContext("classpath:spring-circle-simple.xml");
+        A a = applicationContext.getBean("a", A.class);
+        B b = applicationContext.getBean("b", B.class);
+        C c = applicationContext.getBean("c", C.class);
+        System.out.println("result->A：" + a.query());
+        System.out.println("result->B：" + b.query());
+        System.out.println("result->C：" + c.query());
+    }
 
     @Test
     public void test_hook() {

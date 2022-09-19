@@ -56,7 +56,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport
     }
 
     protected <T> T doGetBean(final String name, final Object[] args) {
-        Object sharedInstance = getSingle(name);
+        Object sharedInstance = getSingleton(name);
         if (null != sharedInstance) {
             return (T) getObjectForBeanInstance(sharedInstance, name);
         }

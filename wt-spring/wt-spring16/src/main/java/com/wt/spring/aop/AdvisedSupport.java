@@ -8,7 +8,7 @@ import org.aopalliance.intercept.MethodInterceptor;
  * @description
  * @date 2022/9/10 17:13
  */
-public class AdvisedSupported {
+public class AdvisedSupport {
 
     private boolean proxyTargetClass = false;
 

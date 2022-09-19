@@ -1,6 +1,6 @@
 package com.wt.spring.aop.framework;
 
-import com.wt.spring.aop.AdvisedSupported;
+import com.wt.spring.aop.AdvisedSupport;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -15,9 +15,9 @@ import java.lang.reflect.Method;
  */
 public class Cglib2AopProxy implements AopProxy {
 
-    private final AdvisedSupported advised;
+    private final AdvisedSupport advised;
 
-    public Cglib2AopProxy(AdvisedSupported advised) {
+    public Cglib2AopProxy(AdvisedSupport advised) {
         this.advised = advised;
     }
 
@@ -32,16 +32,15 @@ public class Cglib2AopProxy implements AopProxy {
 
     private static class DynamicAdvisedInterceptor implements MethodInterceptor {
 
-        private final AdvisedSupported advised;
+        private final AdvisedSupport advised;
 
-        private DynamicAdvisedInterceptor(AdvisedSupported advised) {
+        public DynamicAdvisedInterceptor(AdvisedSupport advised) {
             this.advised = advised;
         }
 
         @Override
-        public Object intercept(Object obj, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-            CglibMethodInvocation methodInvocation = new
-                    CglibMethodInvocation(advised.getTargetSource().getTarget(), method, args, methodProxy);
+        public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+            CglibMethodInvocation methodInvocation = new CglibMethodInvocation(advised.getTargetSource().getTarget(), method, objects, methodProxy);
             if (advised.getMethodMatcher().matches(method, advised.getTargetSource().getTarget().getClass())) {
                 return advised.getMethodInterceptor().invoke(methodInvocation);
             }
@@ -60,8 +59,9 @@ public class Cglib2AopProxy implements AopProxy {
 
         @Override
         public Object proceed() throws Throwable {
-            return methodProxy.invoke(this.target, this.arguments);
+            return this.methodProxy.invoke(this.target, this.arguments);
         }
+
     }
 
 }

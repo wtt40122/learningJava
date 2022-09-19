@@ -1,6 +1,6 @@
 package com.wt.spring.aop.framework;
 
-import com.wt.spring.aop.AdvisedSupported;
+import com.wt.spring.aop.AdvisedSupport;
 
 /**
  * @author wtt
@@ -10,9 +10,9 @@ import com.wt.spring.aop.AdvisedSupported;
  */
 public class ProxyFactory {
 
-    private AdvisedSupported advisedSupported;
+    private AdvisedSupport advisedSupported;
 
-    public ProxyFactory(AdvisedSupported advisedSupported) {
+    public ProxyFactory(AdvisedSupport advisedSupported) {
         this.advisedSupported = advisedSupported;
     }
 

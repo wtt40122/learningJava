@@ -7,7 +7,7 @@ package com.wt.spring.beans.factory.config;
  */
 public interface SingleBeanRegistry {
 
-    Object getSingle(String beanName);
+    Object getSingleton(String beanName);
 
     void registerSingleton(String beanName, Object singletonObject);
 }

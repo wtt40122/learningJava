@@ -8,5 +8,5 @@ package com.wt.spring.aop;
  */
 public interface PointCutAdvisor extends Advisor {
 
-    PointCut getPointCut();
+    PointCut getPointcut();
 }

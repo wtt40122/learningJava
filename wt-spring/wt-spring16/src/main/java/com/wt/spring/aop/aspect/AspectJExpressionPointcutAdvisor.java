@@ -10,7 +10,7 @@ import org.aopalliance.aop.Advice;
  * @description
  * @date 2022/9/11 12:08
  */
-public class AspectJExpressionPointCutAdvisor implements PointCutAdvisor {
+public class AspectJExpressionPointcutAdvisor implements PointCutAdvisor {
 
     private AspectJExpressionPointCut pointCut;
     private Advice advice;
@@ -30,7 +30,7 @@ public class AspectJExpressionPointCutAdvisor implements PointCutAdvisor {
     }
 
     @Override
-    public PointCut getPointCut() {
+    public PointCut getPointcut() {
         if (null == pointCut) {
             pointCut = new AspectJExpressionPointCut(expression);
         }
