@@ -6,6 +6,7 @@ import com.wt.spring.beans.factory.FactoryBean;
 import com.wt.spring.beans.factory.config.BeanDefinition;
 import com.wt.spring.beans.factory.config.BeanPostProcessor;
 import com.wt.spring.beans.factory.config.ConfigurableBeanFactory;
+import com.wt.spring.core.ConversionService;
 import com.wt.spring.util.StringValueResolver;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport
     private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     private final List<StringValueResolver> embeddedValueResolvers = new ArrayList<>();
+
+    private ConversionService conversionService;
 
     @Override
     public void addEmbeddedValueResolver(StringValueResolver valueResolver) {
@@ -82,6 +85,23 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport
         this.beanPostProcessors.remove(beanPostProcessor);
         this.beanPostProcessors.add(beanPostProcessor);
     }
+
+    @Override
+    public void setConversionService(ConversionService conversionService) {
+        this.conversionService = conversionService;
+    }
+
+    @Override
+    public ConversionService getConversionService() {
+        return conversionService;
+    }
+
+    @Override
+    public boolean containsBean(String name) {
+        return containsBeanDefinition(name);
+    }
+
+    protected abstract boolean containsBeanDefinition(String name);
 
     public List<BeanPostProcessor> getBeanPostProcessors() {
         return beanPostProcessors;

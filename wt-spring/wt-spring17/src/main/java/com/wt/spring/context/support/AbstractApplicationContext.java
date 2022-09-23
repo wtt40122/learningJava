@@ -8,6 +8,7 @@ import com.wt.spring.context.ApplicationEvent;
 import com.wt.spring.context.ApplicationListener;
 import com.wt.spring.context.ConfigurableApplicationContext;
 import com.wt.spring.context.event.*;
+import com.wt.spring.core.ConversionService;
 import com.wt.spring.core.io.DefaultResourceLoader;
 
 import java.util.Collection;
@@ -42,10 +43,24 @@ public abstract class AbstractApplicationContext extends
         initApplicationEventMulticaster();
         // 7.注册事件监听者
         registerListeners();
-        // 8.提前实例化单例Bean对象
-        beanFactory.preInstantiateSingletons();
+        // 8. 设置类型转换器、提前实例化单例Bean对象
+        finishBeanFactoryInitialization(beanFactory);
         // 9.发布容器刷新完成事件
         finishRefresh();
+    }
+
+    // 设置类型转换器、提前实例化单例Bean对象
+    protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
+        // 设置类型转换器
+        if (beanFactory.containsBean("conversionService")) {
+            Object conversionService = beanFactory.getBean("conversionService");
+            if (conversionService instanceof ConversionService) {
+                beanFactory.setConversionService((ConversionService) conversionService);
+            }
+        }
+
+        // 提前实例化单例Bean对象
+        beanFactory.preInstantiateSingletons();
     }
 
     private void finishRefresh() {
@@ -126,6 +141,11 @@ public abstract class AbstractApplicationContext extends
     @Override
     public <T> T getBean(Class<T> requiredType) throws BeansException {
         return getBeanFactory().getBean(requiredType);
+    }
+
+    @Override
+    public boolean containsBean(String name) {
+        return getBeanFactory().containsBean(name);
     }
 
     @Override

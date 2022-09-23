@@ -1,6 +1,7 @@
 package com.wt.spring.beans.factory.config;
 
 import com.wt.spring.beans.factory.HierarchicalBeanFactory;
+import com.wt.spring.core.ConversionService;
 import com.wt.spring.util.StringValueResolver;
 
 /**
@@ -22,4 +23,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory,
     void addEmbeddedValueResolver(StringValueResolver valueResolver);
 
     String resolveEmbeddedValue(String value);
+
+    void setConversionService(ConversionService conversionService);
+
+    ConversionService getConversionService();
 }

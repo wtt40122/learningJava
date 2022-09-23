@@ -2,11 +2,13 @@ package com.wt.spring.beans.factory.support;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.TypeUtil;
 import com.wt.spring.beans.BeansException;
 import com.wt.spring.beans.PropertyValue;
 import com.wt.spring.beans.PropertyValues;
 import com.wt.spring.beans.factory.*;
 import com.wt.spring.beans.factory.config.*;
+import com.wt.spring.core.ConversionService;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -194,6 +196,15 @@ public abstract class AbstractAutowireCapableBeanFactory extends
                 if (value instanceof BeanReference) {
                     BeanReference beanReference = (BeanReference) value;
                     value = getBean(beanReference.getBeanName());
+                } else {
+                    Class<?> sourceType = value.getClass();
+                    Class<?> targetType = (Class<?>) TypeUtil.getFieldType(bean.getClass(), name);
+                    ConversionService conversionService = getConversionService();
+                    if (null != conversionService) {
+                        if (conversionService.canConvert(sourceType, targetType)) {
+                            value = conversionService.convert(value, targetType);
+                        }
+                    }
                 }
                 BeanUtil.setFieldValue(bean, name, value);
             }
