@@ -34,6 +34,7 @@
         <module>java-jvm</module>
         <module>wt-spring</module>
         <module>wt-bytecode</module>
+        <module>source-analysis</module>
     </modules>
 
 	<parent>
