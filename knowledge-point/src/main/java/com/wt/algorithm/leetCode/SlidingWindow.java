@@ -202,6 +202,28 @@ public class SlidingWindow {
     }
 
     /**
+     * https://leetcode.cn/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/
+     *
+     * @param s
+     * @return
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        int count = 0;
+        int right = 0;
+        List<Character> characters = new LinkedList<>();
+        while (right < s.length()) {
+            if (!characters.contains(s.charAt(right))) {
+                characters.add(s.charAt(right));
+                right++;
+            } else {
+                characters.remove(0);
+            }
+            count = Math.max(count, characters.size());
+        }
+        return count;
+    }
+
+    /**
      * https://leetcode.cn/problems/longest-substring-with-at-least-k-repeating-characters/
      *
      * @param s
@@ -210,10 +232,100 @@ public class SlidingWindow {
      */
     public static int longestSubstring(String s, int k) {
         int count = 0;
-        for (int i = k - 1; i < s.length(); i++) {
-
+        int left = 0;
+        int right = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        while (right < s.length()) {
+            while (s.charAt(left) != s.charAt(right)) {
+                right++;
+            }
+            while (map.getOrDefault(s.charAt(right), 0) < k && right < s.length()) {
+                map.put(s.charAt(right), map.getOrDefault(s.charAt(right), 0) + 1);
+                right++;
+            }
+            left++;
+            map.remove(s.charAt(left));
+            count = Math.max(count, right - left);
         }
         return count;
+    }
+
+    /**
+     * https://leetcode.cn/problems/maximum-sum-of-distinct-subarrays-with-length-k/submissions/
+     * 超时
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static long maximumSubarraySum(int[] nums, int k) {
+        int left = 0;
+        int right = 0;
+        long sum = 0;
+        long sumTemp = 0;
+        List<Integer> list = new ArrayList<>();
+        while (right < nums.length) {
+            while (right - left < k) {
+                list.add(nums[right]);
+                sumTemp += nums[right];
+                right++;
+            }
+            if (list.parallelStream().distinct().count() == k) {
+                sum = Math.max(sum, sumTemp);
+            }
+            sumTemp -= nums[left];
+            list.remove(0);
+            left++;
+        }
+        return sum;
+    }
+
+    /**
+     * https://leetcode.cn/problems/maximum-sum-of-distinct-subarrays-with-length-k/submissions/
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static long maximumSubarraySum1(int[] nums, int k) {
+        int left = 0;
+        int right = 0;
+        long sum = 0;
+        long sumTemp = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        while (right < nums.length) {
+            while (right - left < k) {
+                map.put(nums[right], right);
+                sumTemp += nums[right];
+                right++;
+            }
+            if (map.keySet().size() == k) {
+                sum = Math.max(sum, sumTemp);
+            }
+            if (map.get(nums[left]) == left) {
+                map.remove(nums[left]);
+            }
+            sumTemp -= nums[left];
+            left++;
+        }
+        return sum;
+    }
+
+    public static int findLength1(int[] nums1, int[] nums2) {
+        int result = 0;
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                if (nums1[i] == nums2[j]) {
+                    int k = 1;
+                    while (i + k < nums1.length && j + k < nums2.length &&
+                            nums1[i + k] == nums2[j + k]) {
+                        k += 1;
+                    }
+                    result = Math.max(result, k);
+                }
+            }
+        }
+        return result;
     }
 
 
@@ -234,7 +346,13 @@ public class SlidingWindow {
 //        System.out.println(minimumRecolors("WBBWWBBWBW", 7));
 //        findRepeatedDnaSequences("A").stream().forEach(System.out::println);
 //        findRepeatedDnaSequences("AAAAAAAAAAAAA").stream().forEach(System.out::println);
-        System.out.println(minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
+//        System.out.println(minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
+//        System.out.println(lengthOfLongestSubstring("pwwkew"));
+//        System.out.println(longestSubstring("aaabb", 3));
+//        System.out.println(maximumSubarraySum1(new int[]{9, 9, 9, 1, 2, 3}, 3));
+//        System.out.println(maximumSubarraySum1(new int[]{4, 4, 4}, 3));
+//        System.out.println(maximumSubarraySum1(new int[]{5, 3, 3, 1, 1}, 3));
+        System.out.println(findLength1(new int[]{1, 2, 3, 2, 1}, new int[]{3, 2, 1, 4, 7}));
         ;
     }
 }
