@@ -1,5 +1,7 @@
 package com.wt.algorithm.leetCode;
 
+import java.util.Arrays;
+
 /**
  * @author wtt
  * @version 1.0
@@ -76,8 +78,55 @@ public class ArrayCode {
         return slowIndex;
     }
 
+    public static int[] sortedSquares(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = nums[i] * nums[i];
+        }
+        Arrays.sort(nums);
+        return nums;
+    }
+
+    public static int[] sortedSquaresDoublePoint(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int[] result = new int[nums.length];
+        int k = nums.length - 1;
+        while (left <= right) {
+            if (nums[left] * nums[left] < nums[right] * nums[right]) {
+                result[k] = nums[right] * nums[right];
+                right--;
+            } else {
+                result[k] = nums[left] * nums[left];
+                left++;
+            }
+            k--;
+        }
+        int succeed;
+        return result;
+    }
+
+    public static int minSubArrayLen(int target, int[] nums) {
+        int left = 0;
+        int right = 0;
+        int result = Integer.MAX_VALUE;
+        int sum = 0;
+        while (right < nums.length) {
+            sum += nums[right];
+            while (sum >= target) {
+                result = Math.min(result, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+            right++;
+        }
+        return result == Integer.MAX_VALUE ? 0 : result;
+    }
+
+
     public static void main(String[] args) {
 //        System.out.println(binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 0));
-        System.out.println(removeElement1(new int[]{-1, 3, 3, 5, 9, 12, 3}, 3));
+//        System.out.println(removeElement1(new int[]{-1, 3, 3, 5, 9, 12, 3}, 3));
+//        Arrays.stream(sortedSquaresDoublePoint(new int[]{-4, -1, 0, 3, 10})).forEach(System.out::println);
+        System.out.println(minSubArrayLen(4, new int[]{1, 4, 4}));
     }
 }
