@@ -140,12 +140,47 @@ public class ArrayCode {
         return right;
     }
 
+    public static int[] searchRange(int[] nums, int target) {
+        int[] result = new int[]{-1, -1};
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                result[0] = i;
+                for (int j = i; j < nums.length; j++) {
+                    if (nums[j] == target) {
+                        result[1] = j;
+                    }
+                }
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static int[] searchRangeBinarySearch(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int[] result = new int[]{-1, -1};
+        while (left <= right) {
+            int middle = (left + right) / 2;
+            if (nums[middle] == target) {
+                result[0] = middle;
+                result[1] = middle;
+            } else if (nums[middle] < target) {
+                left = middle + 1;
+            } else {
+                right = middle - 1;
+            }
+        }
+        return result;
+    }
+
 
     public static void main(String[] args) {
 //        System.out.println(binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 0));
 //        System.out.println(removeElement1(new int[]{-1, 3, 3, 5, 9, 12, 3}, 3));
 //        Arrays.stream(sortedSquaresDoublePoint(new int[]{-4, -1, 0, 3, 10})).forEach(System.out::println);
-        System.out.println(minSubArrayLen(4, new int[]{1, 4, 4}));
-        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2));
+//        System.out.println(minSubArrayLen(4, new int[]{1, 4, 4}));
+//        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2));
+        Arrays.stream(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)).forEach(System.out::println);
     }
 }
