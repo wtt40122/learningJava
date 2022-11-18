@@ -65,6 +65,20 @@ public class MyLinkedList {
         size--;
     }
 
+    public static ListNode reverseList(ListNode head) {
+
+        ListNode cur = head;
+        ListNode pre = null;
+        ListNode temp;
+        while (cur != null) {
+            temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
+    }
+
     public static class ListNode {
         int val;
         MyLinkedList.ListNode next;

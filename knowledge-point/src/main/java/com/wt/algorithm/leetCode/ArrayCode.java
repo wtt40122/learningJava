@@ -123,10 +123,29 @@ public class ArrayCode {
     }
 
 
+    public static int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length;
+        while (left < right) {
+            int middle = (left + right) / 2;
+            if (nums[middle] == target) {
+                return middle;
+            }
+            if (nums[middle] > target) {
+                right = middle;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return right;
+    }
+
+
     public static void main(String[] args) {
 //        System.out.println(binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 0));
 //        System.out.println(removeElement1(new int[]{-1, 3, 3, 5, 9, 12, 3}, 3));
 //        Arrays.stream(sortedSquaresDoublePoint(new int[]{-4, -1, 0, 3, 10})).forEach(System.out::println);
         System.out.println(minSubArrayLen(4, new int[]{1, 4, 4}));
+        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2));
     }
 }
