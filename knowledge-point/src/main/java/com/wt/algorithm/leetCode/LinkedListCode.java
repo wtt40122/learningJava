@@ -16,7 +16,7 @@ public class LinkedListCode {
         while (current != null && current.next != null) {
             if (current.next.val == val) {
                 current.next = current.next.next;
-            }else{
+            } else {
                 current = current.next;
             }
         }
@@ -29,9 +29,25 @@ public class LinkedListCode {
         while (current != null && current.next != null) {
             if (current.next.val == val) {
                 current.next = current.next.next;
-            }else{
+            } else {
                 current = current.next;
             }
+        }
+        return dummyHead.next;
+    }
+
+    public static ListNode swapPairs(ListNode head) {
+        ListNode dummyHead = new ListNode(-1, head);
+        ListNode cur = dummyHead;
+        while (cur.next != null && cur.next.next != null) {
+            ListNode temp1 = cur.next;
+            ListNode temp2 = cur.next.next;
+
+            cur.next = temp2;
+            temp2.next = temp1;
+            temp1.next = temp2.next;
+
+            cur = temp2;
         }
         return dummyHead.next;
     }
