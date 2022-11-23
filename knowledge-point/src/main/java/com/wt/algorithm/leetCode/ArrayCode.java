@@ -1,6 +1,6 @@
 package com.wt.algorithm.leetCode;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @author wtt
@@ -174,6 +174,205 @@ public class ArrayCode {
         return result;
     }
 
+    public static int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int top = 0, bottom = n - 1, left = 0, right = n - 1;
+        int count = 1;
+        while (true) {
+            for (int j = left; j <= right; j++) {
+                matrix[top][j] = count++;
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int i = top; i <= bottom; i++) {
+                matrix[i][right] = count++;
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int j = right; j >= left; j--) {
+                matrix[bottom][j] = count++;
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int i = bottom; i >= top; i--) {
+                matrix[i][left] = count++;
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+        return matrix;
+    }
+
+    public static int[][] generateMatrix2(int n) {
+        int[][] matrix = new int[n][n];
+        int loop = 0;
+        int count = 1;
+        int x = 0, y;
+        int start = 0;
+        while (loop++ < n / 2) {
+            for (y = start; y < n - loop; y++) {
+                matrix[start][y] = count++;
+            }
+            for (x = start; x < n - loop; x++) {
+                matrix[x][y] = count++;
+            }
+            for (; y >= loop; y--) {
+                matrix[x][y] = count++;
+            }
+            for (; x >= loop; x--) {
+                matrix[x][y] = count++;
+            }
+            start++;
+        }
+        if (n % 2 != 0) {
+            matrix[start][start] = n * n;
+        }
+        return matrix;
+    }
+
+    public static List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> list = new ArrayList<>();
+        int top = 0, bottom = matrix.length - 1, left = 0, right = matrix[0].length - 1;
+        while (true) {
+            for (int j = left; j <= right; j++) {
+                list.add(matrix[top][j]);
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int i = top; i <= bottom; i++) {
+                list.add(matrix[i][right]);
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int j = right; j >= left; j--) {
+                list.add(matrix[bottom][j]);
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int i = bottom; i >= top; i--) {
+                list.add(matrix[i][left]);
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+        return list;
+    }
+
+    public static int[] spiralOrder2(int[][] matrix) {
+        if (matrix.length == 0) {
+            return new int[]{};
+        }
+        int[] arr = new int[matrix.length * matrix[0].length];
+        int top = 0, bottom = matrix.length - 1, left = 0, right = matrix[0].length - 1;
+        int index = 0;
+        while (true) {
+            for (int j = left; j <= right; j++) {
+                arr[index++] = matrix[top][j];
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int i = top; i <= bottom; i++) {
+                arr[index++] = matrix[i][right];
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int j = right; j >= left; j--) {
+                arr[index++] = matrix[bottom][j];
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int i = bottom; i >= top; i--) {
+                arr[index++] = matrix[i][left];
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+        return arr;
+    }
+
+    public static String minWindow(String s, String t) {
+        int left = 0;
+        int right = 0;
+        Map<Character, Integer> originMap = new HashMap<>();
+        Map<Character, Integer> sourceMap = new HashMap<>();
+        for (char c : t.toCharArray()) {
+            originMap.put(c, originMap.getOrDefault(c, 0) + 1);
+        }
+        Integer size = s.length() + 1;
+        String minStr = "";
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            sourceMap.put(c, sourceMap.getOrDefault(c, 0) + 1);
+            right++;
+            while (containsPer(originMap, sourceMap)) {
+                if (right - left < size) {
+                    minStr = s.substring(left, right);
+                }
+                size = Math.min(size, right - left);
+                sourceMap.put(s.charAt(left), sourceMap.getOrDefault(s.charAt(left), 0) - 1);
+                left++;
+            }
+
+        }
+        return minStr;
+    }
+
+    private static boolean containsPer(Map<Character, Integer> oMap,
+                                       Map<Character, Integer> sMap) {
+        for (Map.Entry<Character, Integer> entry : oMap.entrySet()) {
+            if (sMap.getOrDefault(entry.getKey(), 0) < (entry.getValue())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int totalFruit(int[] fruits) {
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        while (right < fruits.length) {
+            map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
+            right++;
+            while (map.size() > 2) {
+                if (map.get(fruits[left]) > 1) {
+                    map.put(fruits[left], map.get(fruits[left]) - 1);
+                } else {
+                    map.remove(fruits[left]);
+                }
+                left++;
+            }
+            sum = Math.max(sum, right - left);
+        }
+        return sum;
+    }
+
+    public static int removeDuplicates(int[] nums) {
+        if (nums.length < 2) {
+            return nums.length;
+        }
+        int slowIndex = 2;
+        for (int i = 2; i < nums.length; i++) {
+            if (nums[slowIndex - 2] != nums[i]) {
+                nums[slowIndex] = nums[i];
+                slowIndex++;
+            }
+        }
+        return slowIndex;
+    }
 
     public static void main(String[] args) {
 //        System.out.println(binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 0));
@@ -181,6 +380,8 @@ public class ArrayCode {
 //        Arrays.stream(sortedSquaresDoublePoint(new int[]{-4, -1, 0, 3, 10})).forEach(System.out::println);
 //        System.out.println(minSubArrayLen(4, new int[]{1, 4, 4}));
 //        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2));
-        Arrays.stream(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)).forEach(System.out::println);
+//        Arrays.stream(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)).forEach(System.out::println);
+//        System.out.println(minWindow("ADOBECODEBANC", "ABC"));
+        System.out.println(removeDuplicates(new int[]{1, 1, 2}));
     }
 }

@@ -9,7 +9,25 @@ import java.util.stream.Collectors;
  * @description
  * @date 2022/11/22 10:22
  */
-public class MapTestCode {
+public class MapCode {
+
+    public static boolean isAnagram(String s, String t) {
+        Map<Character, Integer> sMap = new HashMap<>();
+        if (s.length() != t.length()) {
+            return false;
+        }
+        for (char c : s.toCharArray()) {
+            sMap.put(c, sMap.getOrDefault(c, 0) + 1);
+        }
+        for (char c : t.toCharArray()) {
+            if (sMap.containsKey(c) && sMap.get(c) != 0) {
+                sMap.put(c, sMap.get(c) - 1);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static boolean isYiWei(String s, String t) {
         int[] hash = new int[26];
@@ -133,6 +151,48 @@ public class MapTestCode {
             }
         }
         return list;
+    }
+
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] >= 0 && nums[i] > target) {
+                break;
+            }
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] > target && nums[i] + nums[j] >= 0) {
+                    break;
+                }
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                int left = j + 1;
+                int right = nums.length - 1;
+                while (left < right) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum > target) {
+                        right--;
+                    } else if (sum < target) {
+                        left++;
+                    } else {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
+                        }
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+                        right--;
+                        left++;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public static void main(String[] args) {
