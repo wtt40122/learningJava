@@ -1,0 +1,13 @@
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: wtt-springboot-test
+
+# 自定义中间件配置
+wt:
+  door:
+    enabled: true
+    userStr: 1001,aaaa,ccc #白名单用户ID，多个逗号隔开

@@ -35,6 +35,7 @@
         <module>wt-spring</module>
         <module>wt-bytecode</module>
         <module>source-analysis</module>
+        <module>wt-springboot</module>
     </modules>
 
 	<parent>
