@@ -7,7 +7,7 @@ package com.wt.algorithm.leetCode;
  * @date 2022/11/29 0:51
  */
 public class TreeNode {
-    Integer val;
+    int val;
     TreeNode left;
     TreeNode right;
 
