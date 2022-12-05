@@ -1224,6 +1224,99 @@ public class TreeCode {
         }
     }
 
+    public TreeNode lowestCommonAncestors(TreeNode root, TreeNode p, TreeNode q) {
+        if (null == root) {
+            return null;
+        }
+        if (root == p || root == q) {
+            return root;
+        }
+        if (root.val > p.val && root.val > q.val) {
+            TreeNode left = lowestCommonAncestors(root.left, p, q);
+            if (null != left) {
+                return left;
+            }
+        }
+        if (root.val < p.val && root.val < q.val) {
+            TreeNode right = lowestCommonAncestors(root.right, p, q);
+            if (null != right) {
+                return right;
+            }
+        }
+        return root;
+    }
+
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (null == root) {
+            root = new TreeNode(val);
+        }
+        if (root.val > val) {
+            root.left = insertIntoBST(root.left, val);
+        }
+        if (root.val < val) {
+            root.right = insertIntoBST(root.right, val);
+        }
+        return root;
+    }
+
+    /**
+     * 二叉搜索树删除节点
+     *
+     * @param root
+     * @param key
+     * @return
+     */
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (null == root) {
+            return null;
+        }
+        if (root.val == key) {
+            if (null == root.left && null == root.right) {
+                return null;
+            } else if (null != root.left && null == root.right) {
+                return root.left;
+            } else if (null == root.left && null != root.right) {
+                return root.right;
+            } else {
+                TreeNode cur = root.right;
+                while (null != cur.left) {
+                    cur = cur.left;
+                }
+                cur.left = root.left;
+                return root.right;
+            }
+        }
+        if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        }
+        if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        }
+        return root;
+    }
+
+    /**
+     * 修剪二叉树
+     *
+     * @param root
+     * @param low
+     * @param high
+     * @return
+     */
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (null == root) {
+            return null;
+        }
+        if (root.val < low) {
+            return trimBST(root.right, low, high);
+        }
+        if (root.val > high) {
+            return trimBST(root.left, low, high);
+        }
+        root.left = trimBST(root.left, low, high);
+        root.right = trimBST(root.right, low, high);
+        return root;
+    }
 
     public static void main(String[] args) {
 //        TreeNode treeNode4 = new TreeNode(4);
