@@ -1,5 +1,8 @@
 package com.wt.algorithm.greedy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Auther: wtt
  * @Date: 2022/4/12 23:45
@@ -92,6 +95,49 @@ public class YingBiZhaoLing {
         return (minCoin == Integer.MAX_VALUE) ? -1 : minCoin;  // 输出答案
     }
 
+    /**
+     * @return java.util.List<java.util.List < java.lang.Integer>>
+     * @Description 组合总和
+     * @Author wtt
+     * @Date 2022/12/8 22:22
+     * @param: [candidates, target]
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (candidates.length == 0) {
+            return result;
+        }
+        backTrackingSum(candidates, target, 0, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingSum(int[] candidates, int target, int startIndex,
+                                 int sum, List<Integer> list, List<List<Integer>> result) {
+        if (sum > target) {
+            return;
+        }
+        if (sum == target) {
+            result.add(new ArrayList<>(list));
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            list.add(candidates[i]);
+            sum += candidates[i];
+            backTrackingSum(candidates, target, i, sum, list, result);
+            sum -= candidates[i];
+            list.remove(list.size() - 1);
+        }
+    }
+
+    /**
+     * @return java.util.List<java.util.List < java.lang.Integer>>
+     * @Description 组合总和2
+     * @Author wtt
+     * @Date 2022/12/8 22:38
+     * @param: [candidates, target]
+     */
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        return null;
+    }
 
     public static void main(String[] args) {
         int[] values = {5, 3};
