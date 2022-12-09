@@ -1,9 +1,6 @@
 package com.wt.algorithm.leetCode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: wtt
@@ -111,9 +108,138 @@ public class BackTrackingCode {
         }
     }
 
+    /**
+     * 组合总和II
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (candidates.length == 0) {
+            return result;
+        }
+        Arrays.sort(candidates);
+        backTracking2(candidates, target, 0, 0, new int[candidates.length], new ArrayList(), result);
+        return result;
+    }
+
+    private void backTracking2(int[] candidates, int target, int sum,
+                               int startIndex, int[] used, List<Integer> list, List<List<Integer>> result) {
+        if (sum > target) {
+            return;
+        }
+        if (sum == target) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == 0) {
+                continue;
+            }
+            list.add(candidates[i]);
+            used[i] = 1;
+            backTracking2(candidates, target, sum + candidates[i], i + 1, used, list, result);
+            used[i] = 0;
+            list.remove(list.size() - 1);
+        }
+    }
+
+    /**
+     * 切割回文字符串
+     *
+     * @param s
+     * @return
+     */
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<>();
+        if (s.length() == 0) {
+            return result;
+        }
+        backTrackingPartition(s, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingPartition(String s, int startIndex, List<String> path, List<List<String>> result) {
+        if (startIndex >= s.length()) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = startIndex; i < s.length(); i++) {
+            if (!isPalindrome(s, startIndex, i)) {
+                continue;
+            }
+            path.add(s.substring(startIndex, i + 1));
+            backTrackingPartition(s, i + 1, path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    private boolean isPalindrome(String s, int startIndex, int endIndex) {
+        while (startIndex < endIndex) {
+            if (s.charAt(startIndex) != s.charAt(endIndex)) {
+                return false;
+            }
+            startIndex++;
+            endIndex--;
+        }
+        return true;
+    }
+
+    /**
+     * 复原IP地址
+     *
+     * @param s
+     * @return
+     */
+    public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<>();
+        if (s.length() == 0) {
+            return result;
+        }
+        backTrackingIp(new StringBuilder(s), 0, 0, result);
+        return result;
+    }
+
+    private void backTrackingIp(StringBuilder sb, int starIndex, int positionNum, List<String> result) {
+        if (positionNum == 3) {
+            if (isValid(sb.toString(), starIndex, sb.toString().length() - 1)) {
+                result.add(sb.toString());
+            }
+            return;
+        }
+        for (int i = starIndex; i < sb.toString().length(); i++) {
+            if (isValid(sb.toString(), starIndex, i)) {
+                sb.insert(i + 1, ".");
+                positionNum++;
+                backTrackingIp(sb, i + 2, positionNum, result);
+                positionNum--;
+                sb.deleteCharAt(i + 1);
+            } else {
+                break;
+            }
+        }
+    }
+
+    private boolean isValid(String s, int startedIndex, int endIndex) {
+        if (startedIndex > endIndex) {
+            return false;
+        }
+        if (s.charAt(startedIndex) == '0' && startedIndex != endIndex) {
+            return false;
+        }
+        String substring = s.substring(startedIndex, endIndex + 1);
+        long value = Long.parseLong(substring);
+        if (value >= 0L && value <= 255L) {
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         BackTrackingCode code = new BackTrackingCode();
-        List<String> combine = code.letterCombinations("23");
+        List<String> combine = code.restoreIpAddresses("25525511135");
         combine.stream().forEach(System.out::println);
     }
 }

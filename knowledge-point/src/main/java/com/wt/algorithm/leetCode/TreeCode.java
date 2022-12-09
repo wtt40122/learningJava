@@ -1318,6 +1318,38 @@ public class TreeCode {
         return root;
     }
 
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return traversal(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode traversal(int[] nums, int left, int right) {
+        if (nums.length == 0) {
+            return null;
+        }
+        int middle = left + ((right - left) / 2);
+        TreeNode node = new TreeNode(nums[middle]);
+        node.left = traversal(nums, left, middle);
+        node.right = traversal(nums, middle + 1, nums.length - 1);
+        return node;
+    }
+
+    public TreeNode convertBST(TreeNode root) {
+        traversal(root);
+        return root;
+    }
+
+    int preVa = 0;
+
+    private void traversal(TreeNode treeNode) {
+        if (null == treeNode) {
+            return;
+        }
+        traversal(treeNode.right);
+        treeNode.val += preVa;
+        preVa = treeNode.val;
+        traversal(treeNode.left);
+    }
+
     public static void main(String[] args) {
 //        TreeNode treeNode4 = new TreeNode(4);
 //        TreeNode treeNode3 = new TreeNode(3, treeNode4, null);
@@ -1328,5 +1360,6 @@ public class TreeCode {
         int[] array = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
         int[] ints = splitArray(array, 2, 8);
         Arrays.stream(ints).forEach(System.out::println);
+        System.out.println(1 / 2);
     }
 }
