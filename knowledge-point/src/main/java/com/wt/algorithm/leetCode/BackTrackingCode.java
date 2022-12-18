@@ -237,6 +237,212 @@ public class BackTrackingCode {
         return false;
     }
 
+    /**
+     * 子集
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) {
+            return result;
+        }
+        backTrackingSub(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingSub(int[] nums, int startIndex, List<Integer> path, List<List<Integer>> result) {
+        result.add(new ArrayList<>(path));
+        if (startIndex >= nums.length) {
+            return;
+        }
+        for (int i = startIndex; i < nums.length; i++) {
+            path.add(nums[i]);
+            backTrackingSub(nums, i + 1, path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    /**
+     * 子集II
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) {
+            return result;
+        }
+        Arrays.sort(nums);
+        backTrackingDup(nums, 0, new int[nums.length], new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingDup(int[] nums, int startIndex, int[] used, List<Integer> path, List<List<Integer>> result) {
+        result.add(new ArrayList<>(path));
+        if (startIndex >= nums.length) {
+            return;
+        }
+        for (int i = startIndex; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == 0) {
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = 1;
+            backTrackingDup(nums, i + 1, used, path, result);
+            used[i] = 0;
+            path.remove(path.size() - 1);
+        }
+    }
+
+    /**
+     * 递增子序列
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) {
+            return result;
+        }
+        backTrackingFind(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingFind(int[] nums, int startIndex, List<Integer> path, List<List<Integer>> result) {
+        if (path.size() > 1) {
+            result.add(new ArrayList<>(path));
+        }
+        Set<Integer> set = new HashSet<>();
+        for (int i = startIndex; i < nums.length; i++) {
+            if ((path.size() > 0 && nums[i] > path.get(path.size() - 1)) || set.contains(nums[i])) {
+                continue;
+            }
+            set.add(nums[i]);
+            path.add(nums[i]);
+            backTrackingFind(nums, i + 1, path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    /**
+     * 全排列
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) {
+            return result;
+        }
+        backTrackingPermute(nums, new int[nums.length], new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingPermute(int[] nums, int[] used, List<Integer> path, List<List<Integer>> result) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i] == 1) {
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = 1;
+            backTrackingPermute(nums, used, path, result);
+            used[i] = 0;
+            path.remove(path.size() - 1);
+        }
+    }
+
+    /**
+     * 全排列II
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) {
+            return result;
+        }
+        Arrays.sort(nums);
+        backTrackingUnique(nums, new int[nums.length], new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backTrackingUnique(int[] nums, int[] used, List<Integer> path, List<List<Integer>> result) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i] == 1) {
+                continue;
+            }
+            if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == 0) {
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = 1;
+            backTrackingUnique(nums, used, path, result);
+            used[i] = 0;
+            path.remove(path.size() - 1);
+        }
+    }
+
+    /**
+     * 机场航班问题
+     *
+     * @param tickets
+     * @return
+     */
+    public List<String> findItinerary(List<List<String>> tickets) {
+        Map<String, Map<String, Integer>> map = new HashMap<>();
+        for (List<String> ticket : tickets) {
+            Map<String, Integer> temp;
+            if (map.containsKey(ticket.get(0))) {
+                temp = map.get(ticket.get(0));
+                temp.put(ticket.get(1), temp.getOrDefault(ticket.get(1), 0) + 1);
+            } else {
+                temp = new TreeMap<>();
+                temp.put(ticket.get(1), 1);
+            }
+            map.put(ticket.get(0), temp);
+        }
+        LinkedList<String> result = new LinkedList<>();
+        result.add("JFK");
+        backTrackingIt(map, tickets.size(), result);
+        return result;
+    }
+
+    private boolean backTrackingIt(Map<String, Map<String, Integer>> map, int ticketNum, LinkedList<String> result) {
+        if (result.size() == ticketNum + 1) {
+            return true;
+        }
+        String last = result.getLast();
+        if (map.containsKey(last)) {
+            for (Map.Entry<String, Integer> entry : map.get(last).entrySet()) {
+                int count = entry.getValue();
+                if (count > 0) {
+                    result.add(entry.getKey());
+                    entry.setValue(count - 1);
+                    if (backTrackingIt(map, ticketNum, result)) {
+                        return true;
+                    }
+                    result.removeLast();
+                    entry.setValue(count);
+                }
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         BackTrackingCode code = new BackTrackingCode();
         List<String> combine = code.restoreIpAddresses("25525511135");
