@@ -161,7 +161,7 @@ public class DPCode {
                 }
             }
         }
-        return dp[goods-1][bagSize];
+        return dp[goods - 1][bagSize];
     }
 
     public static void main(String[] args) {
@@ -170,5 +170,89 @@ public class DPCode {
         int[] value = {15, 20, 30};
         int bagSize = 4;
         System.out.println(dpCode.BagProblem(weight, value, bagSize));
+    }
+
+    /**
+     * @return int
+     * @Description 整数拆分
+     * @Author wtt
+     * @Date 2022/12/21 0:36
+     * @param: [n]
+     */
+    public int integerBreak(int n) {
+        int[] dp = new int[n + 1];
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            for (int j = 1; j < i - 1; j++) {
+                dp[i] = Math.max(dp[i], Math.max(j * (i - j), j * dp[i - j]));
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * @return int
+     * @Description 不同的二叉搜索树
+     * @Author wtt
+     * @Date 2022/12/21 0:37
+     * @param: [n]
+     */
+    public int numTrees(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                dp[i] += dp[j - 1] * dp[i - j];
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * @return boolean
+     * @Description 分割等和子集
+     * @Author wtt
+     * @Date 2022/12/22 22:26
+     * @param: [nums]
+     */
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+        }
+        if (sum % 2 == 1) {
+            return false;
+        }
+        int target = sum / 2;
+        int[] dp = new int[target + 1];
+        dp[0] = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = target; j >= nums[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+            }
+        }
+        return dp[target] == target;
+    }
+
+    /**
+     * @return int
+     * @Description 最后一块石头的重量
+     * @Author wtt
+     * @Date 2022/12/22 22:55
+     * @param: [stones]
+     */
+    public int lastStoneWeightII(int[] stones) {
+        int sum = 0;
+        for (int stone : stones) {
+            sum += stone;
+        }
+        int target = sum / 2;
+        int[] dp = new int[target + 1];
+        for (int i = 0; i < stones.length; i++) {
+            for (int j = target; j >= stones[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i]);
+            }
+        }
+        return sum - dp[target] - dp[target];
     }
 }
