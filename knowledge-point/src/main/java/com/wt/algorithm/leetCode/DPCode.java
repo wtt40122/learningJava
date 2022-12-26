@@ -164,12 +164,32 @@ public class DPCode {
         return dp[goods - 1][bagSize];
     }
 
+    /**
+     * 01背包问题一维数组
+     *
+     * @param weight
+     * @param value
+     * @param bagSize
+     * @return
+     */
+    public int bagProblemDis(int[] weight, int[] value, int bagSize) {
+        int[] dp = new int[bagSize + 1];
+        dp[0] = 0;
+        for (int i = 0; i < weight.length; i++) {
+            for (int j = bagSize; j >= weight[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - weight[i]] + value[i]);
+            }
+        }
+        return dp[bagSize];
+    }
+
     public static void main(String[] args) {
         DPCode dpCode = new DPCode();
         int[] weight = {1, 3, 4};
         int[] value = {15, 20, 30};
         int bagSize = 4;
         System.out.println(dpCode.BagProblem(weight, value, bagSize));
+        System.out.println(dpCode.bagProblemDis(weight, value, bagSize));
     }
 
     /**
@@ -254,5 +274,49 @@ public class DPCode {
             }
         }
         return sum - dp[target] - dp[target];
+    }
+
+    /**
+     * 组合总和IV
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int combinationSum4(int[] nums, int target) {
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for (int i = 0; i <= target; i++) {
+            for (int j = 0; j < nums.length; j++) {
+                if (i - nums[j] >= 0) {
+                    dp[i] += dp[i - nums[j]];
+                }
+            }
+        }
+        return dp[target];
+    }
+
+    public int climbStairs(int n, int k) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; i <= k; j++) {
+                if (i - j > 0) {
+                    dp[i] += dp[i - j];
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * 零钱兑换
+     *
+     * @param coins
+     * @param amount
+     * @return
+     */
+    public int coinChange(int[] coins, int amount) {
+        return 0;
     }
 }

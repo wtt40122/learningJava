@@ -38,13 +38,10 @@ public class UrlUtil {
 
     public static void main(String[] args) {
 
-        String rest = "sayHello";
-
+        String rest = "sayHelloWWorld";
         System.out.println(humpToSlash(rest));
 
         String rest1 = "say/hello";
-
-
         System.out.println(slashToHump(rest1));
     }
 }

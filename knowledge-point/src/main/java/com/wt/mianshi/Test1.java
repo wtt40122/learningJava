@@ -1,7 +1,5 @@
 package com.wt.mianshi;
 
-import java.util.HashMap;
-
 /**
  * @Auther: wtt
  * @Date: 2021/4/19 20:56
@@ -22,7 +20,7 @@ public class Test1 {
         Integer i4 = new Integer(40);
         Integer i5 = new Integer(40);
         Integer i6 = new Integer(0);
-
+        //会自动装箱，调用Integer.valueOf(),由于40在-128到127之间，会从缓存中拿一个对象,所以是一个对象
         System.out.println("i1=i2   " + (i1 == i2)); // true 常量池
         System.out.println("i1=i2+i3   " + (i1 == i2 + i3));    //true
         System.out.println("i1=i4   " + (i1 == i4));    //false
@@ -32,7 +30,7 @@ public class Test1 {
 
         Integer i7 = 200;
         Integer i8 = new Integer(200);
-        System.out.println("i7=i8   " + (i7 == i8));
+        System.out.println("i7=i8   " + (i7 == i8)); //false
 
         Integer i = 100;
         Integer j = 100;
