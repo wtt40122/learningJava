@@ -1,5 +1,8 @@
 package com.wt.algorithm.leetCode;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author wtt
  * @version 1.0
@@ -317,6 +320,218 @@ public class DPCode {
      * @return
      */
     public int coinChange(int[] coins, int amount) {
-        return 0;
+        int[] dp = new int[amount + 1];
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            dp[i] = Integer.MAX_VALUE;
+        }
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                if (dp[j - coins[i]] != Integer.MAX_VALUE) {
+                    dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1);
+                }
+            }
+        }
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }
+
+    public int bagMaxValue(int[] weights, int[] values, int bagCapacity) {
+        int goods = weights.length;
+        int[][] dp = new int[goods][bagCapacity + 1];
+        for (int i = weights[0]; i <= bagCapacity; i++) {
+            dp[0][i] = weights[0];
+        }
+        for (int i = 1; i < goods; i++) {
+            for (int j = 0; j <= bagCapacity; j++) {
+                if (j < weights[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weights[i]] + values[i]);
+                }
+            }
+        }
+        return dp[goods - 1][bagCapacity];
+    }
+
+    public int bagMaxValueOne(int[] weights, int[] values, int bagCapacity) {
+        int[] dp = new int[bagCapacity + 1];
+        dp[0] = 0;
+        for (int i = 0; i < weights.length; i++) {
+            for (int j = bagCapacity; j >= weights[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - weights[i]] + values[i]);
+            }
+        }
+        return dp[bagCapacity];
+    }
+
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (Math.abs(target) > sum) return 0;
+        if ((sum + target) % 2 == 1) {
+            return 0;
+        }
+        target = (sum + target) / 2;
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = target; j >= nums[i]; j--) {
+                dp[j] += dp[j - nums[i]];
+            }
+        }
+        return dp[target];
+    }
+
+    public int findMaxForm(String[] strs, int m, int n) {
+        int[][] dp = new int[m + 1][n + 1];
+        dp[0][0] = 0;
+        for (String str : strs) {
+            int oneNum = 0, zeroNum = 0;
+            for (char c : str.toCharArray()) {
+                if (c == '0') {
+                    zeroNum++;
+                } else {
+                    oneNum++;
+                }
+            }
+            for (int i = m; i >= zeroNum; i--) {
+                for (int j = n; j >= oneNum; j--) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    public int fullBag(int[] weights, int[] values, int bagCapacity) {
+        int[] dp = new int[bagCapacity + 1];
+        for (int i = 0; i < weights.length; i++) {
+            for (int j = weights[i]; j <= bagCapacity; j++) {
+                dp[j] = Math.max(dp[j], dp[j - weights[i]] + values[i]);
+            }
+        }
+        return dp[bagCapacity];
+    }
+
+    public int change(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = coins[i]; j <= amount; j++) {
+                dp[j] += dp[j - coins[i]];
+            }
+        }
+        return dp[amount];
+    }
+
+    /**
+     * @return int
+     * @Description 完全平方数
+     * @Author wtt
+     * @Date 2022/12/26 21:08
+     * @param: [n]
+     */
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = Integer.MAX_VALUE;
+        }
+        for (int i = 1; i * i <= n; i++) {
+            for (int j = i * i; j <= n; j++) {
+                if (dp[j - i * i] != Integer.MAX_VALUE) {
+                    dp[j] = Math.min(dp[j], dp[j - i * i] + 1);
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * @return boolean
+     * @Description 单词拆分
+     * @Author wtt
+     * @Date 2022/12/27 22:15
+     * @param: [s, wordDict]
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                String s1 = s.substring(j, i);
+                if (wordDict.contains(s1) && dp[j] == 1) {
+                    dp[i] = 1;
+                }
+            }
+        }
+        return dp[s.length()] == 1;
+    }
+
+    /**
+     * @return int
+     * @Description 打家劫舍
+     * @Author wtt
+     * @Date 2022/12/27 22:40
+     * @param: [nums]
+     */
+    public int rob(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for (int i = 2; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+        }
+        return dp[nums.length - 1];
+    }
+
+    /**
+     * @return int
+     * @Description 打家劫舍II
+     * @Author wtt
+     * @Date 2022/12/27 22:55
+     * @param: [nums]
+     */
+    public int rob2(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int[] leftNums = Arrays.copyOf(nums, nums.length - 1);
+        int[] rightNums = Arrays.copyOfRange(nums, 1, nums.length);
+        return Math.max(rob(leftNums), rob(rightNums));
+    }
+
+    /**
+     * @return int
+     * @Description 打家劫舍III
+     * @Author wtt
+     * @Date 2022/12/27 23:28
+     * @param: [root]
+     */
+    public int rob3(TreeNode root) {
+        int[] dp = transfer(root);
+        return Math.max(dp[0], dp[1]);
+    }
+
+    private int[] transfer(TreeNode treeNode) {
+        if (null == treeNode) {
+            return new int[]{0, 0};
+        }
+        int[] left = transfer(treeNode.left);
+        int[] right = transfer(treeNode.right);
+        int value1 = treeNode.val + left[0] + right[0];
+        int value2 = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        return new int[]{value2, value1};
     }
 }
