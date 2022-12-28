@@ -37,4 +37,14 @@ public class Str {
         List<String> list = letterCasePermutation("a1b2");
         list.stream().forEach(System.out::println);
     }
+
+    public int maxProfit(int[] prices) {
+        int max = 0;
+        for (int i = 0; i < prices.length; i++) {
+            for (int j = i + 1; j < prices.length; j++) {
+                max = Math.max(max, prices[j] - prices[i]);
+            }
+        }
+        return max;
+    }
 }
