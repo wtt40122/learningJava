@@ -132,6 +132,51 @@ public class DP {
         return dp[prices.length - 1][2 * k];
     }
 
+    /**
+     * @return int
+     * @Description 最佳买卖股票时机含冷冻期
+     * <p>
+     * dp[i][0] 持有股票
+     * dp[i][1] 保持卖出状态
+     * dp[i][2] 当前卖出
+     * dp[i][3] 冷冻期
+     * @Author wtt
+     * @Date 2022/12/30 0:14
+     * @param: [prices]
+     */
+    public int maxProfit5(int[] prices) {
+        int[][] dp = new int[prices.length][4];
+        dp[0][0] = -prices[0];
+        dp[0][1] = 0;
+        dp[0][2] = 0;
+        dp[0][3] = 0;
+        for (int i = 1; i < prices.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], Math.max(dp[i - 1][3] - prices[i], dp[i - 1][1] - prices[i]));
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][3]);
+            dp[i][2] = dp[i - 1][0] + prices[i];
+            dp[i][3] = dp[i - 1][2];
+        }
+        return Math.max(dp[prices.length - 1][1], Math.max(dp[prices.length - 1][2], dp[prices.length - 1][3]));
+    }
+
+    /**
+     * @return int
+     * @Description 卖股票的最佳时机含手续费
+     * @Author wtt
+     * @Date 2022/12/30 0:38
+     * @param: [prices, fee]
+     */
+    public int maxProfit(int[] prices, int fee) {
+        int[][] dp = new int[prices.length][2];
+        dp[0][0] = -prices[0];
+        dp[0][1] = 0;
+        for (int i = 1; i < prices.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i] - fee);
+        }
+        return dp[prices.length - 1][1];
+    }
+
     public static void main(String[] args) {
         System.out.println(fib2(2));
         System.out.println(climbStairs(2));
