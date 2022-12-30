@@ -1,5 +1,6 @@
 package com.wt.algorithm.leetCode;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -177,11 +178,98 @@ public class DP {
         return dp[prices.length - 1][1];
     }
 
+    /**
+     * @return int
+     * @Description 最长递增子序列
+     * @Author wtt
+     * @Date 2022/12/30 21:58
+     * @param: [nums]
+     */
+    public int lengthOfLIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        int result = 1;
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            result = Math.max(result, dp[i]);
+        }
+        return result;
+    }
+
+    /**
+     * @return int
+     * @Description 最长连续递增序列
+     * @Author wtt
+     * @Date 2022/12/30 22:11
+     * @param: [nums]
+     */
+    public int findLengthOfLCIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        int max = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i - 1]) {
+                dp[i] = dp[i - 1] + 1;
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+
+    /**
+     * @return int
+     * @Description 最长重复子数组
+     * @Author wtt
+     * @Date 2022/12/30 22:53
+     * @param: [nums1, nums2]
+     */
+    public int findLength(int[] nums1, int[] nums2) {
+        int[][] dp = new int[nums1.length + 1][nums2.length + 1];
+        int max = 0;
+        for (int i = 1; i <= nums1.length; i++) {
+            for (int j = 1; j <= nums2.length; j++) {
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }
+                max = Math.max(max, dp[i][j]);
+            }
+        }
+        return max;
+    }
+
+    /**
+     * @return int
+     * @Description 最长公共子序列
+     * @Author wtt
+     * @Date 2022/12/30 23:19
+     * @param: [text1, text2]
+     */
+    public int longestCommonSubsequence(String text1, String text2) {
+        int[][] dp = new int[text1.length() + 1][text2.length() + 1];
+        for (int i = 1; i <= text1.length(); i++) {
+            for (int j = 1; j <= text2.length(); j++) {
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[text1.length()][text2.length()];
+    }
+
     public static void main(String[] args) {
-        System.out.println(fib2(2));
-        System.out.println(climbStairs(2));
-        System.out.println(climbStairs(0));
-        System.out.println(climbStairs(1));
+//        System.out.println(fib2(2));
+//        System.out.println(climbStairs(2));
+//        System.out.println(climbStairs(0));
+//        System.out.println(climbStairs(1));
+        DP code = new DP();
+        int[] nums = {4, 10, 4, 3, 8, 9};
+        System.out.println(code.lengthOfLIS(nums));
 
     }
 }
