@@ -374,6 +374,165 @@ public class ArrayCode {
         return slowIndex;
     }
 
+    /**
+     * 原地删除数据重复元素
+     *
+     * @param nums
+     * @return
+     */
+    public int removeDuplicates1(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        int index = 0;
+        while (fast < nums.length) {
+            if (nums[fast] != nums[slow]) {
+                slow++;
+                nums[slow] = nums[fast];
+            }
+            fast++;
+        }
+        return slow + 1;
+    }
+
+    /**
+     * 删除排序链表中的重复元素
+     *
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        if (null == head) {
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (null != fast) {
+            if (slow.val != fast.val) {
+                slow.next = fast;
+                slow = slow.next;
+            }
+            fast = fast.next;
+        }
+        slow.next = null;
+        return head;
+    }
+
+    /**
+     * 移除元素
+     *
+     * @param nums
+     * @param val
+     * @return
+     */
+    public int removeElement2(int[] nums, int val) {
+        int fast = 0, slow = 0;
+        while (fast < nums.length) {
+            if (nums[fast] != val) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return slow;
+    }
+
+    /**
+     * 移动0
+     *
+     * @param nums
+     */
+    public void moveZeroes(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        while (fast < nums.length) {
+            if (nums[fast] != 0) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        for (int i = slow + 1; i < nums.length; i++) {
+            nums[i] = 0;
+        }
+    }
+
+    /**
+     * 两数之和 II - 输入有序数组
+     *
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] numbers, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < numbers.length; i++) {
+            if (map.containsKey(target - numbers[i])) {
+                return new int[]{map.get(target - numbers[i]), i};
+            } else {
+                map.put(numbers[i], i);
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    public int[] twoSum1(int[] numbers, int target) {
+        int sum = 0, left = 0, right = numbers.length - 1;
+        while (left < right) {
+            sum = numbers[left] + numbers[right];
+            if (sum > target) {
+                right--;
+            } else if (sum < target) {
+                left++;
+            } else {
+                return new int[]{left + 1, right + 1};
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    /**
+     * 最长回文子串
+     *
+     * @param s
+     * @return
+     */
+    public String longestPalindrome(String s) {
+        String res = "";
+        for (int i = 0; i < s.length(); i++) {
+            String str1 = palindrome(s, i, i);
+            String str2 = palindrome(s, i, i + 1);
+            if (str1.length() > res.length()) {
+                res = str1;
+            }
+            if (str2.length() > res.length()) {
+                res = str2;
+            }
+        }
+        return res;
+    }
+
+    private String palindrome(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return s.substring(left + 1, right);
+    }
+
+
+    private boolean isPalindrome(String str) {
+        int left = 0, right = str.length() - 1;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+
     public static void main(String[] args) {
 //        System.out.println(binarySearch(new int[]{-1, 0, 3, 5, 9, 12}, 0));
 //        System.out.println(removeElement1(new int[]{-1, 3, 3, 5, 9, 12, 3}, 3));
@@ -382,6 +541,9 @@ public class ArrayCode {
 //        System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2));
 //        Arrays.stream(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)).forEach(System.out::println);
 //        System.out.println(minWindow("ADOBECODEBANC", "ABC"));
-        System.out.println(removeDuplicates(new int[]{1, 1, 2}));
+//        System.out.println(removeDuplicates(new int[]{1, 1, 2}));
+        int[] nums = new int[]{0, 1, 0, 3, 12};
+        ArrayCode code = new ArrayCode();
+        code.moveZeroes(nums);
     }
 }
