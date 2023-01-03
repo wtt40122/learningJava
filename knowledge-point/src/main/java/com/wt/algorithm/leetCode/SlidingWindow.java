@@ -207,7 +207,7 @@ public class SlidingWindow {
      * @param s
      * @return
      */
-    public static int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring1(String s) {
         int count = 0;
         int right = 0;
         List<Character> characters = new LinkedList<>();
@@ -328,6 +328,116 @@ public class SlidingWindow {
         return result;
     }
 
+    /**
+     * @return boolean
+     * @Description 字符串的排列
+     * @Author wtt
+     * @Date 2023/1/3 21:44
+     * @param: [s1, s2]
+     */
+    public static boolean checkInclusion(String s1, String s2) {
+        int left = 0, right = 0;
+        int valid = 0;
+        Map<Character, Integer> s1Map = new HashMap<>();
+        for (char c : s1.toCharArray()) {
+            s1Map.put(c, s1Map.getOrDefault(c, 0) + 1);
+        }
+        Map<Character, Integer> s2Map = new HashMap<>();
+        while (right < s2.length()) {
+            char rChar = s2.charAt(right);
+            s2Map.put(rChar, s2Map.getOrDefault(rChar, 0) + 1);
+            if (s1Map.getOrDefault(rChar, 0).equals(s2Map.get(rChar))) {
+                valid++;
+            }
+            right++;
+            if (right - left == s1.length()) {
+                if (valid == s1Map.size()) {
+                    return true;
+                }
+                char lChar = s2.charAt(left);
+                if (s2Map.get(lChar).equals(s1Map.getOrDefault(lChar, 0))) {
+                    valid--;
+                }
+                s2Map.put(lChar, s2Map.get(lChar) - 1);
+                left++;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return java.util.List<java.lang.Integer>
+     * @Description 找到字符串中所有字母异位词
+     * @Author wtt
+     * @Date 2023/1/3 22:36
+     * @param: [s, p]
+     */
+    public static List<Integer> findAnagrams(String s, String p) {
+        int left = 0, right = 0;
+        int valid = 0;
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> pMap = new HashMap<>();
+        List<Integer> resList = new ArrayList<>();
+        for (char c : p.toCharArray()) {
+            pMap.put(c, pMap.getOrDefault(c, 0) + 1);
+        }
+        while (right < s.length()) {
+            char rChar = s.charAt(right);
+            right++;
+            sMap.put(rChar, sMap.getOrDefault(rChar, 0) + 1);
+            if (pMap.getOrDefault(rChar, 0).equals(sMap.get(rChar))) {
+                valid++;
+            }
+            if (right - left == p.length()) {
+                if (valid == pMap.size()) {
+                    resList.add(left);
+                }
+                char lChar = s.charAt(left);
+                left++;
+                if (pMap.getOrDefault(lChar, 0).equals(sMap.get(lChar))) {
+                    valid--;
+                }
+                sMap.put(lChar, sMap.get(lChar) - 1);
+            }
+        }
+        return resList;
+    }
+
+    /**
+     * @return int
+     * @Description 无重复字符的最长子串
+     * @Author wtt
+     * @Date 2023/1/3 22:58
+     * @param: [s]
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        int left = 0, right = 0;
+        int max = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        while (right < s.length()) {
+            char rChar = s.charAt(right);
+            map.put(rChar, map.getOrDefault(rChar, 0) + 1);
+            right++;
+            while (map.get(rChar) > 1) {
+                char lChar = s.charAt(left);
+                left++;
+                map.put(lChar, map.get(lChar) - 1);
+            }
+            max = Integer.max(max, right - left);
+        }
+        return max;
+    }
+
+    private static Boolean containsAll(Map<Character, Integer> s1Map,
+                                       Map<Character, Integer> s2Map) {
+        for (Map.Entry<Character, Integer> entry : s1Map.entrySet()) {
+            if (s2Map.getOrDefault(entry.getKey(), 0) < entry.getValue()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
 //        System.out.println(findMaxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
@@ -347,12 +457,12 @@ public class SlidingWindow {
 //        findRepeatedDnaSequences("A").stream().forEach(System.out::println);
 //        findRepeatedDnaSequences("AAAAAAAAAAAAA").stream().forEach(System.out::println);
 //        System.out.println(minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3}));
-//        System.out.println(lengthOfLongestSubstring("pwwkew"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
 //        System.out.println(longestSubstring("aaabb", 3));
 //        System.out.println(maximumSubarraySum1(new int[]{9, 9, 9, 1, 2, 3}, 3));
 //        System.out.println(maximumSubarraySum1(new int[]{4, 4, 4}, 3));
 //        System.out.println(maximumSubarraySum1(new int[]{5, 3, 3, 1, 1}, 3));
-        System.out.println(findLength1(new int[]{1, 2, 3, 2, 1}, new int[]{3, 2, 1, 4, 7}));
-        ;
+//        System.out.println(findLength1(new int[]{1, 2, 3, 2, 1}, new int[]{3, 2, 1, 4, 7}));
+        System.out.println(findAnagrams("baa", "aa"));
     }
 }
