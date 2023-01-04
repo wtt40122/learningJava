@@ -438,11 +438,46 @@ public class SlidingWindow {
         return true;
     }
 
+    /**
+     * 最小覆盖子串
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public static String minWindow(String s, String t) {
+        /**
+         * s = "ADOBECODEBANC", t = "ABC"
+         * .ADOBEC  SOBECODEBA
+         */
+        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> tMap = new HashMap<>();
+        String result = "";
+        Integer min = Integer.MAX_VALUE;
+        for (char c : t.toCharArray()) {
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+        int left = 0, right = 0;
+        while (right < s.length()) {
+            char rChar = s.charAt(right);
+            sMap.put(rChar, sMap.getOrDefault(rChar, 0) + 1);
+            right++;
+            while (containsAll(sMap, tMap)) {
+                if (right - left < min) {
+                    min = right - left;
+                    result = s.substring(left, right);
+                }
+                char lChar = s.charAt(left);
+                sMap.put(lChar, sMap.getOrDefault(lChar, 0) - 1);
+                left++;
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
 //        System.out.println(findMaxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
 //        System.out.println(findMaxAverage(new int[]{5}, 1));
-//        System.out.println(findMaxAverage(new int[]{-1}, 1));
 //        System.out.println(findMaxAverage(new int[]{0, 4, 0, 3, 2}, 1));
 //        System.out.println(minimumDifference(new int[]{90}, 1));
 //        System.out.println(countGoodSubstrings("xyzzaz"));

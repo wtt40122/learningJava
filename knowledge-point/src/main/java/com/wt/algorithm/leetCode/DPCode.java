@@ -186,15 +186,6 @@ public class DPCode {
         return dp[bagSize];
     }
 
-    public static void main(String[] args) {
-        DPCode dpCode = new DPCode();
-        int[] weight = {1, 3, 4};
-        int[] value = {15, 20, 30};
-        int bagSize = 4;
-        System.out.println(dpCode.BagProblem(weight, value, bagSize));
-        System.out.println(dpCode.bagProblemDis(weight, value, bagSize));
-    }
-
     /**
      * @return int
      * @Description 整数拆分
@@ -533,5 +524,100 @@ public class DPCode {
         int value1 = treeNode.val + left[0] + right[0];
         int value2 = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
         return new int[]{value2, value1};
+    }
+
+    /**
+     * 不相交的线
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int maxUncrossedLines(int[] nums1, int[] nums2) {
+        int[][] dp = new int[nums1.length + 1][nums2.length + 1];
+        int result = 0;
+        for (int i = 1; i <= nums1.length; i++) {
+            for (int j = 1; j <= nums2.length; j++) {
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1);
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+                result = Math.max(result, dp[i][j]);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 最大子数组和
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        int result = dp[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+            result = Math.max(result, dp[i]);
+        }
+        return result;
+    }
+
+    /**
+     * 判断子序列
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubsequence(String s, String t) {
+        int[][] dp = new int[s.length() + 1][t.length() + 1];
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 1; j <= t.length(); j++) {
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                }
+            }
+        }
+        return dp[s.length()][t.length()] == s.length();
+    }
+
+    /**
+     * 不同的子序列
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public int numDistinct(String s, String t) {
+        int[][] dp = new int[s.length() + 1][t.length() + 1];
+        for (int i = 0; i < s.length(); i++) {
+            dp[i][0] = 1;
+        }
+        dp[0][0] = 1;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 1; j <= t.length(); j++) {
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[s.length()][t.length()];
+    }
+
+    public static void main(String[] args) {
+        DPCode dpCode = new DPCode();
+        int[] weight = {1, 3, 4};
+        int[] value = {15, 20, 30};
+        int bagSize = 4;
+        System.out.println(dpCode.BagProblem(weight, value, bagSize));
+        System.out.println(dpCode.bagProblemDis(weight, value, bagSize));
     }
 }
