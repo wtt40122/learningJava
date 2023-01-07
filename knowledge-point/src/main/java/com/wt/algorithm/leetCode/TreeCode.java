@@ -1350,6 +1350,26 @@ public class TreeCode {
         traversal(treeNode.left);
     }
 
+    int maxDepth1 = 1;
+    int currentDepth = 0;
+
+    public int maxDepth1(TreeNode root) {
+        traverse(root);
+        return maxDepth1;
+    }
+
+    private void traverse(TreeNode treeNde) {
+        if (null == treeNde) {
+            return;
+        }
+        currentDepth++;
+        maxDepth1 = Math.max(maxDepth1, currentDepth);
+        traverse(treeNde.left);
+        traversal(treeNde.right);
+        currentDepth--;
+    }
+
+
     public static void main(String[] args) {
 //        TreeNode treeNode4 = new TreeNode(4);
 //        TreeNode treeNode3 = new TreeNode(3, treeNode4, null);
