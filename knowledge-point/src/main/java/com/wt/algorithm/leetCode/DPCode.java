@@ -666,6 +666,31 @@ public class DPCode {
         return dp[word1.length()][word2.length()];
     }
 
+    /**
+     * 回文子串
+     *
+     * @param s
+     * @return
+     */
+    public int countSubstrings(String s) {
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        int count = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            for (int j = i; j < s.length(); j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (j - i <= 1) {
+                        dp[i][j] = true;
+                        count++;
+                    } else if (dp[i + 1][j - 1]) {
+                        dp[i][j] = true;
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         DPCode dpCode = new DPCode();
         int[] weight = {1, 3, 4};

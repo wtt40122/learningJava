@@ -1358,15 +1358,52 @@ public class TreeCode {
         return maxDepth1;
     }
 
-    private void traverse(TreeNode treeNde) {
+    private void traverse1(TreeNode treeNde) {
         if (null == treeNde) {
             return;
         }
         currentDepth++;
         maxDepth1 = Math.max(maxDepth1, currentDepth);
-        traverse(treeNde.left);
-        traversal(treeNde.right);
+        traverse1(treeNde.left);
+        traverse1(treeNde.right);
         currentDepth--;
+    }
+
+
+    public int maxDepth2(TreeNode root) {
+        return traverse(root);
+    }
+
+    private int traverse(TreeNode treeNode) {
+        if (null == treeNode) {
+            return 0;
+        }
+        int leftDept = traverse(treeNode.left);
+        int rightDept = traverse(treeNode.right);
+        return Math.max(leftDept, rightDept) + 1;
+    }
+
+    /**
+     * 二叉树的直径
+     *
+     * @param root
+     * @return
+     */
+    int maxDiameter = 0;
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        traverseBST(root);
+        return maxDiameter;
+    }
+
+    private int traverseBST(TreeNode treeNode) {
+        if (null == treeNode) {
+            return 0;
+        }
+        int leftDepth = traverseBST(treeNode.left);
+        int rightDepth = traverseBST(treeNode.right);
+        maxDiameter = Math.max(maxDiameter, leftDepth + rightDepth);
+        return Math.max(leftDepth, rightDepth) + 1;
     }
 
 
