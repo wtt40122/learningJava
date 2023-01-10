@@ -475,6 +475,36 @@ public class SlidingWindow {
         return result;
     }
 
+    /**
+     * 最长回文子串
+     *
+     * @param s
+     * @return
+     */
+    public static String longestPalindrome(String s) {
+        String result = "";
+        for (int i = 0; i < s.length(); i++) {
+            String res1 = palindrome(s, i, i);
+            String res2 = palindrome(s, i, i + 1);
+            if (res1.length() > result.length()) {
+                result = res1;
+            }
+            if (res2.length() > result.length()) {
+                result = res2;
+            }
+
+        }
+        return result;
+    }
+
+    private static String palindrome(String s, int left, int right) {
+        while (left > 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return s.substring(left + 1, right);
+    }
+
     public static void main(String[] args) {
 //        System.out.println(findMaxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
 //        System.out.println(findMaxAverage(new int[]{5}, 1));
@@ -499,5 +529,6 @@ public class SlidingWindow {
 //        System.out.println(maximumSubarraySum1(new int[]{5, 3, 3, 1, 1}, 3));
 //        System.out.println(findLength1(new int[]{1, 2, 3, 2, 1}, new int[]{3, 2, 1, 4, 7}));
         System.out.println(findAnagrams("baa", "aa"));
+        System.out.println(longestPalindrome("babad"));
     }
 }
