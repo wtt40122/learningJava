@@ -36,7 +36,8 @@
         <module>wt-bytecode</module>
         <module>source-analysis</module>
         <module>wt-springboot</module>
-    </modules>
+		<module>netty-learn</module>
+	</modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
