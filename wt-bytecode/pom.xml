@@ -15,7 +15,6 @@
     <modules>
         <module>wt-bytecode01</module>
         <module>wt-bytecode02</module>
-        <module>wt-bytecode02</module>
     </modules>
 
     <properties>
