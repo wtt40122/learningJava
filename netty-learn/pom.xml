@@ -19,6 +19,10 @@
         <module>netty-03</module>
         <module>netty-04</module>
         <module>netty-05</module>
+        <module>netty-06</module>
+        <module>netty-07</module>
+        <module>netty-08</module>
+        <module>netty-09</module>
     </modules>
 
     <properties>
