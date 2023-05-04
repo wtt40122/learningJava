@@ -29,6 +29,8 @@
         <module>netty-13</module>
         <module>netty-14</module>
         <module>netty-15</module>
+        <module>netty-16</module>
+        <module>netty-17</module>
     </modules>
 
     <properties>
