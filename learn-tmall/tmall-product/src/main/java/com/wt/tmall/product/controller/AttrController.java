@@ -11,7 +11,6 @@ import com.wt.tmall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.wt.tmall.product.entity.AttrEntity;
 import com.wt.tmall.product.service.AttrService;
 import com.wt.common.utils.PageUtils;
 import com.wt.common.utils.R;

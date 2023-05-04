@@ -7,15 +7,11 @@ import com.wt.common.valid.UpdateGroup;
 import com.wt.common.valid.UpdateStatusGroup;
 import com.wt.tmall.product.entity.BrandEntity;
 import com.wt.tmall.product.service.BrandService;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 

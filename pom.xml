@@ -10,16 +10,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>tmall-coupon</module>
-		<module>tmall-member</module>
-		<module>tmall-order</module>
-		<module>tmall-product</module>
-		<module>tmall-ware</module>
 		<module>renren-fast</module>
 		<module>renren-generator</module>
-        <module>tmall-common</module>
-        <module>tmall-gateway</module>
-        <module>tmall-third-party</module>
         <module>knowledge-point</module>
         <module>mini-tomcat</module>
         <module>mini-mybatis</module>
@@ -37,7 +29,8 @@
         <module>source-analysis</module>
         <module>wt-springboot</module>
 		<module>netty-learn</module>
-	</modules>
+        <module>learn-tmall</module>
+    </modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
