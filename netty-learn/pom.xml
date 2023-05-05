@@ -34,6 +34,7 @@
         <module>netty-18</module>
         <module>netty-19</module>
         <module>netty-20</module>
+        <module>netty-21</module>
     </modules>
 
     <properties>

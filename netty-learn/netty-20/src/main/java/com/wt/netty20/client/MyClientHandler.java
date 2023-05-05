@@ -39,10 +39,10 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
             public void run() {
                 try {
                     new NettyClient().connect("127.0.0.1", 7397);
-                    System.out.println("itstack-demo-netty client start done. {关注公众号：bugstack虫洞栈，获取源码}");
+                    System.out.println("netty client start done.");
                     Thread.sleep(500);
                 } catch (Exception e) {
-                    System.out.println("itstack-demo-netty client start error go reconnect ... {关注公众号：bugstack虫洞栈，获取源码}");
+                    System.out.println("netty client start error go reconnect ... ");
                 }
             }
         }).start();
