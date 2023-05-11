@@ -46,7 +46,7 @@ public class ServerSocket implements Runnable{
             f = b.bind(7397).sync();
             f.channel().closeFuture().sync();
 
-
+            System.out.println("到这里了");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
