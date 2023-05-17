@@ -12,9 +12,6 @@
     <artifactId>netty-rpc</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>netty-rpc-01</module>
-        <module>netty-rpc-02</module>
-        <module>netty-rpc-03</module>
         <module>netty-rpc-consumer</module>
         <module>netty-rpc-provider</module>
         <module>netty-rpc-learn</module>

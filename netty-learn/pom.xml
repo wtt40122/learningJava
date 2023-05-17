@@ -39,6 +39,7 @@
         <module>netty-23</module>
         <module>netty-24</module>
         <module>netty-rpc</module>
+        <module>netty-25</module>
     </modules>
 
     <properties>

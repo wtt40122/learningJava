@@ -17,4 +17,10 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <modules>
+        <module>netty-rpc-01</module>
+        <module>netty-rpc-02</module>
+        <module>netty-rpc-03</module>
+    </modules>
+
 </project>
