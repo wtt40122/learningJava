@@ -8,21 +8,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>learn-mq</artifactId>
     <packaging>pom</packaging>
+
     <modules>
-        <module>jvm-commander</module>
-        <module>jvm-class-search</module>
+        <module>learn-activemq</module>
     </modules>
 
-    <artifactId>java-jvm</artifactId>
-
-    <dependencies>
-        <!-- 命令行参数解析器 -->
-        <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-            <version>1.72</version>
-        </dependency>
-    </dependencies>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
 </project>

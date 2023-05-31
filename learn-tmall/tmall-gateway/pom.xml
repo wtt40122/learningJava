@@ -21,7 +21,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.wt.tmall</groupId>
+			<groupId>com.wt.learn</groupId>
 			<artifactId>tmall-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

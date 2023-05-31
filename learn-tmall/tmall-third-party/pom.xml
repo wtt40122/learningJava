@@ -8,7 +8,7 @@
         <version>2.1.8.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.wt.tmall</groupId>
+    <groupId>com.wt.learn</groupId>
     <artifactId>tmall-third-party</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tmall-third-party</name>
@@ -21,7 +21,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.wt.tmall</groupId>
+            <groupId>com.wt.learn</groupId>
             <artifactId>tmall-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <exclusions>
