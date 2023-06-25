@@ -37,7 +37,7 @@ public class TestType<K extends Comparable & Serializable, V> {
 
     @Test
     public void testTypeVariable() throws NoSuchFieldException {
-// 获取字段的类型
+        // 获取字段的类型
         Field fk = TestType.class.getDeclaredField("key");
         Field fv = TestType.class.getDeclaredField("value");
 //        Assert.that(fk.getGenericType() instanceof TypeVariable, "必须为TypeVariable类型");

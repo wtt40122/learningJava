@@ -18,6 +18,10 @@ public class UserDao {
         hashMap.put("10003", "锦毛鼠白玉堂");
     }
 
+    public void addData(String key, String value) {
+        hashMap.put(key, value);
+    }
+
     public String queryUserName(String uId) {
         return hashMap.get(uId);
     }

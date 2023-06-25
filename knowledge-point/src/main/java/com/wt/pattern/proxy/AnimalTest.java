@@ -6,6 +6,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import java.lang.reflect.Proxy;
 
 /**
+ * @author wangtao
  * @Auther: wtt
  * @Date: 2021/1/22 10:39
  * @Description: JDK动态代理 只能代理接口实现类

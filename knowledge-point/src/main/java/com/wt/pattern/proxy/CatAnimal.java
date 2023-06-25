@@ -1,6 +1,7 @@
 package com.wt.pattern.proxy;
 
 /**
+ * @author wangtao
  * @Auther: wtt
  * @Date: 2021/1/22 10:46
  * @Description:

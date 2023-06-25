@@ -17,6 +17,7 @@ public class TestSimple {
         String[] oldStr = {"1", "2", "3"};
         String[] newStr = Arrays.copyOf(oldStr, 5);
         Arrays.stream(newStr).forEach(System.out::println);
+        System.out.println("------------------");
         /**
          * 数据拷贝过去后，在新数组中不存在的数据都默认是null
          */
@@ -29,7 +30,7 @@ public class TestSimple {
     public void test_arr_copy() {
         String[] oldStr = {"1", "2", "3", "4", "5"};
         System.arraycopy(oldStr, 4, oldStr, 3, 1);
-        oldStr[4] = null;
+//        oldStr[4] = null;
         Arrays.stream(oldStr).forEach(System.out::println);
     }
 }

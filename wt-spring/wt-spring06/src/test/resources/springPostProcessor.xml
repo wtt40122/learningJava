@@ -11,6 +11,7 @@
     </bean>
 
     <bean class="com.wt.spring.test.common.MyBeanFactoryPostProcessor"/>
+    <bean class="com.wt.spring.test.common.MyBeanFactoryPostProcessor02"/>
     <bean class="com.wt.spring.test.common.MyBeanPostProcessor"/>
 
 </beans>

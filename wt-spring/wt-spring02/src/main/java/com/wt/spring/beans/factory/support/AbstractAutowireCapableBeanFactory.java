@@ -11,7 +11,7 @@ import com.wt.spring.beans.factory.config.BeanDefinition;
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
     @Override
     protected Object createBean(String name, BeanDefinition beanDefinition) throws BeansException {
-        Object bean = null;
+        Object bean;
         try {
             bean = beanDefinition.getBeanClass().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {

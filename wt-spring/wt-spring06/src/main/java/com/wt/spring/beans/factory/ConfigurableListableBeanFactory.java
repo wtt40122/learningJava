@@ -18,5 +18,4 @@ public interface ConfigurableListableBeanFactory extends ListableBeanFactory, Au
 
     void preInstantiateSingletons();
 
-    void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 }

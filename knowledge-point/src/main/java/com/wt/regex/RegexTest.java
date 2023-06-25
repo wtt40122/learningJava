@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @date 2022/1/2 11:03
  */
 public class RegexTest {
-    private final Pattern NEW_LINE_PATTERN = Pattern.compile("^20[0-9]{2}|^\\[20[0-9]{2}");
+    private static final Pattern NEW_LINE_PATTERN = Pattern.compile("^20[0-9]{2}|^\\[20[0-9]{2}");
 
     @Test
     public void test1() {
