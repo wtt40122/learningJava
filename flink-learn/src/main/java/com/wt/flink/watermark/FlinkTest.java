@@ -67,7 +67,8 @@ public class FlinkTest {
                 logSourceStream.flatMap(null);
         // 开窗聚合统计--定义滚动时间窗口一分钟统计一次
         WindowedStream<Tuple3<LineMessage, FlinkAlertRule, Integer>, Long, TimeWindow> streamOperator = matchStream.keyBy(data -> data.f1.getRuleId())
-                .window(TumblingEventTimeWindows.of(Time.milliseconds(DELAY_INTERVAL)));
+                .window(TumblingEventTimeWindows.of(Time.milliseconds(DELAY_INTERVAL)))
+                ;
         //自定义触发器触发窗口
         streamOperator.trigger(LogTrigger.create(DELAY_INTERVAL));
 

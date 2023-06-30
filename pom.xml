@@ -31,6 +31,7 @@
 		<module>netty-learn</module>
         <module>learn-tmall</module>
         <module>learn-mq</module>
+        <module>antlr4-learn</module>
     </modules>
 
 </project>
