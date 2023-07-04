@@ -32,6 +32,7 @@
         <module>learn-tmall</module>
         <module>learn-mq</module>
 		<module>api-gateway</module>
+		<module>antlr4-learn</module>
 	</modules>
 
 </project>
