@@ -7,6 +7,7 @@ package com.wt.learn;
  */
 public class Bootstrap {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Config config = ConfigureLoader.getInstance().load(args);
+        System.out.println(config.getPort());
     }
 }

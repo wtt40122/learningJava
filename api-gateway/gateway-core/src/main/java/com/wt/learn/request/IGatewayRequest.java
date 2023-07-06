@@ -1,6 +1,7 @@
 package com.wt.learn.request;
 
 import io.netty.handler.codec.http.cookie.Cookie;
+import org.asynchttpclient.Request;
 
 /**
  * @Author: wtt
@@ -32,5 +33,5 @@ public interface IGatewayRequest {
 
     String getFinalUrl();
 
-    IGatewayRequest build();
+    Request build();
 }

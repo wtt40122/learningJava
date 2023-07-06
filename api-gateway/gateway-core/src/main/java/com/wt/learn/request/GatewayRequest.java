@@ -10,6 +10,7 @@ import io.netty.handler.codec.http.cookie.Cookie;
 import io.netty.handler.codec.http.cookie.ServerCookieDecoder;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+import org.asynchttpclient.Request;
 import org.asynchttpclient.RequestBuilder;
 
 import java.nio.charset.Charset;
@@ -21,7 +22,7 @@ import java.util.*;
  * @Version: 1.0
  * @Description:
  */
-public class GateWayRequest implements IGatewayRequest {
+public class GatewayRequest implements IGatewayRequest {
 
     @Getter
     private final String uniqueId;
@@ -69,7 +70,7 @@ public class GateWayRequest implements IGatewayRequest {
 
     private final RequestBuilder requestBuilder;
 
-    public GateWayRequest(String uniqueId, long beginTime, long endTime, Charset charset, String clientIp, String host, String path, String uri, HttpMethod httpMethod, String contentType, HttpHeaders httpHeaders, QueryStringDecoder queryStringDecoder, FullHttpRequest fullHttpRequest, RequestBuilder requestBuilder) {
+    public GatewayRequest(String uniqueId, long beginTime, long endTime, Charset charset, String clientIp, String host, String path, String uri, HttpMethod httpMethod, String contentType, HttpHeaders httpHeaders, QueryStringDecoder queryStringDecoder, FullHttpRequest fullHttpRequest, RequestBuilder requestBuilder) {
         this.uniqueId = uniqueId;
         this.beginTime = TimeUtil.currentTimeMillis();
         this.endTime = endTime;
@@ -153,61 +154,65 @@ public class GateWayRequest implements IGatewayRequest {
 
     @Override
     public void setModifyHost(String host) {
-
+        this.modifyHost = host;
     }
 
     @Override
     public String getModifyHost() {
-        return null;
+        return modifyHost;
     }
 
     @Override
     public void setModifyPath(String path) {
-
+        this.modifyPath = path;
     }
 
     @Override
     public String getModifyPath() {
-        return null;
+        return modifyPath;
     }
 
     @Override
     public void addHeader(CharSequence name, String value) {
-
+        requestBuilder.addHeader(name, value);
     }
 
     @Override
     public void setHeader(CharSequence name, String value) {
-
+        requestBuilder.setHeader(name, value);
     }
 
     @Override
     public void addQueryParam(String name, String value) {
-
+        requestBuilder.addQueryParam(name, value);
     }
 
     @Override
     public void addFormParam(String name, String value) {
+        if (isFormPost()) {
+            requestBuilder.addFormParam(name, value);
+        }
 
     }
 
     @Override
     public void addOrReplaceCookie(Cookie cookie) {
-
+        requestBuilder.addOrReplaceCookie(cookie);
     }
 
     @Override
     public void setRequestTimeout(int requestTimeout) {
-
+        requestBuilder.setRequestTimeout(requestTimeout);
     }
 
     @Override
     public String getFinalUrl() {
-        return null;
+        return modifyScheme + modifyHost + modifyPath;
     }
 
     @Override
-    public IGatewayRequest build() {
-        return null;
+    public Request build() {
+        requestBuilder.setUrl(getFinalUrl());
+        return requestBuilder.build();
     }
 }
