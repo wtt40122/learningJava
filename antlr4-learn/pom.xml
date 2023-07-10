@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>antlr4-01</module>
+        <module>antlr4-02</module>
+        <module>antlr4-03</module>
     </modules>
 
     <properties>
