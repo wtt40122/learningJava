@@ -1,3 +1,5 @@
+// Derived from http://json.org
+
 grammar JSON;
 
 json:   object
@@ -5,24 +7,24 @@ json:   object
     ;
 
 object
-    :   '{' pair (',' pair)* '}'    # AnObject
-    |   '{' '}'                     # emptyObject
+    :   '{' pair (',' pair)* '}'
+    |   '{' '}' // empty object
     ;
 pair:   STRING ':' value ;
 
 array
-    :   '[' value (',' value)* ']'  #ArrayOfValues
-    |   '[' ']'                     #EmptyArray
+    :   '[' value (',' value)* ']'
+    |   '[' ']' // empty array
     ;
 
 value
-    :   STRING          #String
-    |   NUMBER          #Atom
-    |   object          #ObjectValue
-    |   array           #ArrayValue
-    |   'true'          #Atom
-    |   'false'         #Atom
-    |   'null'          #Atom
+    :   STRING
+    |   NUMBER
+    |   object  // recursion
+    |   array   // recursion
+    |   'true'  // keywords
+    |   'false'
+    |   'null'
     ;
 
 STRING :  '"' (ESC | ~["\\])* '"' ;
