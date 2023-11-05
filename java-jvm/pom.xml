@@ -12,6 +12,7 @@
     <modules>
         <module>jvm-commander</module>
         <module>jvm-class-search</module>
+        <module>jvm-parameters</module>
     </modules>
 
     <artifactId>java-jvm</artifactId>
