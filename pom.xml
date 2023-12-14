@@ -34,6 +34,7 @@
 		<module>api-gateway</module>
 		<module>antlr4-learn</module>
         <module>log-test</module>
-    </modules>
+		<module>mini-spring</module>
+	</modules>
 
 </project>

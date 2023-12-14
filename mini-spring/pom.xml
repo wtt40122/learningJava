@@ -5,20 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.wt.learn</groupId>
-        <artifactId>api-gateway</artifactId>
+        <artifactId>learningJava</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway-register-center</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>gateway-register-center-api</module>
-    </modules>
+    <artifactId>mini-spring</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+
+    </dependencies>
 
 </project>

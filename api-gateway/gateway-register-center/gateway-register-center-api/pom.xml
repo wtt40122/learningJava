@@ -5,20 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.wt.learn</groupId>
-        <artifactId>api-gateway</artifactId>
+        <artifactId>gateway-register-center</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway-register-center</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>gateway-register-center-api</module>
-    </modules>
+    <artifactId>gateway-register-center-api</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wt.learn</groupId>
+            <artifactId>gateway-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans>
+    <bean id="aService" class="com.wt.lean.AServiceImpl">
+        <property type="String" name="property1" value="Hello World!"/>
+        <constructor-arg type="String" name="name" value="abc"/>
+        <constructor-arg type="int" name="level" value="3"/>
+    </bean>
+</beans>

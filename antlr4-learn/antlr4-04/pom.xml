@@ -5,15 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.wt.learn</groupId>
-        <artifactId>api-gateway</artifactId>
+        <artifactId>antlr4-learn</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway-register-center</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>gateway-register-center-api</module>
-    </modules>
+    <artifactId>antlr4-04</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
