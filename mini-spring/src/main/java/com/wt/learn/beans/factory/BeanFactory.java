@@ -1,4 +1,4 @@
-package com.wt.learn.beans;
+package com.wt.learn.beans.factory;
 
 import com.wt.learn.beans.BeansException;
 

@@ -1,5 +1,11 @@
-package com.wt.learn.beans;
+package com.wt.learn.beans.factory.xml;
 
+import com.wt.learn.beans.PropertyValue;
+import com.wt.learn.beans.PropertyValues;
+import com.wt.learn.beans.factory.config.BeanDefinition;
+import com.wt.learn.beans.factory.config.ConstructorArgumentValue;
+import com.wt.learn.beans.factory.config.ConstructorArgumentValues;
+import com.wt.learn.beans.factory.support.AbstractBeanFactory;
 import com.wt.learn.core.Resource;
 import org.dom4j.Element;
 
@@ -13,10 +19,10 @@ import java.util.List;
  * @Description:
  */
 public class XmlBeanDefinitionReader {
-    private SimpleBeanFactory simpleBeanFactory;
+    private AbstractBeanFactory beanFactory;
 
-    public XmlBeanDefinitionReader(SimpleBeanFactory simpleBeanFactory) {
-        this.simpleBeanFactory = simpleBeanFactory;
+    public XmlBeanDefinitionReader(AbstractBeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
 
     public void loadBeanDefinitions(Resource res) {
@@ -29,12 +35,12 @@ public class XmlBeanDefinitionReader {
 
             //get constructor
             List<Element> constructorElements = element.elements("constructor-arg");
-            ArgumentValues AVS = new ArgumentValues();
+            ConstructorArgumentValues AVS = new ConstructorArgumentValues();
             for (Element e : constructorElements) {
                 String pType = e.attributeValue("type");
                 String pName = e.attributeValue("name");
                 String pValue = e.attributeValue("value");
-                AVS.addArgumentValue(new ArgumentValue(pType, pName, pValue));
+                AVS.addArgumentValue(new ConstructorArgumentValue(pType, pName, pValue));
             }
             beanDefinition.setConstructorArgumentValues(AVS);
             //end of handle constructor
@@ -65,7 +71,7 @@ public class XmlBeanDefinitionReader {
             beanDefinition.setDependsOn(refArray);
             //end of handle properties
 
-            this.simpleBeanFactory.registerBeanDefinition(beanID, beanDefinition);
+            this.beanFactory.registerBeanDefinition(beanID, beanDefinition);
         }
     }
 }

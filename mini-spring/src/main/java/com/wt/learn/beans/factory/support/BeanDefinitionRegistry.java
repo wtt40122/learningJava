@@ -1,4 +1,6 @@
-package com.wt.learn.beans;
+package com.wt.learn.beans.factory.support;
+
+import com.wt.learn.beans.factory.config.BeanDefinition;
 
 /**
  * @Author: wtt

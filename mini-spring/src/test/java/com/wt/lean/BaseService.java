@@ -1,5 +1,7 @@
 package com.wt.lean;
 
+import com.wt.learn.beans.factory.annotation.Autowired;
+
 /**
  * @Author: wtt
  * @Date: 2023/12/20 11:32
@@ -8,6 +10,7 @@ package com.wt.lean;
  */
 public class BaseService {
 
+    @Autowired
     private BaseBaseService bbs;
 
     public BaseBaseService getBbs() {
