@@ -1,6 +1,7 @@
 package com.wt.learn.beans;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @Author: wtt
@@ -9,56 +10,25 @@ import java.util.*;
  * @Description:
  */
 public class ArgumentValues {
-    private final Map<Integer, ArgumentValue> indexedArguments = new HashMap<>();
-    private final List<ArgumentValue> genericArguments = new LinkedList<>();
+    private final List<ArgumentValue> argumentValueList = new LinkedList<>();
 
     public ArgumentValues() {
     }
 
-    private void addArgumentValue(Integer key, ArgumentValue newValue) {
-        indexedArguments.put(key, newValue);
-    }
+    public void addArgumentValue(ArgumentValue newValue) {
 
-    public boolean hasIndexedArgumentValue(int index) {
-        return indexedArguments.containsKey(index);
+        argumentValueList.add(newValue);
     }
 
     public ArgumentValue getIndexedArgumentValue(int index) {
-        return indexedArguments.get(index);
-    }
-
-    public void addGenericArgumentValue(int index, ArgumentValue argumentValue) {
-        indexedArguments.put(index, argumentValue);
-    }
-
-    private void addGenericArgumentValue(ArgumentValue newValue) {
-        if (null != newValue.getName()) {
-            Iterator<ArgumentValue> iterator = genericArguments.iterator();
-            while (iterator.hasNext()) {
-                ArgumentValue argumentValue = iterator.next();
-                if (newValue.getName().equals(argumentValue.getName())) {
-                    iterator.remove();
-                }
-            }
-        }
-        genericArguments.add(newValue);
-    }
-
-    public ArgumentValue getGenericArgumentValue(String requiredName) {
-        for (ArgumentValue valueHolder : this.genericArguments) {
-            if (valueHolder.getName() != null && (requiredName == null || !valueHolder.getName().equals(requiredName))) {
-                continue;
-            }
-            return valueHolder;
-        }
-        return null;
+        return this.argumentValueList.get(index);
     }
 
     public int getArgumentCount() {
-        return genericArguments.size();
+        return argumentValueList.size();
     }
 
     public boolean isEmpty() {
-        return genericArguments.isEmpty();
+        return argumentValueList.isEmpty();
     }
 }

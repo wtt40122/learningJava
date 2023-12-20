@@ -28,10 +28,10 @@ public class PropertyValues {
         propertyValueList.add(pValue);
     }
 
-    public void addPropertyValue(String propertyName, Object pValue) {
-        propertyValueList.add(new PropertyValue(propertyName, pValue));
-
-    }
+//    public void addPropertyValue(String propertyName, Object pValue) {
+//        propertyValueList.add(new PropertyValue(propertyName, pValue));
+//
+//    }
 
     public void removePropertyValue(PropertyValue pValue) {
         propertyValueList.remove(pValue);
@@ -39,6 +39,10 @@ public class PropertyValues {
 
     public void removePropertyValue(String propertyName) {
         propertyValueList.remove(getPropertyValue(propertyName));
+    }
+
+    public PropertyValue[] getPropertyValues() {
+        return this.propertyValueList.toArray(new PropertyValue[this.propertyValueList.size()]);
     }
 
     private PropertyValue getPropertyValue(String propertyName) {
@@ -54,9 +58,11 @@ public class PropertyValues {
         PropertyValue pv = getPropertyValue(propertyName);
         return pv != null ? pv.getValue() : null;
     }
+
     public boolean contains(String propertyName) {
         return getPropertyValue(propertyName) != null;
     }
+
     public boolean isEmpty() {
         return this.propertyValueList.isEmpty();
     }
