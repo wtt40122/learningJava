@@ -5,6 +5,7 @@ import com.wt.learn.beans.PropertyValue;
 import com.wt.learn.beans.PropertyValues;
 import com.wt.learn.beans.factory.BeanFactory;
 import com.wt.learn.beans.factory.config.BeanDefinition;
+import com.wt.learn.beans.factory.config.ConfigurableBeanFactory;
 import com.wt.learn.beans.factory.config.ConstructorArgumentValue;
 import com.wt.learn.beans.factory.config.ConstructorArgumentValues;
 
@@ -23,10 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Version: 1.0
  * @Description:
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory, BeanDefinitionRegistry {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
+        implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
-    private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
-    private List<String> beanDefinitionNames = new ArrayList<>();
+    protected  Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
+    protected  List<String> beanDefinitionNames = new ArrayList<>();
     private final Map<String, Object> earlySingletonObjects = new HashMap<String, Object>(16);
 
     public AbstractBeanFactory() {

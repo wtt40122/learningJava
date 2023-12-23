@@ -1,7 +1,7 @@
 package com.wt.learn.beans.factory.annotation;
 
 import com.wt.learn.beans.BeansException;
-import com.wt.learn.beans.factory.config.AutowireCapableBeanFactory;
+import com.wt.learn.beans.factory.BeanFactory;
 import com.wt.learn.beans.factory.config.BeanPostProcessor;
 
 import java.lang.reflect.Field;
@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  */
 public class AutowiredAnnotationBeanPostProcessor implements BeanPostProcessor {
 
-    private AutowireCapableBeanFactory beanFactory;
+    private BeanFactory beanFactory;
 
 
     @Override
@@ -47,11 +47,11 @@ public class AutowiredAnnotationBeanPostProcessor implements BeanPostProcessor {
         return null;
     }
 
-    public AutowireCapableBeanFactory getBeanFactory() {
+    public BeanFactory getBeanFactory() {
         return beanFactory;
     }
 
-    public void setBeanFactory(AutowireCapableBeanFactory beanFactory) {
+    public void setBeanFactory(BeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 }

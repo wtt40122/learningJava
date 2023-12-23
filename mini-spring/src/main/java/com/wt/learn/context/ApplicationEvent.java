@@ -9,13 +9,11 @@ import java.util.EventObject;
  * @Description:
  */
 public class ApplicationEvent extends EventObject {
-    /**
-     * Constructs a prototypical Event.
-     *
-     * @param source The object on which the Event initially occurred.
-     * @throws IllegalArgumentException if source is null.
-     */
-    public ApplicationEvent(Object source) {
-        super(source);
+    private static final long serialVersionUID = 1L;
+    protected String msg = null;
+
+    public ApplicationEvent(Object arg0) {
+        super(arg0);
+        this.msg = arg0.toString();
     }
 }

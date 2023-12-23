@@ -1,6 +1,7 @@
 package com.wt.learn.beans.factory.config;
 
 import com.wt.learn.beans.BeansException;
+import com.wt.learn.beans.factory.BeanFactory;
 
 /**
  * @Author: wtt
@@ -13,4 +14,6 @@ public interface BeanPostProcessor {
     Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException;
 
     Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException;
+
+    void setBeanFactory(BeanFactory beanFactory);
 }
