@@ -1,6 +1,8 @@
 package com.wt.algorithm.other;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -171,12 +173,121 @@ public class Array {
         return true;
     }
 
+    public static List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> result = new ArrayList<>();
+        int subStrLength = words[0].length() * words.length;
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], map.getOrDefault(words[i], 0) + 1);
+        }
+        int left = 0, right;
+        for (right = 0; right < s.length(); right++) {
+
+            while (right - left + 1 >= subStrLength) {
+                Map<String, Integer> tempMap = new HashMap<>();
+                for (int i = left; i <= right; i += words[0].length()) {
+                    tempMap.put(s.substring(i, i + words[0].length()), tempMap.getOrDefault(s.substring(i, i + words[0].length()), 0) + 1);
+                }
+                if (isEqual(map, tempMap)) {
+                    result.add(left);
+                }
+                left++;
+            }
+        }
+        return result;
+    }
+
+    private static boolean isEqual(Map<String, Integer> map1, Map<String, Integer> map2) {
+        if (map1.size() != map2.size()) {
+            return false;
+        } else {
+            for (Map.Entry<String, Integer> entry : map1.entrySet()) {
+                if (!map2.getOrDefault(entry.getKey(), 0).equals(entry.getValue())) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    public static int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        int top = 0, bottom = n - 1, left = 0, right = n - 1;
+        int count = 1;
+        while (true) {
+            for (int i = left; i <= right; i++) {
+                res[top][i] = count++;
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int j = top; j <= bottom; j++) {
+                res[j][right] = count++;
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int i = right; i >= left; i--) {
+                res[bottom][i] = count++;
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int j = bottom; j >= top; j--) {
+                res[j][left] = count++;
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+        return res;
+    }
+
+    public static List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        int top = 0, bottom = matrix.length - 1, left = 0, right = matrix[0].length - 1;
+        while (true) {
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[top][i]);
+            }
+            if (++top > bottom) {
+                break;
+            }
+            for (int j = top; j <= bottom; j++) {
+                res.add(matrix[j][right]);
+            }
+            if (--right < left) {
+                break;
+            }
+            for (int i = right; i >= left; i--) {
+                res.add(matrix[bottom][i]);
+            }
+            if (--bottom < top) {
+                break;
+            }
+            for (int j = bottom; j >= top; j--) {
+                res.add(matrix[j][left]);
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+        return res;
+    }
+
+
     public static void main(String[] args) {
 //        int[] data = {1, 1, 2};
 //        System.out.println(removeDuplicates(data));
-        String s = "ADOBECODEBANC";
-        String t = "ABC";
-        System.out.println(minWindow(s, t));
+//        String s = "ADOBECODEBANC";
+//        String t = "ABC";
+//        System.out.println(minWindow(s, t));
+//        String s = "a";
+//        String[] words = {"a"};
+//        System.out.println(findSubstring(s, words));
 
+        generateMatrix(2);
+        String[] abs = "ABCD".split("AB");
+        System.out.println();
     }
 }

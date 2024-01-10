@@ -25,4 +25,36 @@ public class StringTest {
         }
         return sb.toString();
     }
+
+
+    public static int minLength(String s) {
+        while (s.contains("AB") || s.contains("CD")) {
+            if (s.contains("AB")) {
+                String[] abs = s.split("AB");
+                String str = "";
+                for (String ab : abs) {
+                    if (!"".equals(ab)) {
+                        str += ab;
+                    }
+                }
+                s = str;
+            }
+            if (s.contains("CD")) {
+                String[] abs = s.split("CD");
+                String str = "";
+                for (String ab : abs) {
+                    if (!"".equals(ab)) {
+                        str += ab;
+                    }
+                }
+                s = str;
+            }
+        }
+        return s.length();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(minLength("ABFCACDB"));
+    }
 }
+
