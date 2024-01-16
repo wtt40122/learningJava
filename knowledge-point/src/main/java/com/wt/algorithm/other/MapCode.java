@@ -125,9 +125,111 @@ public class MapCode {
         return setRes.stream().mapToInt(Integer::intValue).toArray();
     }
 
+    /**
+     * 三数之和
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length < 3) {
+            return res;
+        }
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                return res;
+            }
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1, right = nums.length - 1;
+
+            while (left < right) {
+                List<Integer> list = new ArrayList<>();
+                if (nums[i] + nums[left] + nums[right] == 0) {
+                    list.add(nums[i]);
+                    list.add(nums[left]);
+                    list.add(nums[right]);
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                    left++;
+                    right--;
+                } else if (nums[i] + nums[left] + nums[right] > 0) {
+                    right--;
+                } else {
+                    left++;
+                }
+                if (list.size() == 3) {
+                    res.add(list);
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 四数之和
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length < 4) {
+            return res;
+        }
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > target && nums[i] > 0) {
+                return res;
+            }
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                int left = j + 1, right = nums.length - 1;
+                while (left < right) {
+                    if (nums[i] + nums[j] + nums[left] + nums[right] == target) {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[i]);
+                        list.add(nums[j]);
+                        list.add(nums[left]);
+                        list.add(nums[right]);
+                        res.add(list);
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
+                        }
+                        left++;
+                        right--;
+                    } else if (nums[i] + nums[j] + nums[left] + nums[right] > target) {
+                        right--;
+                    } else {
+                        left++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         String s = "rat";
         String t = "car";
-        System.out.println(isAnagram(s, t));
+        int[] nums = {-1, 0, 1, 2, -1, -4};
+//        System.out.println(isAnagram(s, t));
+        System.out.println(threeSum(nums));
     }
 }
