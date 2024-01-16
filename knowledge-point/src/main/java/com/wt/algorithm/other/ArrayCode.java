@@ -9,9 +9,9 @@ import java.util.Map;
  * @Author: wtt
  * @Date: 2024/1/4 21:56
  * @Version: 1.0
- * @Description:
+ * @Description: 数组相关算法题
  */
-public class Array {
+public class ArrayCode {
     /**
      * 移除元素--暴力解法
      *

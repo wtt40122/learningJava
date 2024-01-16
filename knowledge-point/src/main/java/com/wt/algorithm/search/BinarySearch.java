@@ -101,16 +101,16 @@ public class BinarySearch {
 
     // <target的最大值
     public static <E extends Comparable<E>> int lower(E[] arr, E target) {
-        int l = -1, r = arr.length - 1;
-        while (l < r) {
-            int mid = l + (r - l + 1) / 2;
+        int l = 0, r = arr.length - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
             if (arr[mid].compareTo(target) < 0) {
-                l = mid;
+                l = mid + 1;
             } else {
                 r = mid - 1;
             }
         }
-        return l;
+        return l - 1;
     }
 
     public static void main(String[] args) {
@@ -119,9 +119,11 @@ public class BinarySearch {
 //        System.out.println(BinarySearch.search(arr, 988));
 //        System.out.println(BinarySearch.search2(arr, 988));
 
-        Integer[] nums = {1, 1, 3, 3, 5, 5};
-        for (int i = 0; i <= 6; i++) {
-            System.out.print(BinarySearch.lower(nums, i) + " ");
-        }
+//        Integer[] nums = {1, 1, 3, 3, 5, 5};
+//        for (int i = 0; i <= 6; i++) {
+//            System.out.print(BinarySearch.lower(nums, i) + " ");
+//        }
+        Integer[] nums = {1, 2, 3, 4, 5};
+        System.out.print(BinarySearch.lower(nums, 4));
     }
 }
