@@ -225,11 +225,104 @@ public class MapCode {
         return res;
     }
 
+    /**
+     * 整数转罗马数字
+     *
+     * @param num
+     * @return
+     */
+    public String intToRoman(int num) {
+        int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] strs = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strs.length; i++) {
+            while (num / nums[i] != 0) {
+                sb.append(strs[i]);
+                num -= nums[i];
+            }
+            if (num == 0) {
+                break;
+            }
+        }
+        return sb.toString();
+
+    }
+
+    /**
+     * 罗马数字转整数1
+     *
+     * @param s
+     * @return
+     */
+    public static int romanToInt(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("M", 1000);
+        map.put("CM", 900);
+        map.put("D", 500);
+        map.put("CD", 400);
+        map.put("C", 100);
+        map.put("XC", 90);
+        map.put("L", 50);
+        map.put("XL", 40);
+        map.put("X", 10);
+        map.put("IX", 9);
+        map.put("V", 5);
+        map.put("IV", 4);
+        map.put("I", 1);
+        int res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (i + 1 < s.length() && map.containsKey(String.valueOf(s.charAt(i)) + s.charAt(i + 1))) {
+                res += map.get(String.valueOf(s.charAt(i)) + s.charAt(i + 1));
+                i++;
+            } else {
+                res += map.get(String.valueOf(s.charAt(i)));
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 罗马数字转整数2
+     *
+     * @param s
+     * @return
+     */
+    public static int romanToInt1(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("M", 1000);
+        map.put("CM", 900);
+        map.put("D", 500);
+        map.put("CD", 400);
+        map.put("C", 100);
+        map.put("XC", 90);
+        map.put("L", 50);
+        map.put("XL", 40);
+        map.put("X", 10);
+        map.put("IX", 9);
+        map.put("V", 5);
+        map.put("IV", 4);
+        map.put("I", 1);
+        int res = 0;
+        int preNum = map.get(String.valueOf(s.charAt(0)));
+        for (int i = 1; i < s.length(); i++) {
+            int num = map.get(String.valueOf(s.charAt(i)));
+            if (num > preNum) {
+                res -= preNum;
+            } else {
+                res += preNum;
+            }
+            preNum = num;
+        }
+        res += preNum;
+        return res;
+    }
+
     public static void main(String[] args) {
         String s = "rat";
         String t = "car";
         int[] nums = {-1, 0, 1, 2, -1, -4};
 //        System.out.println(isAnagram(s, t));
-        System.out.println(threeSum(nums));
+//        System.out.println(threeSum(nums));
+        System.out.println(romanToInt1("MCMXCIV"));
     }
 }
