@@ -317,6 +317,77 @@ public class MapCode {
         return res;
     }
 
+    /**
+     * 四数之和为0--暴力法
+     *
+     * @param nums1
+     * @param nums2
+     * @param nums3
+     * @param nums4
+     * @return
+     */
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                for (int k = 0; k < nums3.length; k++) {
+                    for (int l = 0; l < nums4.length; l++) {
+                        if (nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0) {
+                            list.add(nums1[i] + nums2[j] + nums3[k] + nums4[l]);
+                        }
+                    }
+                }
+
+            }
+        }
+        return list.size();
+    }
+
+    /**
+     * 四数之和--hash法
+     *
+     * @param nums1
+     * @param nums2
+     * @param nums3
+     * @param nums4
+     * @return
+     */
+    public int fourSumCount1(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                map.put(nums1[i] + nums2[j], map.getOrDefault(nums1[i] + nums2[j], 0) + 1);
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < nums3.length; i++) {
+            for (int j = 0; j < nums4.length; j++) {
+                count += map.getOrDefault(-nums3[i] - nums4[j], 0);
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 赎金信
+     * @param ransomNote
+     * @param magazine
+     * @return
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] magazineCount = new int[26];
+        for (int i = 0; i < magazine.length(); i++) {
+            magazineCount[magazine.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < ransomNote.length(); i++) {
+            if (magazineCount[ransomNote.charAt(i) - 'a'] == 0) {
+                return false;
+            }
+            magazineCount[ransomNote.charAt(i) - 'a']--;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         String s = "rat";
         String t = "car";

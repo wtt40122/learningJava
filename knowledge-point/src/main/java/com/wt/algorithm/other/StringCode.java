@@ -1,7 +1,5 @@
 package com.wt.algorithm.other;
 
-import java.util.Arrays;
-
 /**
  * @Author: wtt
  * @Date: 2024/1/4 22:51
@@ -129,6 +127,87 @@ public class StringCode {
         return new String(chars);
     }
 
+    /**
+     * 将所有的字符用数字替换
+     *
+     * @param s
+     * @return
+     */
+    public String replaceDigits(String s) {
+        char[] result = new char[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                result[i] = (char) (result[i - 1] + Character.getNumericValue(s.charAt(i)));
+            } else {
+                result[i] = s.charAt(i);
+            }
+        }
+        return new String(result);
+    }
+
+    public String reverseWordss(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        StringBuilder sb = new StringBuilder();
+        while (s.charAt(left) == ' ') {
+            left++;
+        }
+        while (s.charAt(right) == ' ') {
+            right--;
+        }
+        while (left <= right) {
+            char c = s.charAt(left);
+            if (c != ' ' || sb.charAt(sb.length() - 1) != ' ') {
+                sb.append(c);
+            }
+            left++;
+        }
+        reverseString(sb, 0, sb.length() - 1);
+        reverseEachWord(sb);
+        return sb.toString();
+    }
+
+    private void reverseEachWord(StringBuilder sb) {
+        int start = 0;
+        int end = 1;
+        int n = sb.length();
+        while (start < n) {
+            while (end < n && sb.charAt(end) != ' ') {
+                end++;
+            }
+            reverseString(sb, start, end - 1);
+            start = end + 1;
+            end = start + 1;
+        }
+    }
+
+    public void reverseString(StringBuilder sb, int start, int end) {
+        while (start < end) {
+            char temp = sb.charAt(start);
+            sb.setCharAt(start, sb.charAt(end));
+            sb.setCharAt(end, temp);
+            start++;
+            end--;
+        }
+    }
+
+    public static int strStr(String haystack, String needle) {
+        if (needle.length() > haystack.length()) {
+            return -1;
+        }
+        for (int i = 0; i < haystack.length(); i++) {
+            for (int j = 0; j < needle.length(); j++) {
+                if (i + j >= haystack.length() || haystack.charAt(i + j) != needle.charAt(j)) {
+                    break;
+                }
+                if (j == needle.length() - 1) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     public static String reverseWords2(String s) {
         String[] res = s.split(" ");
         StringBuilder sb = new StringBuilder();
@@ -143,7 +222,7 @@ public class StringCode {
         return sb.toString().trim();
     }
 
-    public int strStr(String haystack, String needle) {
+    public int strStr1(String haystack, String needle) {
         if (needle.length() > haystack.length()) {
             return -1;
         }
