@@ -1,5 +1,7 @@
 package com.wt.algorithm.other;
 
+import java.util.Stack;
+
 /**
  * @Author: wtt
  * @Date: 2024/1/4 22:51
@@ -308,7 +310,7 @@ public class StringCode {
         return true;
     }
 
-    public static String longestPalindrome1(String s) {
+    public String longestPalindrome1(String s) {
         String res = "";
         for (int i = 0; i < s.length(); i++) {
             String str1 = palindromeStr(s, i, i);
@@ -332,9 +334,71 @@ public class StringCode {
         return s.substring(left + 1, right);
     }
 
+    /**
+     * 删除字符串中所有相邻的重复项
+     *
+     * @param s
+     * @return
+     */
+    public String removeDuplicates(String s) {
+        char[] charArray = s.toCharArray();
+        int slow = 0;
+
+        for (int fast = 0; fast < charArray.length; fast++) {
+            if (slow > 0 && charArray[fast] == charArray[slow - 1]) {
+                slow--;
+            } else {
+                charArray[slow++] = charArray[fast];
+            }
+        }
+
+        return new String(charArray, 0, slow);
+    }
+
+    /**
+     * 逆波兰表达式求值
+     *
+     * @param tokens
+     * @return
+     */
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for (String token : tokens) {
+            switch (token) {
+                case "+":
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "-":
+                    int num1 = stack.pop();
+                    int num2 = stack.pop();
+                    stack.push(num2 - num1);
+                    break;
+                case "*":
+                    stack.push(stack.pop() * stack.pop());
+                    break;
+                case "/":
+                    int divisor = stack.pop();
+                    int dividend = stack.pop();
+                    if (divisor == 0) {
+                        stack.push(0);
+                    } else {
+                        stack.push(dividend / divisor);
+                    }
+                    break;
+                default:
+                    stack.push(Integer.parseInt(token));
+            }
+        }
+        return stack.pop();
+    }
+
     public static void main(String[] args) {
 //        System.out.println(reverseWords2("  hello world  "));
-        System.out.println(longestPalindrome1("vyzonecajxxdvswhftixmzgjbfoeilbnchqmdgoxfmkkkkcqguavfozmplhzgothrwpukzgkctdacbxefrzrmbgwwrrhpcvqwvgwgknyrtxxoligsqpbqoucltakbkywwssyodzydsjxeuvgiqqitkfkqnxsfflgbjvbxdrworsdkowtkgabnszgsmgytupybdclmmsmougfendwvzarfdfbixjnlxvevqfoohcgrrysofifdfulygrmkwpimduzzluojeqixdtcxhcqnfsdbunmhsglhiplgbhrqrrrprffjfradvbifxxhoqylkejyprxdtianietnjumltxywfowopghurofvwtxvaxtqnjbzwvljjwfmmlhixogwwyaoysvrpgfymyqjschhqcwvytkreirdxfapaomayebhkzxgmlthoxialmtnilfopvhhqlocytyrtpfmpgqakdbrsteurcpfvruicuxzukfpwjwgnuaaungwjwpfkuzxuciurvfpcruetsrbdkaqgpmfptrytycolqhhvpoflintmlaixohtlmgxzkhbeyamoapafxdrierktyvwcqhhcsjqymyfgprvsyoaywwgoxihlmmfwjjlvwzbjnqtxavxtwvforuhgpowofwyxtlmujnteinaitdxrpyjeklyqohxxfibvdarfjffrprrrqrhbglpihlgshmnubdsfnqchxctdxiqejoulzzudmipwkmrgylufdfifosyrrgchoofqvevxlnjxibfdfrazvwdnefguomsmmlcdbyputygmsgzsnbagktwokdsrowrdxbvjbglffsxnqkfktiqqigvuexjsdyzdoysswwykbkatlcuoqbpqsgiloxxtrynkgwgvwqvcphrrwwgbmrzrfexbcadtckgzkupwrhtogzhlpmzofvaugqckkkkmfxogdmqhcnblieofbjgzmxitfhwsvdxxjacenozyv"));
+        StringCode stringCode = new StringCode();
+//        System.out.println(stringCode.longestPalindrome1("ffs"));
+//        System.out.println(stringCode.removeDuplicates("abbaca"));
+        String[] str = {"2", "1", "+", "3", "*"};
+        System.out.println(stringCode.evalRPN(str));
     }
 }
 

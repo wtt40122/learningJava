@@ -105,6 +105,12 @@ public class StackQueueCode {
         return stack.isEmpty();
     }
 
+    /**
+     * 括号匹配
+     *
+     * @param s
+     * @return
+     */
     public boolean isValid2(String s) {
         Stack<Character> stack = new Stack<>();
         for (char c : s.toCharArray()) {
@@ -121,8 +127,29 @@ public class StackQueueCode {
         return stack.isEmpty();
     }
 
+    /**
+     * 移除相邻的重复字符
+     *
+     * @param s
+     * @return
+     */
+    public String removeDuplicates(String s) {
+        StringBuilder sb = new StringBuilder();
+
+        for (char c : s.toCharArray()) {
+            int length = sb.length();
+            if (length > 0 && c == sb.charAt(length - 1)) {
+                sb.deleteCharAt(length - 1);
+            } else {
+                sb.append(c);
+            }
+        }
+
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         StackQueueCode stackQueueCode = new StackQueueCode();
-        System.out.println(stackQueueCode.isValid("]"));
+        System.out.println(stackQueueCode.removeDuplicates("abbaca"));
     }
 }
