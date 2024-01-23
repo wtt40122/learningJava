@@ -190,6 +190,31 @@ public class ListCode {
         return null;
     }
 
+    /**
+     * 链表插入排序
+     *
+     * @param head
+     * @return
+     */
+    public ListNode insertionSortList(ListNode head) {
+        ListNode cur = head;
+        List<ListNode> nodes = new ArrayList<>();
+        while (null != cur) {
+            nodes.add(cur);
+            cur = cur.next;
+        }
+        for (int i = 1; i < nodes.size(); i++) {
+            int num = nodes.get(i).val;
+            int j = i;
+            while (j > 0 && nodes.get(j - 1).val > num) {
+                nodes.get(j).val = nodes.get(j - 1).val;
+                j--;
+            }
+            nodes.get(j).val = num;
+        }
+        return head;
+    }
+
     public class ListNode {
         int val;
         ListNode next;
