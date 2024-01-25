@@ -1,9 +1,6 @@
 package com.wt.algorithm.other;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author wtt
@@ -148,8 +145,61 @@ public class StackQueueCode {
         return sb.toString();
     }
 
+    /**
+     * 滑动窗口最大值
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int left = 0, right = 0;
+        MyMonQueue monQueue = new MyMonQueue();
+        List<Integer> list = new ArrayList<>();
+        while (right < nums.length) {
+            monQueue.push(nums[right]);
+            if (right - left + 1 == k) {
+                list.add(monQueue.max());
+                monQueue.pop(nums[left]);
+                left++;
+            }
+            right++;
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    class MyMonQueue {
+        private Deque<Integer> deque;
+
+        public MyMonQueue() {
+            deque = new LinkedList<>();
+        }
+
+        public void push(int x) {
+            while (!deque.isEmpty() && deque.peekLast() < x) {
+                deque.pollLast();
+            }
+            deque.offerLast(x);
+        }
+
+        public void pop(int x) {
+            if (!deque.isEmpty() && deque.peekFirst() == x) {
+                deque.pollFirst();
+            }
+        }
+
+        public int max() {
+            return deque.peek();
+        }
+    }
+
     public static void main(String[] args) {
         StackQueueCode stackQueueCode = new StackQueueCode();
-        System.out.println(stackQueueCode.removeDuplicates("abbaca"));
+//        System.out.println(stackQueueCode.removeDuplicates("abbaca"));
+        int[] nums = new int[]{-7, -8, 7, 5, 7, 1, 6, 0};
+        int[] result = stackQueueCode.maxSlidingWindow(nums, 4);
+        for (int i = 0; i < result.length; i++) {
+            System.out.println(result[i]);
+        }
     }
 }

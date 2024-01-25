@@ -70,6 +70,45 @@ public class SortCode {
         }
     }
 
+    /**
+     * 快速排序
+     * 主要是选取一个基准元素，然后基准元素左边的要比基准元素小，右边的要比基准元素大
+     * 主要都是找基准元素的实际索引位置
+     *
+     * @param nums
+     */
+    public void quickSort(int[] nums) {
+        sort(nums, 0, nums.length - 1);
+    }
+
+    private void sort(int[] nums, int left, int right) {
+        if (left < right) {
+            int pivot = partition(nums, left, right);
+            sort(nums, left, pivot - 1);
+            sort(nums, pivot + 1, right);
+        }
+    }
+
+    private int partition(int[] nums, int left, int right) {
+        int midIndex = (left + right) / 2;
+        int temp = nums[midIndex];
+        nums[midIndex] = nums[left];
+        nums[left] = temp;
+        int pivot = nums[left];
+        while (left < right) {
+            while (left < right && nums[right] >= pivot) {
+                right--;
+            }
+            nums[left] = nums[right];
+            while (left < right && nums[left] <= pivot) {
+                left++;
+            }
+            nums[right] = nums[left];
+        }
+        nums[left] = pivot;
+        return left;
+    }
+
     public static void main(String[] args) {
         SortCode sortCode = new SortCode();
         int[] nums = {5, 2, 3, 1};
