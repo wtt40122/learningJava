@@ -141,6 +141,12 @@ public class BinaryTreeCode {
         }
     }
 
+    /**
+     * 后序遍历-迭代法
+     *
+     * @param root
+     * @return
+     */
     public List<Integer> postOrderTraversalIteration(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         if (null == root) {
