@@ -145,6 +145,51 @@ public class StackQueueCode {
         return sb.toString();
     }
 
+    public int[] maxSlidingWindow1(int[] nums, int k) {
+        int left = 0, right = 0;
+        List<Integer> list = new ArrayList<>();
+        while (right < nums.length) {
+            while (right - left + 1 == k) {
+                int max = Integer.MIN_VALUE;
+                for (int i = left; i <= right; i++) {
+                    max = Math.max(max, nums[i]);
+                }
+
+                list.add(max);
+                left++;
+            }
+            right++;
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /**
+     * 前k个高频元素
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            queue.offer(new int[]{entry.getKey(), entry.getValue()});
+            if (queue.size() > k) {
+                queue.poll();
+            }
+        }
+        int[] res = new int[k];
+        for (int i = k - 1; i >= 0; i--) {
+            res[i] = queue.poll()[0];
+        }
+        return res;
+    }
+
     /**
      * 滑动窗口最大值
      *

@@ -109,10 +109,88 @@ public class SortCode {
         return left;
     }
 
+    /**
+     * 归并排序
+     * 1.将数组分为两部分，递归调用
+     * 2.将两部分合并
+     * 两个数组合并的过程：
+     * 需要一个辅助数组，将两部分合并后，将结果存入辅助数组
+     *
+     * @param nums
+     */
+    public void mergeSort(int[] nums) {
+        int[] temp = new int[nums.length];
+        sort(nums, 0, nums.length - 1, temp);
+    }
+
+    private void sort(int[] nums, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            sort(nums, left, mid, temp);
+            sort(nums, mid + 1, right, temp);
+            merge(nums, left, mid, right, temp);
+        }
+    }
+
+    private void merge(int[] nums, int left, int mid, int right, int[] temp) {
+        int i = left, j = mid + 1, k = 0;
+        while (i <= mid && j <= right) {
+            if (nums[i] < nums[j]) {
+                temp[k] = nums[i];
+                i++;
+            } else {
+                temp[k] = nums[j];
+                j++;
+            }
+            k++;
+        }
+        while (i <= mid) {
+            temp[k] = nums[i];
+            i++;
+            k++;
+        }
+        while (j <= right) {
+            temp[k] = nums[j];
+            j++;
+            k++;
+        }
+        for (int m = left; m <= right; m++) {
+            nums[m] = temp[m - left];
+        }
+    }
+
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = 0, j = 0, k = 0;
+        int[] temp = new int[nums1.length];
+        while (i < m && j < n) {
+            if (nums1[i] < nums2[j]) {
+                temp[k] = nums1[i];
+                i++;
+            } else {
+                temp[k] = nums2[j];
+                j++;
+            }
+            k++;
+        }
+        while (i < m) {
+            temp[k] = nums1[i];
+            i++;
+            k++;
+        }
+        while (j < n) {
+            temp[k] = nums2[j];
+            j++;
+            k++;
+        }
+        for (i = 0; i < temp.length; i++) {
+            nums1[i] = temp[i];
+        }
+    }
+
     public static void main(String[] args) {
         SortCode sortCode = new SortCode();
         int[] nums = {5, 2, 3, 1};
-        sortCode.bubbleSort(nums);
+        sortCode.mergeSort(nums);
         Arrays.stream(nums).forEach(System.out::println);
     }
 }
