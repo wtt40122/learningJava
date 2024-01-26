@@ -497,7 +497,6 @@ public class BinaryTreeCode {
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        int minDepth = Integer.MAX_VALUE;
         while (!queue.isEmpty()) {
             int size = queue.size();
             depth++;
@@ -515,5 +514,143 @@ public class BinaryTreeCode {
             }
         }
         return depth;
+    }
+
+    /**
+     * 反转链表-递归
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (null == root) {
+            return null;
+        }
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        root.left = invertTree(right);
+        root.right = invertTree(left);
+        return root;
+    }
+
+    /**
+     * 反转链表-迭代
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode invertTreeIterative(TreeNode root) {
+        if (null == root) {
+            return null;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            TreeNode left = node.left;
+            TreeNode right = node.right;
+            node.left = right;
+            node.right = left;
+            if (null != right) {
+                stack.push(right);
+            }
+            if (null != left) {
+                stack.push(left);
+            }
+        }
+        return root;
+    }
+
+    /**
+     * N叉树的前序遍历-迭代
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> preorder(Node root) {
+        List<Integer> res = new ArrayList<>();
+        if (null == root) {
+            return res;
+        }
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            Node poll = stack.pop();
+            res.add(poll.val);
+            for (int i = poll.children.size() - 1; i >= 0; i--) {
+                if (null != poll.children.get(i)) {
+                    stack.push(poll.children.get(i));
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * N叉树的前序遍历-递归
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> preorderRecursive(Node root) {
+        List<Integer> res = new ArrayList<>();
+        preorderRecursive(root, res);
+        return res;
+    }
+
+    private void preorderRecursive(Node node, List<Integer> res) {
+        if (null != node) {
+            res.add(node.val);
+            for (Node child : node.children) {
+                preorderRecursive(child, res);
+            }
+        }
+    }
+
+    /**
+     * N叉树的后序遍历-迭代
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> postorder(Node root) {
+        List<Integer> res = new ArrayList<>();
+        postorder(root, res);
+        return res;
+    }
+
+    private void postorder(Node node, List<Integer> res) {
+        if (null != node) {
+            for (Node child : node.children) {
+                postorder(child, res);
+            }
+            res.add(node.val);
+        }
+    }
+
+    /**
+     * N叉树的后序遍历-迭代
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> postorderIterative(Node root) {
+        List<Integer> res = new ArrayList<>();
+        if (null == root) {
+            return res;
+        }
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            Node poll = stack.pop();
+            res.add(poll.val);
+            for (Node child : poll.children) {
+                if (null != child) {
+                    stack.push(child);
+                }
+            }
+        }
+        Collections.reverse(res);
+        return res;
     }
 }
