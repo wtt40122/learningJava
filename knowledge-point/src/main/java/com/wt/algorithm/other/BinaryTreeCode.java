@@ -1,5 +1,7 @@
 package com.wt.algorithm.other;
 
+import com.wt.algorithm.leetCode.LeetCode;
+
 import java.util.*;
 
 /**
@@ -652,5 +654,219 @@ public class BinaryTreeCode {
         }
         Collections.reverse(res);
         return res;
+    }
+
+    /**
+     * 是否对称二叉树-递归
+     *
+     * @param root
+     * @return
+     */
+    public boolean isSymmetricRecursive(TreeNode root) {
+        if (null == root) {
+            return true;
+        }
+        return isSymmetric(root.left, root.right);
+    }
+
+    private boolean isSymmetric(TreeNode left, TreeNode right) {
+        if (null != left && null == right) {
+            return false;
+        } else if (null == left && null != right) {
+            return false;
+        } else if (null == left && null == right) {
+            return true;
+        } else if (left.val != right.val) {
+            return false;
+        }
+        return isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left);
+    }
+
+    /**
+     * 是否对称二叉树-迭代
+     *
+     * @param root
+     * @return
+     */
+    public boolean isSymmetricIterative(TreeNode root) {
+        if (null == root) {
+            return true;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root.left);
+        queue.offer(root.right);
+        while (!queue.isEmpty()) {
+            TreeNode left = queue.poll();
+            TreeNode right = queue.poll();
+            if (null == left && null == right) {
+                continue;
+            }
+            if (null == left || null == right || left.val != right.val) {
+                return false;
+            }
+            queue.offer(left.left);
+            queue.offer(right.right);
+            queue.offer(left.right);
+            queue.offer(right.left);
+        }
+        return true;
+    }
+
+    /**
+     * 是否是相同结构的二叉树
+     *
+     * @param p
+     * @param q
+     * @return
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (null == p && null == q) {
+            return true;
+        } else if (null == p || null == q) {
+            return false;
+        }
+        return p.val == q.val && isSameTree(p.left, q.left) &&
+                isSameTree(p.right, q.right);
+    }
+
+    /**
+     * 另一棵树的子树
+     *
+     * @param root
+     * @param subRoot
+     * @return
+     */
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if (root == null && subRoot == null) {
+            return true;
+        }
+        if (null == root || subRoot == null) {
+            return false;
+        }
+        return isSameTree(root, subRoot) ||
+                isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    /**
+     * 二叉树的最大深度-递归
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepthRecursive(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        return 1 + Math.max(maxDepthRecursive(root.left), maxDepthRecursive(root.right));
+    }
+
+    /**
+     * 二叉树的最小深度-递归
+     *
+     * @param root
+     * @return
+     */
+    public int minDepthRecursive(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        if (null == root.left && null != root.right) {
+            return 1 + minDepthRecursive(root.right);
+        }
+        if (null != root.left && null == root.right) {
+            return 1 + minDepthRecursive(root.left);
+        }
+        return 1 + Math.min(minDepthRecursive(root.left), minDepthRecursive(root.right));
+    }
+
+    /**
+     * 二叉树的节点个数
+     *
+     * @param root
+     * @return
+     */
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return countNodes(root.left) + countNodes(root.right) + 1;
+
+    }
+
+    /**
+     * 完全二叉树的节点个数
+     *
+     * @param root
+     * @return
+     */
+    public int countNodesComplete(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        int leftDepth = 0;
+        int rightDepth = 0;
+        while (null != left) {
+            left = left.left;
+            leftDepth++;
+        }
+        while (null != right) {
+            right = right.right;
+            rightDepth++;
+        }
+        if (leftDepth == rightDepth) {
+            return (2 << leftDepth) - 1;
+        }
+        return 1 + countNodesComplete(root.left) + countNodesComplete(root.right);
+    }
+
+    /**
+     * 平衡二叉树
+     *
+     * @param root
+     * @return
+     */
+    public boolean isBalanced(TreeNode root) {
+        if (null == root) {
+            return true;
+        }
+        return isBalanced(root.left) && isBalanced(root.right) &&
+                Math.abs(height(root.left) - height(root.right)) < 2;
+    }
+
+    private int height(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        return 1 + Math.max(height(root.left), height(root.right));
+    }
+
+    /**
+     * 二叉树的所有路径
+     *
+     * @param root
+     * @return
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (null == root) {
+            return res;
+        }
+        binaryTreePaths(root, res, "");
+        return res;
+    }
+
+    private void binaryTreePaths(TreeNode node, List<String> res, String path) {
+        if (null == node) {
+            return;
+        }
+        if (null == node.right && null == node.left) {
+            res.add(path + node.val);
+            return;
+        }
+        String tmp = path + node.val + "->";
+        binaryTreePaths(node.left, res, tmp);
+        binaryTreePaths(node.right, res, tmp);
     }
 }
