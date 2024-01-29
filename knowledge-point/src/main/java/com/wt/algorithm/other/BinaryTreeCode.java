@@ -950,10 +950,174 @@ public class BinaryTreeCode {
         return sum;
     }
 
+    /**
+     * 最左则叶子节点的值-迭代
+     *
+     * @param root
+     * @return
+     */
     public int findBottomLeftValue(TreeNode root) {
-        if(null == root){
+        if (null == root) {
             return 0;
         }
-        return 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (i == 0) {
+                    res = node.val;
+                }
+                if (null != node.left) {
+                    queue.offer(node.left);
+                }
+                if (null != node.right) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return res;
     }
+
+    int maxDepth = 0;
+    int res;
+
+    /**
+     * 最左则叶子节点的值-递归
+     *
+     * @param root
+     * @return
+     */
+    public int findBottomLeftValueRecursive(TreeNode root) {
+        res = root.val;
+        findBottomLeftValueRecursive(root, 0);
+        return res;
+    }
+
+    private void findBottomLeftValueRecursive(TreeNode node, int depth) {
+        if (null == node) {
+            return;
+        }
+        if (null == node.left && null == node.right) {
+            if (maxDepth < depth) {
+                maxDepth = depth;
+                res = node.val;
+            }
+        }
+        if (null != node.left) {
+            depth++;
+            findBottomLeftValueRecursive(node.left, depth);
+            depth--;
+        }
+        if (null != node.right) {
+            depth++;
+            findBottomLeftValueRecursive(node.right, depth);
+        }
+    }
+
+    boolean hasPathSum;
+
+    /**
+     * 路径总和
+     *
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        orderBinary(root, root == null ? 0 : root.val, targetSum);
+        return hasPathSum;
+    }
+
+    private void orderBinary(TreeNode node, int sum, int targetSum) {
+        if (null == node) {
+            return;
+        }
+        if (null == node.left && null == node.right) {
+            if (sum == targetSum) {
+                hasPathSum = true;
+            }
+            return;
+        }
+        if (null != node.left) {
+            sum += node.left.val;
+            orderBinary(node.left, sum, targetSum);
+            sum -= node.left.val;
+        }
+        if (null != node.right) {
+            sum += node.right.val;
+            orderBinary(node.right, sum, targetSum);
+            sum -= node.right.val;
+        }
+    }
+
+    public boolean hasPathSumIteration(TreeNode root, int targetSum) {
+        if (null == root) {
+            return false;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        stack.push(root);
+        stack2.push(root.val);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            Integer sum = stack2.pop();
+            if (null == node.left && null == node.right && sum == targetSum) {
+                return true;
+            }
+            if (null != node.right) {
+                stack.push(node.right);
+                stack2.push(sum + node.right.val);
+            }
+            if (null != node.left) {
+                stack.push(node.left);
+                stack2.push(sum + node.left.val);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 路径综合II-递归
+     *
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (null == root) {
+            return res;
+        }
+        List<Integer> list = new ArrayList<>();
+        list.add(root.val);
+        orderBinary(root, root.val, res, list, targetSum);
+        return res;
+    }
+
+    private void orderBinary(TreeNode node, int sum, List<List<Integer>> res,
+                             List<Integer> list, int targetSum) {
+        if (null == node) {
+            return;
+        }
+        if (null == node.left && null == node.right) {
+            if (sum == targetSum) {
+                res.add(new ArrayList<>(list));
+            }
+            return;
+        }
+        if (null != node.left) {
+            list.add(node.left.val);
+            orderBinary(node.left, sum + node.left.val, res, list, targetSum);
+            list.remove(list.size() - 1);
+        }
+        if (null != node.right) {
+            list.add(node.right.val);
+            orderBinary(node.right, sum + node.right.val, res, list, targetSum);
+            list.remove(list.size() - 1);
+        }
+    }
+
 }
