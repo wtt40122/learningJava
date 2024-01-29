@@ -10,29 +10,23 @@ public class Testbdu {
 //
 //     1 2 2 4 3 5
 
-//    public Node sortNode(Node head, Integer target) {
-//        Node list1 = new Node();
-//        Node list2 = new Node();
-//        while (head != null) {
-//            if (head.val == target) {
-//                list2 = head;
-//                head.next = null;
-//            } else {
-//                head = head.next;
-//            }
-//        }
-//        list1 = head;
-//        while (list2.next != null) {
-//
-//        }
-//    }
+    public static void main(String[] args) {
+        method(null);
+    }
 
-
-    public static class Node {
-        Integer val;
-        private Node next;
-
-        public Node() {
+    public static void method(String param) {
+        switch (param) {
+            // 肯定不是进入这里
+            case "sth":
+                System.out.println("it's sth");
+                break;
+            // 也不是进入这里
+            case "null":
+                System.out.println("it's null");
+                break;
+            // 也不是进入这里
+            default:
+                System.out.println("default");
         }
     }
 

@@ -869,4 +869,91 @@ public class BinaryTreeCode {
         binaryTreePaths(node.left, res, tmp);
         binaryTreePaths(node.right, res, tmp);
     }
+
+    /**
+     * 左叶子之和-递归
+     *
+     * @param root
+     * @return
+     */
+    public int sumOfLeftLeavesRecursive(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        if (null == root.left && null == root.right) {
+            return 0;
+        }
+        int leftValue = sumOfLeftLeavesRecursive(root.left);
+        if (null != root.left && null == root.left.left && null == root.left.right) {
+            leftValue = root.left.val;
+        }
+        int rightValue = sumOfLeftLeavesRecursive(root.right);
+        return leftValue + rightValue;
+    }
+
+    /**
+     * 左叶子之和-前序遍历迭代
+     *
+     * @param root
+     * @return
+     */
+    public int sumOfLeftLeavesPreorder(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        int sum = 0;
+        while (!stack.isEmpty()) {
+            TreeNode treeNode = stack.pop();
+            if (null != treeNode.left && null == treeNode.left.left && null == treeNode.left.right) {
+                sum += treeNode.left.val;
+            }
+            if (null != treeNode.right) {
+                stack.push(treeNode.right);
+            }
+            if (null != treeNode.left) {
+                stack.push(treeNode.left);
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * 左叶子之和-层序遍历迭代
+     *
+     * @param root
+     * @return
+     */
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int sum = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (null != node.left && null == node.left.left && null == node.left.right) {
+                    sum += node.left.val;
+                }
+                if (null != node.left) {
+                    queue.offer(node.left);
+                }
+                if (null != node.right) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return sum;
+    }
+
+    public int findBottomLeftValue(TreeNode root) {
+        if(null == root){
+            return 0;
+        }
+        return 0;
+    }
 }
