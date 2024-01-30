@@ -1,7 +1,5 @@
 package com.wt.algorithm.other;
 
-import com.wt.algorithm.leetCode.LeetCode;
-
 import java.util.*;
 
 /**
@@ -1120,4 +1118,205 @@ public class BinaryTreeCode {
         }
     }
 
+    /**
+     * 根据中序遍历和后序遍历重建二叉树
+     *
+     * @param inorder
+     * @param postorder
+     * @return
+     */
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if (null == inorder || null == postorder ||
+                inorder.length != postorder.length ||
+                inorder.length == 0) {
+            return null;
+        }
+        int rootValue = postorder[postorder.length - 1];
+        TreeNode root = new TreeNode(rootValue);
+        int delimiterIndex;
+        for (delimiterIndex = 0; delimiterIndex < inorder.length; delimiterIndex++) {
+            if (rootValue == inorder[delimiterIndex]) {
+                break;
+            }
+        }
+        int[] leftInorder = delimiterArray(inorder, 0, delimiterIndex);
+        int[] rightInorder = delimiterArray(inorder, delimiterIndex + 1, inorder.length);
+
+        int[] leftPostorder = delimiterArray(postorder, 0, leftInorder.length);
+        int[] rightPostorder = delimiterArray(postorder, leftInorder.length, postorder.length - 1);
+        root.left = buildTree(leftInorder, leftPostorder);
+        root.right = buildTree(rightInorder, rightPostorder);
+        return root;
+    }
+
+    private int[] delimiterArray(int[] array, int start, int end) {
+        int[] res = new int[end - start];
+        for (int i = start; i < end; i++) {
+            res[i - start] = array[i];
+        }
+        return res;
+    }
+
+    /**
+     * 前序遍历和中序遍历构造二叉树
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    public TreeNode buildTreePreIn(int[] preorder, int[] inorder) {
+        if (null == preorder || null == inorder || preorder.length != inorder.length || preorder.length == 0) {
+            return null;
+        }
+        int rootValue = preorder[0];
+        TreeNode root = new TreeNode(rootValue);
+        int delimiterIndex;
+        for (delimiterIndex = 0; delimiterIndex < inorder.length; delimiterIndex++) {
+            if (rootValue == inorder[delimiterIndex]) {
+                break;
+            }
+        }
+        int[] leftInorder = delimiterArray(inorder, 0, delimiterIndex);
+        int[] rightInorder = delimiterArray(inorder, delimiterIndex + 1, inorder.length);
+
+        int[] leftPreorder = delimiterArray(preorder, 1, leftInorder.length + 1);
+        int[] rightPreorder = delimiterArray(preorder, leftInorder.length + 1, preorder.length);
+        root.left = buildTreePreIn(leftPreorder, leftInorder);
+        root.right = buildTreePreIn(rightPreorder, rightInorder);
+        return root;
+    }
+
+    /**
+     * 最大二叉树
+     *
+     * @param nums
+     * @return
+     */
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        if (null == nums || nums.length == 0) {
+            return null;
+        }
+        int maxValueIndex = 0;
+        int maxValue = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > maxValue) {
+                maxValueIndex = i;
+                maxValue = nums[maxValueIndex];
+            }
+        }
+
+        TreeNode root = new TreeNode(maxValue);
+        int[] left = delimiterArray(nums, 0, maxValueIndex);
+        int[] right = delimiterArray(nums, maxValueIndex + 1, nums.length);
+        root.left = constructMaximumBinaryTree(left);
+        root.right = constructMaximumBinaryTree(right);
+        return root;
+    }
+
+    /**
+     * 合并两个二叉树-递归
+     *
+     * @param root1
+     * @param root2
+     * @return
+     */
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if (null == root1) {
+            return root2;
+        }
+        if (null == root2) {
+            return root1;
+        }
+        root1.val += root2.val;
+        root1.left = mergeTrees(root1.left, root2.left);
+        root1.right = mergeTrees(root1.right, root2.right);
+        return root1;
+    }
+
+    /**
+     * 合并两个二叉树-迭代
+     *
+     * @param root1
+     * @param root2
+     * @return
+     */
+    public TreeNode mergeTreesRecursive(TreeNode root1, TreeNode root2) {
+        if (null == root1) {
+            return root2;
+        }
+        if (null == root2) {
+            return root1;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root1);
+        stack.push(root2);
+        while (!stack.isEmpty()) {
+            TreeNode node2 = stack.pop();
+            TreeNode node1 = stack.pop();
+            node1.val += node2.val;
+            if (null != node1.left && null != node2.left) {
+                stack.push(node1.left);
+                stack.push(node2.left);
+            }
+            if (null != node1.right && null != node2.right) {
+                stack.push(node1.right);
+                stack.push(node2.right);
+            }
+            if (null == node1.left && null != node2.left) {
+                node1.left = node2.left;
+            }
+            if (null == node1.right && null != node2.right) {
+                node1.right = node2.right;
+            }
+        }
+        return root1;
+    }
+
+    /**
+     * 二叉搜索树的搜索-递归
+     *
+     * @param root
+     * @param val
+     * @return
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (null == root) {
+            return null;
+        }
+//        if (val == root.val) {
+//            return root;
+//        }
+//        TreeNode treeNode = searchBST(root.left, val);
+//        if (null != treeNode) {
+//            return treeNode;
+//        }
+//        return searchBST(root.right, val);
+        if (root.val == val) {
+            return root;
+        } else if (root.val < val) {
+            return searchBST(root.right, val);
+        } else {
+            return searchBST(root.left, val);
+        }
+    }
+
+    /**
+     * 二叉搜索树的搜索-迭代
+     *
+     * @param root
+     * @param val
+     * @return
+     */
+    public TreeNode searchBSTIterator(TreeNode root, int val) {
+        while (null != root) {
+            if (val == root.val) {
+                return root;
+            } else if (val < root.val) {
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+        return null;
+    }
 }
