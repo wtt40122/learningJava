@@ -1,5 +1,7 @@
 package com.wt.algorithm.other;
 
+import org.checkerframework.checker.units.qual.min;
+
 import java.util.*;
 
 /**
@@ -1318,5 +1320,111 @@ public class BinaryTreeCode {
             }
         }
         return null;
+    }
+
+    /**
+     * 二叉搜索树的验证-递归
+     *
+     * @param root
+     * @return
+     */
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValidBST(TreeNode root, long min, long max) {
+        if (root == null) {
+            return true;
+        }
+        if (root.val <= min || root.val >= max) {
+            return false;
+        }
+        return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
+    }
+
+    /**
+     * 验证二叉搜索树-迭代
+     *
+     * @param root
+     * @return
+     */
+    public boolean isValidBSTIterator(TreeNode root) {
+        if (null == root) {
+            return true;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        TreeNode pre = null;
+        while (null != cur || !stack.isEmpty()) {
+            if (null != cur) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                TreeNode treeNode = stack.pop();
+                if (null != pre && treeNode.val <= pre.val) {
+                    return false;
+                }
+                pre = treeNode;
+                if (null != treeNode.right) {
+                    cur = treeNode.right;
+                }
+            }
+        }
+        return true;
+    }
+
+    int result = Integer.MAX_VALUE;
+    TreeNode pre = null;
+
+    /**
+     * 二叉搜索树的最小绝对差-递归
+     *
+     * @param root
+     * @return
+     */
+    public int getMinimumDifference(TreeNode root) {
+        getMinimumDifferenceOrder(root);
+        return result;
+    }
+
+    private void getMinimumDifferenceOrder(TreeNode treeNode) {
+        if (null == treeNode) {
+            return;
+        }
+        getMinimumDifferenceOrder(treeNode.left);
+        if (null != pre) {
+            result = Math.min(result, treeNode.val - pre.val);
+        }
+        pre = treeNode;
+        getMinimumDifference(treeNode.right);
+    }
+
+    /**
+     * 二叉搜索树的最小绝对差-迭代
+     *
+     * @param root
+     * @return
+     */
+    public int getMinimumDifferenceIterator(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        int result = Integer.MAX_VALUE;
+        TreeNode pre = null;
+        while (null != cur || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            TreeNode treeNode = stack.pop();
+            if (null != pre) {
+                result = Math.min(result, treeNode.val - pre.val);
+            }
+            pre = treeNode;
+            cur = treeNode.right;
+        }
+        return result;
     }
 }
