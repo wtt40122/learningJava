@@ -3,6 +3,7 @@ package com.wt.algorithm.other;
 import org.checkerframework.checker.units.qual.min;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wtt
@@ -1426,5 +1427,94 @@ public class BinaryTreeCode {
             cur = treeNode.right;
         }
         return result;
+    }
+
+    /**
+     * 二叉搜索树中的众数-遍历树保存下频率然后排序取最值
+     *
+     * @param root
+     * @return
+     */
+    public int[] findMode(TreeNode root) {
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        if (root == null) {
+            return list.stream().mapToInt(Integer::intValue).toArray();
+        }
+        orderTree(root, map);
+        List<Map.Entry<Integer, Integer>> sortedList = new ArrayList<>(map.entrySet());
+        sortedList.sort(Map.Entry.comparingByValue());
+        List<Map.Entry<Integer, Integer>> mapList = map.entrySet().stream()
+                .sorted((c1, c2) -> c2.getValue().compareTo(c1.getValue()))
+                .collect(Collectors.toList());
+        list.add(mapList.get(0).getKey());
+        // 把频率最高的加入 list
+        for (int i = 1; i < mapList.size(); i++) {
+            if (mapList.get(i).getValue() == mapList.get(i - 1).getValue()) {
+                list.add(mapList.get(i).getKey());
+            } else {
+                break;
+            }
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    private void orderTree(TreeNode node, Map<Integer, Integer> map) {
+        if (null == node) {
+            return;
+        }
+        map.put(node.val, map.getOrDefault(node.val, 0) + 1);
+        orderTree(node.left, map);
+        orderTree(node.right, map);
+    }
+
+    int count = 0;
+    int maxCount = 0;
+
+    /**
+     * 二叉搜索树的众数-中序遍历，有序，前后指针比较判断-递归
+     *
+     * @param root
+     * @return
+     */
+    public int[] findModeInOrder(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        orderTree(root, result);
+        int[] intArray = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            intArray[i] = result.get(i);
+        }
+        return intArray;
+    }
+
+    private void orderTree(TreeNode node, List<Integer> result) {
+        if (null == node) {
+            return;
+        }
+        orderTree(node.left, result);
+        if (null == pre) {
+            count = 1;
+        } else if (node.val == pre.val) {
+            count++;
+        } else {
+            count = 1;
+        }
+        if (count == maxCount) {
+            result.add(node.val);
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            result.clear();
+            result.add(node.val);
+        }
+        pre = node;
+        orderTree(node.right, result);
+    }
+
+    public int[] findModeIterator(TreeNode root) {
+        if(null == root){
+            return new int[0];
+        }
+        Stack<TreeNode> stack = new Stack<>();
     }
 }
