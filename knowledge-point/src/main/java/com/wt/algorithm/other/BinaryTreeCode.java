@@ -1511,10 +1511,177 @@ public class BinaryTreeCode {
         orderTree(node.right, result);
     }
 
+    /**
+     * 二叉搜索树的众数-中序遍历，有序，前后指针比较判断-迭代
+     *
+     * @param root
+     * @return
+     */
     public int[] findModeIterator(TreeNode root) {
-        if(null == root){
+        if (null == root) {
             return new int[0];
         }
         Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null;
+        TreeNode cur = root;
+        int count = 0;
+        int maxCount = 0;
+        List<Integer> result = new ArrayList<>();
+        while (cur != null || !stack.isEmpty()) {
+            if (null != cur) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                TreeNode node = stack.pop();
+
+                cur = node.right;
+                if (null == pre) {
+                    count = 1;
+                } else if (pre.val == node.val) {
+                    count++;
+                } else {
+                    count = 1;
+                }
+                if (count == maxCount) {
+                    result.add(node.val);
+                }
+                if (count > maxCount) {
+                    maxCount = count;
+                    result.clear();
+                    result.add(node.val);
+                }
+                pre = node;
+            }
+        }
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /**
+     * 二叉树的最近公共祖先
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (null == root || null == p || null == q) {
+            return root;
+        }
+        if (root == p || root == q) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (null != left && null != right) {
+            return root;
+        }
+        if (null != left) {
+            return left;
+        }
+        if (null != right) {
+            return right;
+        }
+        return null;
+    }
+
+    /**
+     * 二叉搜索的最近公共祖先-递归
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestorSearch(TreeNode root, TreeNode p, TreeNode q) {
+
+        if (null == root || null == p || null == q) {
+            return root;
+        }
+        if (root.val > p.val && root.val > q.val) {
+            return lowestCommonAncestorSearch(root.left, p, q);
+        }
+        if (root.val < p.val && root.val < q.val) {
+            return lowestCommonAncestorSearch(root.right, p, q);
+        }
+        return root;
+    }
+
+    /**
+     * 二叉搜索的最近公共祖先-迭代
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestorSearchIterative(TreeNode root, TreeNode p, TreeNode q) {
+        if (null == root || null == p || null == q) {
+            return root;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node.val > p.val && node.val > q.val) {
+                stack.push(node.left);
+            } else if (node.val < p.val && node.val < q.val) {
+                stack.push(node.right);
+            } else {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 二叉搜索树的插入-递归
+     *
+     * @param root
+     * @param val
+     * @return
+     */
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (null == root) {
+            return new TreeNode(val);
+        }
+        if (root.val > val) {
+            root.left = insertIntoBST(root.left, val);
+        }
+        if (root.val < val) {
+            root.right = insertIntoBST(root.right, val);
+        }
+        return root;
+    }
+
+    /**
+     * 二叉搜索树的插入-迭代
+     *
+     * @param root
+     * @param val
+     * @return
+     */
+    public TreeNode insertIntoBSTIterative(TreeNode root, int val) {
+        if (null == root) {
+            return new TreeNode(val);
+        }
+        TreeNode cur = root;
+        TreeNode pre = null;
+        TreeNode treeNode = new TreeNode(val);
+
+        while (cur != null) {
+            pre = cur;
+            if (cur.val > val) {
+                cur = cur.left;
+            } else if (cur.val < val) {
+                cur = cur.right;
+            }
+        }
+        if (val < pre.val) {
+            pre.left = treeNode;
+        } else {
+            pre.right = treeNode;
+        }
+        return root;
     }
 }
