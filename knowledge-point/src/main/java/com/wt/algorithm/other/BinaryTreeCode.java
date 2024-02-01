@@ -1684,4 +1684,96 @@ public class BinaryTreeCode {
         }
         return root;
     }
+
+    /**
+     * 把有序数组转换为二叉搜索树
+     *
+     * @param nums
+     * @return
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums.length == 0) {
+            return null;
+        }
+        int middle = nums.length / 2;
+        TreeNode root = new TreeNode(nums[middle]);
+        if (nums.length > 1) {
+            int[] left = new int[middle];
+            for (int i = 0; i < middle; i++) {
+                left[i] = nums[i];
+            }
+            int[] right = new int[nums.length - middle - 1];
+            for (int i = middle + 1; i < nums.length; i++) {
+                right[i - middle - 1] = nums[i];
+            }
+            root.left = sortedArrayToBST(left);
+            root.right = sortedArrayToBST(right);
+        }
+        return root;
+    }
+
+    int preVal = 0;
+
+    /**
+     * 把二叉搜索树转换为累加树-递归
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode convertBST(TreeNode root) {
+        convertBSTOrder(root);
+        return root;
+    }
+
+    private void convertBSTOrder(TreeNode node) {
+        if (null == node) {
+            return;
+        }
+        convertBSTOrder(node.right);
+        node.val += preVal;
+        preVal = node.val;
+        convertBSTOrder(node.left);
+    }
+
+    /**
+     * 把二叉搜索树转换为累加树-迭代
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode convertBSTIterative(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        int preVal = 0;
+        while (null != cur || !stack.isEmpty()) {
+            if (null != cur) {
+                stack.push(cur);
+                cur = cur.right;
+            } else {
+                cur = stack.pop();
+                cur.val += preVal;
+                preVal = cur.val;
+                cur = cur.left;
+            }
+        }
+        return root;
+    }
+
+    /**
+     * 二叉树剪枝
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode pruneTree(TreeNode root) {
+        if (null == root) {
+            return null;
+        }
+        root.left = pruneTree(root.left);
+        root.right = pruneTree(root.right);
+        if (null == root.left && null == root.right && root.val == 0) {
+            return null;
+        }
+        return root;
+    }
 }
