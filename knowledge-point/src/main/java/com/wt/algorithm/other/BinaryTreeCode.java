@@ -1776,4 +1776,64 @@ public class BinaryTreeCode {
         }
         return root;
     }
+
+    /**
+     * 删除二叉搜索树中的节点
+     *
+     * @param root
+     * @param key
+     * @return
+     */
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (null == root) {
+            return null;
+        }
+        if (null == root.left && null == root.right && key == root.val) {
+            return null;
+        }
+        if (null != root.left && null == root.right && key == root.val) {
+            return root.left;
+        }
+        if (null == root.left && null != root.right && key == root.val) {
+            return root.right;
+        }
+        if (null != root.left && null != root.right && key == root.val) {
+            TreeNode cur = root.right;
+            while (null != cur.left) {
+                cur = cur.left;
+            }
+            cur.left = root.left;
+            return root.right;
+        }
+        if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        }
+        if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        }
+        return root;
+    }
+
+    /**
+     * 修剪二叉搜索树
+     *
+     * @param root
+     * @param low
+     * @param high
+     * @return
+     */
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (null == root) {
+            return null;
+        }
+        if (root.val > high) {
+            return trimBST(root.left, low, high);
+        }
+        if (root.val < low) {
+            return trimBST(root.right, low, high);
+        }
+        root.left = trimBST(root.left, low, high);
+        root.right = trimBST(root.right, low, high);
+        return root;
+    }
 }

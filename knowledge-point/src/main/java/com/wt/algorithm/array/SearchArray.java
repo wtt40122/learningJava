@@ -72,8 +72,8 @@ public class SearchArray {
     }
 
     public static void main(String[] args) {
-        int[] arr = {4, -1, 0, 3, 5, 9, 12};
-        System.out.println(search3(arr, 90));
+        int[] arr = {-4, -1, 0, 3, 5, 9, 12};
+        System.out.println(search3(arr, 5));
     }
 
 }
