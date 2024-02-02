@@ -1,7 +1,6 @@
 package com.wt.algorithm.other;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: wtt
@@ -62,9 +61,113 @@ public class BackTrackCode {
         }
     }
 
+    /**
+     * 电话号码的字母组合
+     *
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinations(String digits) {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(2, "abc");
+        map.put(3, "def");
+        map.put(4, "ghi");
+        map.put(5, "jkl");
+        map.put(6, "mno");
+        map.put(7, "pqrs");
+        map.put(8, "tuv");
+        map.put(9, "wxyz");
+        List<String> result = new ArrayList<>();
+        if (digits.length() == 0) {
+            return result;
+        }
+        backtrack2(map, digits, 0, "", result);
+        return result;
+    }
+
+    private void backtrack2(Map<Integer, String> map, String digits, Integer index,
+                            String str, List<String> result) {
+        if (index == digits.length()) {
+            result.add(str);
+            return;
+        }
+        String strPer = map.get(digits.charAt(index) - '0');
+        for (int i = 0; i < strPer.length(); i++) {
+            backtrack2(map, digits, index + 1, str + strPer.charAt(i), result);
+        }
+    }
+
+    /**
+     * 组合总和
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (candidates.length == 0) {
+            return result;
+        }
+        backtrack3(candidates, target, 0, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack3(int[] candidates, int target, int index, int sum,
+                            List<Integer> path, List<List<Integer>> result) {
+        if (sum >= target) {
+            if (sum == target) {
+                result.add(new ArrayList<>(path));
+            }
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            if (sum + candidates[i] > target) {
+                continue;
+            }
+            path.add(candidates[i]);
+            backtrack3(candidates, target, i, sum + candidates[i], path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (candidates.length == 0) {
+            return result;
+        }
+        Arrays.sort(candidates);
+        backtrack4(candidates, target, 0, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack4(int[] candidates, int target, int index,
+                            int sum, List<Integer> path, List<List<Integer>> result) {
+        if (sum >= target) {
+            if (sum == target) {
+                result.add(new ArrayList<>(path));
+            }
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            if (i > index && candidates[i] == candidates[i - 1]) {
+                continue;
+            }
+            if (sum + candidates[i] > target) {
+                continue;
+            }
+            path.add(candidates[i]);
+            backtrack4(candidates, target, i + 1, sum + candidates[i], path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+
+
     public static void main(String[] args) {
+        int[] candidates = new int[]{2, 3, 6, 7};
         BackTrackCode backTrackCode = new BackTrackCode();
-        List<List<Integer>> result = backTrackCode.combinationSum3(3, 7);
+        List<List<Integer>> result = backTrackCode.combinationSum(candidates, 7);
         System.out.println(result);
     }
+
 }
