@@ -36,6 +36,7 @@ public class MapCode {
         return true;
     }
 
+
     /**
      * 判断两个字符串是否是变位词-数组
      *
